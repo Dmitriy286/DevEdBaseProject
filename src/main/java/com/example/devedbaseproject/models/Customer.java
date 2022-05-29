@@ -12,7 +12,8 @@ public class Customer {
     @GeneratedValue (strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private long id;
-
+    
+    
     private String name;
     private String surname;
     private int age;
