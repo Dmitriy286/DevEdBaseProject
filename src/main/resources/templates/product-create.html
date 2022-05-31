@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Create product</title>
+</head>
+<body>
+<form action="#" th:action="@{/product-create}" th:object="${product}" method="post">
+  <label for="productName">Name</label>
+  <input type="text" th:field="*{productName}" id="productname" placeholder="Введите название">
+  <label for="country">Country</label>
+  <input type="text" th:field="*{country}" id="country" placeholder="Введите страну">
+  <input type="submit" value="Create Product">
+</form>
+</body>
+</html>
