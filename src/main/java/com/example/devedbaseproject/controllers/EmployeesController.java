@@ -41,16 +41,16 @@ public class EmployeesController {
         return "employee/employee";
     }
 
-//    @GetMapping("/new")
-//    public String newProduct(@ModelAttribute("product") ProductModel product) {
-//        return "new";
-//    }
-//
-//    @PostMapping()
-//    public String createProduct(@ModelAttribute("product") ProductModel product) {
-//        repository.save(product);
-//        return "redirect:/products";
-//    }
+    @GetMapping("/new")
+    public String newEmployee(@ModelAttribute("employee") Employee employee) {
+        return "employee/new";
+    }
+
+    @PostMapping()
+    public String createEmployee(@ModelAttribute("employee") Employee employee) {
+        repository.save(employee);
+        return "redirect:/employees";
+    }
 //
 //    @GetMapping("/{id}/edit")
 //    public String edit(Model model, @PathVariable("id") Long id) {
