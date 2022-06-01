@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Creating Form</title>
+</head>
+<body>
+<h1>Creating form</h1>
+
+<form th:action="@{/employees}" th:method="POST" th:object="${employee}">
+    <label for="Name">Name:</label>
+    <input type="text" th:field="*{name}" id="Name">
+
+    <br>
+
+    <label for="Login">Login:</label>
+    <input id="Login" type="text" th:field="*{login}">
+
+    <br>
+
+    <label for="Password">Password:</label>
+    <input id="Password" type="text" th:field="*{password}">
+
+    <br>
+
+    <label for="Email">Email:</label>
+    <input id="Email" type="text" th:field="*{email}">
+
+    <br>
+
+    <label for="Phonenumber">Phonenumber:</label>
+    <input id="Phonenumber" type="text" th:field="*{phonenumber}">
+
+    <br>
+
+    <label for="Photo">Photo:</label>
+    <input id="Photo" type="image" th:field="*{photo}">
+
+    <br>
+
+    <input type="submit" value="Add employee">
+</form>
+
+</body>
+</html>

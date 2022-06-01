@@ -17,7 +17,7 @@
     <table>
         <thead>
         <tr>
-            <th>EmployeeID</th>
+            <th>EmployeeId</th>
             <th>Name</th>
             <th>Login</th>
             <th>Password</th>
@@ -28,15 +28,15 @@
         </thead>
         <tbody>
         <tr th:each = "employee: ${employees}">
-            <td><a th:href = "@{/employees/{id}(id=${employee.getID()})}" th:text = "${employee.ID}">userid</a></td>
+            <td><a th:href = "@{/employees/{id}(id=${employee.getId()})}" th:text = "${employee.Id}">userid</a></td>
             <td th:text = "${employee.name}"></td>
             <td th:text = "${employee.login}"></td>
             <td th:text = "${employee.password}"></td>
             <td th:text = "${employee.email}"></td>
             <td th:text = "${employee.phonenumber}"></td>
-            <td><img th:src = "@{/static/img/employee_id_{id}.png(id = ${employee.ID})}" alt="Employee photo"></td>
-            <td><a th:href = "@{/employees/{id}/edit(id = ${employee.ID})}">Update</a></td>
-            <td><a th:href = "@{/employees/{id}/delete(id = ${employee.ID})}">Delete</a></td>
+            <td><img th:src = "@{/static/img/employee_id_{id}.png(id = ${employee.Id})}" alt="Employee photo"></td>
+            <td><a th:href = "@{/employees/{id}/edit(id = ${employee.Id})}">Update</a></td>
+            <td><a th:href = "@{/employees/{id}/delete(id = ${employee.Id})}">Delete</a></td>
         </tr>
         </tbody>
     </table>

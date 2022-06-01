@@ -51,35 +51,35 @@ public class EmployeesController {
         repository.save(employee);
         return "redirect:/employees";
     }
-//
-//    @GetMapping("/{id}/edit")
-//    public String edit(Model model, @PathVariable("id") Long id) {
-//        Optional<ProductModel> product = repository.findById(id);
-//        if (product.isPresent()) {
-//            model.addAttribute("product", product.get());
-//            System.out.println(product);
-//        }
-//        else {
-//            System.out.println("Error Found");
-//        }
-//
-//        return "product/edit";
-//    }
-//
-////    @PatchMapping("/{id}")
-//    @PostMapping("/{id}")
-//    public String update(@ModelAttribute("product") ProductModel product, @PathVariable("id") Long id) {
-//        repository.save(product);
-//
-//        return "redirect:/products";
-//    }
-//
-//    //    @DeleteMapping("/{id}/delete")
-//    @GetMapping("/{id}/delete")
-//    public String delete(@PathVariable("id") Long id) {
-//        repository.deleteById(id);
-//        return "redirect:/products";
-//    }
-//
+
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") Long id) {
+        Optional<Employee> employee = repository.findById(id);
+        if (employee.isPresent()) {
+            model.addAttribute("employee", employee.get());
+            System.out.println(employee);
+        }
+        else {
+            System.out.println("Error Found");
+        }
+
+        return "employee/edit";
+    }
+
+//    @PatchMapping("/{id}")
+    @PostMapping("/{id}")
+    public String update(@ModelAttribute("employee") Employee employee, @PathVariable("id") Long id) {
+        repository.save(employee);
+
+        return "redirect:/employees";
+    }
+
+    //    @DeleteMapping("/{id}/delete")
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable("id") Long id) {
+        repository.deleteById(id);
+        return "redirect:/employees";
+    }
+
 
 }

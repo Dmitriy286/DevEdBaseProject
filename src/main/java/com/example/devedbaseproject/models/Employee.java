@@ -8,8 +8,8 @@ public class Employee {
 
     public Employee(){}
 
-    public Employee(Long ID, String name, String login, String password, String email, String phonenumber, String photo) {
-        this.ID = ID;
+    public Employee(Long Id, String name, String login, String password, String email, String phonenumber, String photo) {
+        this.Id = Id;
         this.name = name;
         this.login = login;
         this.password = password;
@@ -19,8 +19,8 @@ public class Employee {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long Id;
 
     @Column(name = "name")
     private String name;
@@ -44,7 +44,7 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "ID=" + ID +
+                "Id=" + Id +
                 ", name='" + name + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
@@ -54,12 +54,12 @@ public class Employee {
                 '}';
     }
 
-    public Long getID() {
-        return ID;
+    public Long getId() {
+        return Id;
     }
 
-    public void setID(Long ID) {
-        this.ID = ID;
+    public void setId(Long Id) {
+        this.Id = Id;
     }
 
     public String getName() {
