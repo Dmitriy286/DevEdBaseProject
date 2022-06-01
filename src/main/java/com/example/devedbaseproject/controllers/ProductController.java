@@ -48,7 +48,8 @@ public class ProductController {
 
     @GetMapping("/product-update/{id}")
     public String updateProductForm(@PathVariable("id") Long id, Model model){
-        Product product = productRepository.getOne(id);
+        Product product = productRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("Invalid product ID" + id));
         model.addAttribute("product", product);
         return "product-update";
     }

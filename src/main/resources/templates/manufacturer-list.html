@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Manufacturer</title>
+</head>
+<body>
+<div th:switch="${manufacturer}">
+    <h2 th:case="null">No manufacturer found!</h2>
+    <div th:case="*">
+        <h2>Manufacturers</h2>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Manufacturer's Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="manufacturer : ${manufacturer}">
+<!--                            ПОЛЯ КЛАССА!!!!-->
+                <td th:text="${manufacturer.manufacturerId}"></td>
+                <td th:text="${manufacturer.name}"></td>
+                <td th:text="${manufacturer.email}"></td>
+                <td th:text="${manufacturer.phoneNumber}"></td>
+
+                <td><a th:href="@{manufacturer-update/{id}(id=${manufacturer.manufacturerId})}">Edit</a></td>
+                <td><a th:href="@{manufacturer-delete/{id}(id=${manufacturer.manufacturerId})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/manufacturer-create">Create manufacturer</a></p>
+    <p><a href="/">Back</a></p>
+</div>
+</body>
+</html>
