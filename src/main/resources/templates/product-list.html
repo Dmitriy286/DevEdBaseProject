@@ -9,21 +9,30 @@
     <h2 th:case="null">No products found!</h2>
     <div th:case="*">
         <h2>Products</h2>
-        <table>
+        <table border="1">
             <thead>
             <tr>
                 <th>Product Id</th>
                 <th>Product Name</th>
-                <th>Country</th>
+                <th>Product Description</th>
+                <th>Manufacturer Id</th>
+                <th>Product Quantity</th>
+                <th>Product Subtype Id</th>
+
             </tr>
             </thead>
             <tbody>
             <tr th:each="product : ${products}">
-                <td th:text="${product.id}"></td>
+<!--                            ПОЛЯ КЛАССА!!!!-->
+                <td th:text="${product.productId}"></td>
                 <td th:text="${product.productName}"></td>
-                <td th:text="${product.country}"></td>
-                <td><a th:href="@{product-update/{id}(id=${product.id})}">Edit</a></td>
-                <td><a th:href="@{product-delete/{id}(id=${product.id})}">Delete</a></td>
+                <td th:text="${product.description}"></td>
+                <td th:text="${product.manufacturerId}"></td>
+                <td th:text="${product.productQuantity}"></td>
+                <td th:text="${product.productSubtypeId}"></td>
+
+                <td><a th:href="@{product-update/{id}(id=${product.productId})}">Edit</a></td>
+                <td><a th:href="@{product-delete/{id}(id=${product.productId})}">Delete</a></td>
             </tr>
             </tbody>
         </table>

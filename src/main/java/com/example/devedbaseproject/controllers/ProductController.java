@@ -14,7 +14,7 @@ import java.util.List;
 
 @Controller
 public class ProductController {
-    private final ProductRepository productRepository;// ProductRepository удалить репозиторий
+    private final ProductRepository productRepository;
 
     @Autowired
     public ProductController(ProductRepository productRepository){
