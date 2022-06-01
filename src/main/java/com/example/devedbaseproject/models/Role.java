@@ -1,6 +1,7 @@
 package com.example.devedbaseproject.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Roles")
@@ -19,6 +20,12 @@ public class Role {
 
     @Column(name = "name")
     private String name;
+
+//    @ManyToMany
+//    @JoinTable(name="Employees",
+//            joinColumns=@JoinColumn(name="roleId"),
+//            inverseJoinColumns=@JoinColumn(name="employeeId"))
+//    private List<Employee> employees;
 
     @Override
     public String toString() {
@@ -44,4 +51,4 @@ public class Role {
         this.name = name;
     }
 
-}
+    }

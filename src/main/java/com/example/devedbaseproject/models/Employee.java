@@ -1,6 +1,7 @@
 package com.example.devedbaseproject.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Employees")
@@ -40,6 +41,20 @@ public class Employee {
     @Column(name = "photo")
     private String photo;
 
+    @JoinTable(
+            name = "employeeRole",
+            joinColumns = {@JoinColumn(
+                    name = "EmployeeId",
+                    referencedColumnName = "id"
+            )},
+            inverseJoinColumns = @JoinColumn(
+                    name = "RoleId",
+                    referencedColumnName = "id"
+            )
+    )
+
+    @OneToMany
+    private List<Role> roles;
 
     @Override
     public String toString() {
@@ -108,5 +123,13 @@ public class Employee {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }
