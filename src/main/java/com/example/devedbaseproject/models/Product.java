@@ -22,7 +22,6 @@ public class Product {
         this.productId = productId;
         this.productName = productName;
         this.description = description;
-        this.manufacturerId = manufacturerId;
         this.productQuantity = productQuantity;
         this.productSubtypeId = productSubtypeId;
     }
@@ -37,8 +36,9 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "manufacturer_id")
-    private String manufacturerId;
+    @ManyToOne//(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "manufacturer_id")
+    private Manufacturer manufacturerId;
 
     @Column(name = "product_quantity")
     private Long productQuantity;
