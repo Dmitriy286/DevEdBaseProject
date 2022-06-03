@@ -9,11 +9,16 @@
 
 <div th:switch="${employees.size()}">
     <p th:case="0">List is empty</p>
-    <p th:case="*">List created</p>
+    <div th:case="*">
 <!--    todo Как убрать блок кода во второй case?-->
-</div>
-<div>
     <h2>Employees</h2>
+    <form action="filter" method="POST">
+        <label for="filter">Enter name:</label>
+        <input type="text" name="filter" id="filter">
+        <button type="submit">Find</button>
+    </form>
+
+        <br>
     <table>
         <thead>
         <tr>
@@ -26,6 +31,7 @@
             <th>Photo</th>
         </tr>
         </thead>
+
         <tbody>
         <tr th:each = "employee: ${employees}">
             <td><a th:href = "@{/employees/{id}(id=${employee.getId()})}" th:text = "${employee.Id}">userid</a></td>
@@ -41,9 +47,11 @@
         </tbody>
     </table>
 
+    </div>
     <br>
     <hr>
     <p><a href="/employees/new">Create employee</a></p>
+    <p><a href="/employees/">Show all employee</a></p>
 </div>
 </body>
 </html>

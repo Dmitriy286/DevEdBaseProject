@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/employees")
+@RequestMapping("/employees/")
 public class EmployeesController {
     private final IEmployeeRepository repository;
 
@@ -79,6 +79,19 @@ public class EmployeesController {
     public String delete(@PathVariable("id") Long id) {
         repository.deleteById(id);
         return "redirect:/employees";
+    }
+
+    @PostMapping("/filter")
+    public String filter(@RequestParam("filter") String filter, Model model) {
+        Iterable<Employee> employees;
+        if (filter != null && !filter.isEmpty()) {
+            employees = repository.findByName(filter);
+        }
+        else {
+            employees = repository.findAll();
+        }
+        model.addAttribute("employees", employees);
+        return "employee/showAll";
     }
 
 
