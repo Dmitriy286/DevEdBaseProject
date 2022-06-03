@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,8 +23,8 @@ public class Manufacturer {
     @Column(name = "manufacturer_id")
     private Long manufacturerId;
 
-//    @OneToMany(mappedBy = "Manufacturer")
-//    private list <Product> product = new ArrayList<>();
+    @OneToMany(mappedBy = "manufacturerId") // поле класса
+    private List<Product> productList;
 
     @Column(name = "name")
     private String name;
@@ -34,6 +34,4 @@ public class Manufacturer {
 
     @Column(name = "email")
     private String email;
-
-
 }

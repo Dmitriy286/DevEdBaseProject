@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -24,5 +25,5 @@ public class Supplies {
     private Manufacturer manufacturerId;
 
     @Column(name = "supplies_date")
-    private String suppliesDate;
+    private LocalDate suppliesDate;// ввод 03.06.2022
 }
