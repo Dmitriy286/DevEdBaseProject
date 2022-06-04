@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Create supplies</title>
+  <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 <form action="#" th:action="@{/supplies-create}" th:object="${supplies}" method="post">
@@ -13,7 +14,7 @@
   <input type="text" th:field="*{suppliesDate}" id="supplies_date" placeholder="Введите дату">
   <br/>
 
-  <input type="submit" value="Create Supplies">
+  <input type="submit" value="Create Supplies" class="btn">
 </form>
 </body>
 </html>

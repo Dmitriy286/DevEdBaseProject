@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Create manufacturer</title>
+  <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 <form action="#" th:action="@{/manufacturer-create}" th:object="${manufacturer}" method="post">
@@ -16,7 +17,7 @@
   <input type="text" th:field="*{phoneNumber}" id="phone_number" placeholder="Введите номер телефона">
   <br/>
 
-  <input type="submit" value="Create Manufacturer">
+  <input type="submit" value="Create Manufacturer" class="btn">
 </form>
 </body>
 </html>

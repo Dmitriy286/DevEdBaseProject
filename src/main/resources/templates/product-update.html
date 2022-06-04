@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Update product</title>
+  <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 <form action="#" th:action="@{/product-update}" th:object="${product}" method="post">
@@ -24,7 +25,7 @@
   <label for="product_subtype_id">Subtype ID</label>
   <input type="text" th:field="*{productSubtypeId}" id="product_subtype_id" placeholder="Введите ID подтип">
   <br/>
-  <input type="submit" value="Update Product">
+  <input type="submit" value="Update Product" class="btn">
 </form>
 </body>
 </html>

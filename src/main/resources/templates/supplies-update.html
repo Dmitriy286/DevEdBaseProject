@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Update supplies</title>
+  <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 <form action="#" th:action="@{/supplies-update}" th:object="${supplies}" method="post">
@@ -16,7 +17,7 @@
   <input type="text" th:field="*{suppliesDate}" id="supplies_date" placeholder="Введите дату">
   <br/>
 
-  <input type="submit" value="Update supplies">
+  <input type="submit" value="Update supplies" class="btn">
 </form>
 </body>
 </html>

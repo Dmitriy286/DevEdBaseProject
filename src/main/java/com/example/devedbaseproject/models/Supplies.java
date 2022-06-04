@@ -24,6 +24,7 @@ public class Supplies {
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturerId;
 
+    
     @Column(name = "supplies_date")
     private LocalDate suppliesDate;// ввод 03.06.2022
 }

@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Products</title>
+    <link rel="stylesheet" href="/list.css">
+
 </head>
 <body>
 <div th:switch="${products}">
     <h2 th:case="null">No products found!</h2>
     <div th:case="*">
-        <h2>Products</h2>
-        <table border="1">
+        <h2 >Products</h2>
+        <table>
             <thead>
             <tr>
                 <th>Product Id</th>
@@ -31,14 +33,14 @@
                 <td th:text="${product.productQuantity}"></td>
                 <td th:text="${product.productSubtypeId}"></td>
 
-                <td><a th:href="@{product-update/{id}(id=${product.productId})}">Edit</a></td>
-                <td><a th:href="@{product-delete/{id}(id=${product.productId})}">Delete</a></td>
+                <td><a th:href="@{product-update/{id}(id=${product.productId})}" class="btn">Edit</a></td>
+                <td><a th:href="@{product-delete/{id}(id=${product.productId})}" class="btn">Delete</a></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a href="/product-create">Create products</a></p>
-    <p><a href="/">Back</a></p>
+    <p><a href="/product-create" class="btn">Create products</a></p>
+    <p><a href="/" class="btn">Back</a></p>
 </div>
 </body>
 </html>

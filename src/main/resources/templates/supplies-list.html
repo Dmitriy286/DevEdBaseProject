@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Supplies</title>
+    <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 <div th:switch="${supplies}">
@@ -24,14 +25,14 @@
                 <td th:text="${supplies.manufacturerId.name}"></td>
                 <td th:text="${supplies.suppliesDate}"></td>
 
-                <td><a th:href="@{supplies-update/{id}(id=${supplies.suppliesId})}">Edit</a></td>
-                <td><a th:href="@{supplies-delete/{id}(id=${supplies.suppliesId})}">Delete</a></td>
+                <td><a th:href="@{supplies-update/{id}(id=${supplies.suppliesId})}" class="btn">Edit</a></td>
+                <td><a th:href="@{supplies-delete/{id}(id=${supplies.suppliesId})}" class="btn">Delete</a></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a href="/supplies-create">Create supplies</a></p>
-    <p><a href="/">Back</a></p>
+    <p><a href="/supplies-create" class="btn">Create supplies</a></p>
+    <p><a href="/" class="btn">Back</a></p>
 </div>
 </body>
 </html>
