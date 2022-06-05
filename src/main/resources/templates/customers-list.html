@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Customers</title>
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+
+    <div th:switch="${customers}">
+        <h2 th:case="null">Неть клиентов</h2>
+        <div th:case="*">
+            <h2>Список клиентов</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>ID клиента</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Возраст</th>
+                    <th>Почта</th>
+                    <th>Номер телефона</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="customer : ${customers}">
+                    <td th:text="${customer.id}"></td>
+                    <td th:text="${customer.name}"></td>
+                    <td th:text="${customer.surname}"></td>
+                    <td th:text="${customer.age}"></td>
+                    <td th:text="${customer.email}"></td>
+                    <td th:text="${customer.phoneNumber}"></td>
+                    <td><a th:href="@{customer-update/{id}(id=${customer.id})}">Редактировать </a></td>
+                    <td><a th:href="@{customer-delete/{id}(id=${customer.id})}">Удалить</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><a href="/customer-create">Создать клиентов</a></p>
+    </div>
+</div>
+</body>
+</html>
