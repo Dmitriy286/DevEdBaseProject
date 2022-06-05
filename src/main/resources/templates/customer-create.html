@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить клиента</title>
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div class="container">
+        <form action="#" th:action="@{/customer-create}" th:object="${customer}" method="post">
+            <label for="name">Имя</label>
+            <input type="text" th:field="*{name}" id="name" placeholder="Введите имя">
+            <label for="surname">Фамилия</label>
+            <input type="text" th:field="*{surname}" id="surname" placeholder="Введите фамилия">
+            <label for="age">Возраст</label>
+            <input type="text" th:field="*{age}" id="age" placeholder="Введите возраст">
+            <label for="email">Почта</label>
+            <input type="text" th:field="*{email}" id="email" placeholder="Введите почтовый адрес">
+            <label for="phoneNumber">Телефон</label>
+            <input type="text" th:field="*{phoneNumber}" id="phoneNumber" placeholder="Введите номер телефона">
+            <input type="submit" value="Добавить клиента">
+        </form>
+    </div>
+</div>
+</body>
+</html>

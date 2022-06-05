@@ -14,6 +14,7 @@ import java.util.List;
 
 @Controller
 public class ProductController {
+
     private final ProductRepository productRepository;
 
     @Autowired
@@ -48,8 +49,7 @@ public class ProductController {
 
     @GetMapping("/product-update/{id}")
     public String updateProductForm(@PathVariable("id") Long id, Model model){
-        Product product = productRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("Invalid product ID" + id));
+        Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid product ID" + id));
         model.addAttribute("product", product);
         return "product-update";
     }

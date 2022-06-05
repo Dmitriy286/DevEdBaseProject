@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <title>Create product</title>
+    <meta charset="UTF-8">
+    <title>Create product</title>
   <link rel="stylesheet" href="/list.css">
 </head>
 <body>
-<form action="#" th:action="@{/product-create}" th:object="${product}" method="post">
-  <label for="product_name">Name</label>
-  <input type="text" th:field="*{productName}" id="product_name" placeholder="Введите наименование">
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div>
+        <form action="#" th:action="@{/product-create}" th:object="${product}" method="post">
+            <label for="product_name">Name</label>
+            <input type="text" th:field="*{productName}" id="product_name" placeholder="Введите наименование">
   <br/>
-  <label for="description">Description</label>
-  <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
+            <label for="description">Description</label>
+            <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
   <br/>
   <label for="manufacturer_id">Manufacturer ID</label>
   <input type="text" th:field="*{manufacturerId}" id="manufacturer_id" placeholder="Введите ID производителя">
@@ -22,7 +25,9 @@
   <label for="product_subtype_id">Subtype ID</label>
   <input type="text" th:field="*{productSubtypeId}" id="product_subtype_id" placeholder="Введите ID подтип">
   <br/>
-  <input type="submit" value="Create Product" class="btn">
-</form>
+            <input type="submit" value="Create Product" class="btn">
+        </form>
+    </div>
+</div>
 </body>
 </html>

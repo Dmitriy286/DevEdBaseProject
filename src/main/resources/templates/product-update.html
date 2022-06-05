@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<title>Update product</title>
+    <meta charset="UTF-8">
+    <title>Update product</title>
   <link rel="stylesheet" href="/list.css">
 </head>
 <body>
-<form action="#" th:action="@{/product-update}" th:object="${product}" method="post">
-  <label for="product_id">ID</label>
-  <input readonly type="number" th:field="*{productId}" id="product_id" placeholder="ID">
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div>
+        <form action="#" th:action="@{/product-update}" th:object="${product}" method="post">
+            <label for="product_id">ID</label>
+            <input readonly type="number" th:field="*{productId}" id="product_id" placeholder="ID">
   <br/>
   <label for="product_name">Name</label>
   <input type="text" th:field="*{productName}" id="product_name" placeholder="Введите наименование">
@@ -18,14 +21,16 @@
   <br/>
   <label for="manufacturer_id">Manufacturer ID</label>
   <input type="text" th:field="*{manufacturerId}" id="manufacturer_id" placeholder="Введите ID производителя">
-  <br/>
-  <label for="product_quantity">Quantity</label>
-  <input type="text" th:field="*{productQuantity}" id="product_quantity" placeholder="Введите количество">
-  <br/>
-  <label for="product_subtype_id">Subtype ID</label>
-  <input type="text" th:field="*{productSubtypeId}" id="product_subtype_id" placeholder="Введите ID подтип">
-  <br/>
-  <input type="submit" value="Update Product" class="btn">
-</form>
+            <br/>
+            <label for="product_quantity">Quantity</label>
+            <input type="text" th:field="*{productQuantity}" id="product_quantity" placeholder="Введите количество">
+            <br/>
+            <label for="product_subtype_id">Subtype ID</label>
+            <input type="text" th:field="*{productSubtypeId}" id="product_subtype_id" placeholder="Введите ID подтип">
+            <br/>
+            <input type="submit" value="Update Product" class="btn">
+        </form>
+    </div>
+</div>
 </body>
 </html>

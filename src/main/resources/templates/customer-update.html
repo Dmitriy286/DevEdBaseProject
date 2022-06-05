@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать клиента</title>
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div>
+        <form action="#" th:action="@{/customer-update}" th:object="${customer}" method="post">
+            <label for="id">ID</label>
+            <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
+            <br/>
+            <label for="name">Имя</label>
+            <input type="text" th:field="*{name}" id="name" placeholder="Name">
+            <br/>
+            <label for="surname">Фамилия</label>
+            <input type="text" th:field="*{surname}" id="surname" placeholder="Surname">
+            <br/>
+            <label for="age">Возраст</label>
+            <input type="number" th:field="*{age}" id="age" placeholder="Age">
+            <br/>
+            <label for="email">Email</label>
+            <input type="text" th:field="*{email}" id="email" placeholder="Email">
+            <br/>
+            <label for="phoneNumber">Фамилия</label>
+            <input type="text" th:field="*{phoneNumber}" id="phoneNumber" placeholder="Phone Number">
+            <br/>
+            <input type="submit" value="Update customer">
+        </form>
+    </div>
+</div>
+</body>
+</html>
