@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Role List</title>
+</head>
+<body>
+
+<div th:switch="${roles.size()}">
+    <p th:case="0">List is empty</p>
+    <p th:case="*">List created</p>
+<!--    todo Как убрать блок кода во второй case?-->
+</div>
+<div>
+    <h2>Roles</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>RoleID</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "role: ${roles}">
+            <td th:text = "${role.Id}">userid</td>
+            <td><a th:href = "@{/roles/{name}(name=${role.getName()})}" th:text = "${role.name}">username</a></td>
+            <td><a th:href = "@{/roles/{id}/edit(id = ${role.Id})}">Update</a></td>
+            <td><a th:href = "@{/roles/{id}/delete(id = ${role.Id})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <hr>
+    <p><a href="/roles/new">Create role</a></p>
+</div>
+</body>
+</html>

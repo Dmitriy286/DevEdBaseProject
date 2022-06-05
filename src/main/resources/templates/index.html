@@ -5,6 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+<div>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
 <p>Get your products <a href="/product">here</a></p>
+<p>Employees: <a href="/employees/">here</a></p>
+<p>Employee roles: <a href="/roles/">here</a></p>
 </body>
 </html>
