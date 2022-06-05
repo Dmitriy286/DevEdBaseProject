@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Create supplies</title>
+  <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+<form action="#" th:action="@{/supplies-create}" th:object="${supplies}" method="post">
+  <label for="manufacturer_id">Manufacturer Id</label>
+  <input type="text" th:field="*{manufacturerId}" id="manufacturer_id" placeholder="Введите ID">
+  <br/>
+  <label for="supplies_date">Date</label>
+  <input type="text" th:field="*{suppliesDate}" id="supplies_date" placeholder="Введите дату">
+  <br/>
+
+  <input type="submit" value="Create Supplies" class="btn">
+</form>
+</body>
+</html>

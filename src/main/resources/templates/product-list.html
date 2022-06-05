@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Products</title>
+    <link rel="stylesheet" href="/list.css">
+
 </head>
 <body>
 <div class="container">
@@ -16,21 +18,31 @@
                 <tr>
                     <th>Product Id</th>
                     <th>Product Name</th>
-                    <th>Country</th>
+                    <th>Product Description</th>
+                    <th>Manufacturer Id</th>
+                    <th>Product Quantity</th>
+                    <th>Product Subtype Id</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="product : ${products}">
-                    <td th:text="${product.id}"></td>
+                    <!--                            ПОЛЯ КЛАССА!!!!-->
+                    <td th:text="${product.productId}"></td>
                     <td th:text="${product.productName}"></td>
-                    <td th:text="${product.country}"></td>
-                    <td><a th:href="@{product-update/{id}(id=${product.id})}">Edit</a></td>
-                    <td><a th:href="@{product-delete/{id}(id=${product.id})}">Delete</a></td>
+                    <td th:text="${product.description}"></td>
+                    <td th:text="${product.manufacturerId.name}"></td>
+                    <td th:text="${product.productQuantity}"></td>
+                    <td th:text="${product.productSubtypeId}"></td>
+
+                    <td><a th:href="@{product-update/{id}(id=${product.productId})}" class="btn">Edit</a></td>
+                    <td><a th:href="@{product-delete/{id}(id=${product.productId})}" class="btn">Delete</a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <p><a href="/product-create">Create products</a></p>
+        <p><a href="/product-create" class="btn">Create products</a></p>
+        <p><a href="/" class="btn">Back</a></p>
     </div>
 </div>
 </body>

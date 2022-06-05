@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Supplies</title>
+    <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+<div th:switch="${supplies}">
+    <h2 th:case="null">No supplies found!</h2>
+    <div th:case="*">
+        <h2>Supplies</h2>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Supply's Id</th>
+                <th>Manufacturer's Id</th>
+                <th>Supply's Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="supplies : ${supplies}">
+<!--                            ПОЛЯ КЛАССА!!!!-->
+                <td th:text="${supplies.suppliesId}"></td>
+                <td th:text="${supplies.manufacturerId.name}"></td>
+                <td th:text="${supplies.suppliesDate}"></td>
+
+                <td><a th:href="@{supplies-update/{id}(id=${supplies.suppliesId})}" class="btn">Edit</a></td>
+                <td><a th:href="@{supplies-delete/{id}(id=${supplies.suppliesId})}" class="btn">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/supplies-create" class="btn">Create supplies</a></p>
+    <p><a href="/" class="btn">Back</a></p>
+</div>
+</body>
+</html>
