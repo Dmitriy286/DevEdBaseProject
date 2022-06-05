@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees List</title>
+</head>
+<body>
+
+<div th:switch="${employees.size()}">
+    <p th:case="0">List is empty</p>
+    <div th:case="*">
+<!--    todo Как убрать блок кода во второй case?-->
+    <h2>Employees</h2>
+    <form action="filter" method="POST">
+        <label for="filter">Enter name:</label>
+        <input type="text" name="filter" id="filter">
+        <button type="submit">Find</button>
+    </form>
+
+        <br>
+    <table>
+        <thead>
+        <tr>
+            <th>EmployeeId</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Email</th>
+            <th>Phonenumber</th>
+            <th>Photo</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each = "employee: ${employees}">
+            <td><a th:href = "@{/employees/{id}(id=${employee.getId()})}" th:text = "${employee.Id}">userid</a></td>
+            <td th:text = "${employee.name}"></td>
+            <td th:text = "${employee.username}"></td>
+            <td th:text = "${employee.password}"></td>
+            <td th:text = "${employee.email}"></td>
+            <td th:text = "${employee.phonenumber}"></td>
+            <td><img th:src = "@{/static/img/employee_id_{id}.png(id = ${employee.Id})}" alt="Employee photo"></td>
+            <td><a th:href = "@{/employees/{id}/edit(id = ${employee.Id})}">Update</a></td>
+            <td><a th:href = "@{/employees/{id}/delete(id = ${employee.Id})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    </div>
+    <br>
+    <hr>
+    <p><a href="/employees/new">Create employee</a></p>
+    <p><a href="/employees/">Show all employee</a></p>
+</div>
+</body>
+</html>
