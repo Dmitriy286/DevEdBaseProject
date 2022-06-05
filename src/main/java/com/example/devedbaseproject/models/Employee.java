@@ -1,6 +1,7 @@
 package com.example.devedbaseproject.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -9,25 +10,49 @@ public class Employee {
 
     public Employee(){}
 
-    public Employee(Long Id, String name, String login, String password, String email, String phonenumber, String photo) {
-        this.Id = Id;
+    public Employee(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.roles = new ArrayList<>();
+        this.active = false;
+
+        this.name = "";
+        this.email = "";
+        this.phonenumber = "";
+        this.photo = "";
+    }
+
+    public Employee(String name, String username, String password, String email, String phonenumber, String photo) {
         this.name = name;
-        this.login = login;
+        this.username = username;
         this.password = password;
         this.email = email;
         this.phonenumber = phonenumber;
         this.photo = photo;
+        this.roles = new ArrayList<>();
+        this.active = false;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
+    @Column(name = "active")
+    private boolean active;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Column(name = "name")
     private String name;
 
-    @Column(name = "login")
-    private String login;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -61,7 +86,7 @@ public class Employee {
         return "Employee{" +
                 "Id=" + Id +
                 ", name='" + name + '\'' +
-                ", login='" + login + '\'' +
+                ", login='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
@@ -85,12 +110,12 @@ public class Employee {
         this.name = name;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String login) {
+        this.username = login;
     }
 
     public String getPassword() {

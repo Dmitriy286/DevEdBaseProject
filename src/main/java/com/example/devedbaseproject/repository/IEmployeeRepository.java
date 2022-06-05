@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findByName(String name);
+    Employee findByUsername(String username);
 }
