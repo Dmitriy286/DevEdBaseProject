@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>Update supplies</title>
+  <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+<form action="#" th:action="@{/supplies-update}" th:object="${supplies}" method="post">
+  <label for="supplies_id">ID</label>
+  <input readonly type="number" th:field="*{suppliesId}" id="supplies_id" placeholder="ID">
+  <br/>
+  <label for="manufacturer_id">Manufacturer</label>
+  <input type="text" th:field="*{manufacturerId}" id="manufacturer_id" placeholder="Введите ID">
+  <br/>
+  <label for="supplies_date">Date</label>
+  <input type="text" th:field="*{suppliesDate}" id="supplies_date" placeholder="Введите дату">
+  <br/>
+
+  <input type="submit" value="Update supplies" class="btn">
+</form>
+</body>
+</html>

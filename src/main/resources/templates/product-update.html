@@ -3,19 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Update product</title>
+  <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 <form action="#" th:action="@{/product-update}" th:object="${product}" method="post">
-  <label for="id">ID</label>
-  <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
+  <label for="product_id">ID</label>
+  <input readonly type="number" th:field="*{productId}" id="product_id" placeholder="ID">
   <br/>
-  <label for="productName">Name</label>
-  <input type="text" th:field="*{productName}" id="productname" placeholder="Name">
+  <label for="product_name">Name</label>
+  <input type="text" th:field="*{productName}" id="product_name" placeholder="Введите наименование">
   <br/>
-  <label for="country">Country</label>
-  <input type="text" th:field="*{country}" id="country" placeholder="Country">
+  <label for="description">Description</label>
+  <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
   <br/>
-  <input type="submit" value="Update Product">
+  <label for="manufacturer_id">Manufacturer ID</label>
+  <input type="text" th:field="*{manufacturerId}" id="manufacturer_id" placeholder="Введите ID производителя">
+  <br/>
+  <label for="product_quantity">Quantity</label>
+  <input type="text" th:field="*{productQuantity}" id="product_quantity" placeholder="Введите количество">
+  <br/>
+  <label for="product_subtype_id">Subtype ID</label>
+  <input type="text" th:field="*{productSubtypeId}" id="product_subtype_id" placeholder="Введите ID подтип">
+  <br/>
+  <input type="submit" value="Update Product" class="btn">
 </form>
 </body>
 </html>
