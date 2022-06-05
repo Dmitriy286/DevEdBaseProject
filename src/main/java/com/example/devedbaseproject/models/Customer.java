@@ -18,15 +18,15 @@ public class Customer {
     @Column(name = "id")
     private Long id;
 
-    @Column(name="CustomerName")
+    @Column(name="customer_name")
     private String name;
-    @Column(name="CustomerSurname")
+    @Column(name="customer_surname")
     private String surname;
-    @Column(name="CustomerAge")
+    @Column(name="customer_age")
     private Integer age;
-    @Column(name="CustomerEmail")
+    @Column(name="customer_email")
     private String email;
-    @Column(name="CustomerPhoneNumber")
+    @Column(name="customer_phone_number")
     private String phoneNumber;
 
 }
