@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<title>Update product</title>
+    <meta charset="UTF-8">
+    <title>Update product</title>
 </head>
 <body>
-<form action="#" th:action="@{/product-update}" th:object="${product}" method="post">
-  <label for="id">ID</label>
-  <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
-  <br/>
-  <label for="productName">Name</label>
-  <input type="text" th:field="*{productName}" id="productname" placeholder="Name">
-  <br/>
-  <label for="country">Country</label>
-  <input type="text" th:field="*{country}" id="country" placeholder="Country">
-  <br/>
-  <input type="submit" value="Update Product">
-</form>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div>
+        <form action="#" th:action="@{/product-update}" th:object="${product}" method="post">
+            <label for="id">ID</label>
+            <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
+            <br/>
+            <label for="productName">Name</label>
+            <input type="text" th:field="*{productName}" id="productname" placeholder="Name">
+            <br/>
+            <label for="country">Country</label>
+            <input type="text" th:field="*{country}" id="country" placeholder="Country">
+            <br/>
+            <input type="submit" value="Update Product">
+        </form>
+    </div>
+</div>
 </body>
 </html>

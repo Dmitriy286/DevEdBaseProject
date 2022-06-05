@@ -55,6 +55,6 @@ public class CustomerController {
     @PostMapping("/customer-update")
     public String updateCustomer(Customer customer){
         customerRepository.save(customer);
-        return "redirect:/customer";
+        return "redirect:/customers";
     }
 }

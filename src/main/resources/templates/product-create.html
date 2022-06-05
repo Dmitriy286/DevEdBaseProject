@@ -7,13 +7,15 @@
 <body>
 <div class="container">
     <th:block th:insert="fragments/navigation :: main-menu"></th:block>
-    <form action="#" th:action="@{/product-create}" th:object="${product}" method="post">
-        <label for="productName">Name</label>
-        <input type="text" th:field="*{productName}" id="productname" placeholder="Введите название">
-        <label for="country">Country</label>
-        <input type="text" th:field="*{country}" id="country" placeholder="Введите страну">
-        <input type="submit" value="Create Product">
-    </form>
+    <div>
+        <form action="#" th:action="@{/product-create}" th:object="${product}" method="post">
+            <label for="productName">Name</label>
+            <input type="text" th:field="*{productName}" id="productname" placeholder="Введите название">
+            <label for="country">Country</label>
+            <input type="text" th:field="*{country}" id="country" placeholder="Введите страну">
+            <input type="submit" value="Create Product">
+        </form>
+    </div>
 </div>
 </body>
 </html>
