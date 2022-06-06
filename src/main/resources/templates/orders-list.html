@@ -9,31 +9,31 @@
 <div class="container">
     <th:block th:insert="fragments/navigation :: main-menu"></th:block>
 
-    <div th:switch="${customers}">
-        <h2 th:case="null">Неть клиентов</h2>
+    <div th:switch="${orders}">
+        <h2 th:case="null">Неть заказов</h2>
         <div th:case="*">
-            <h2>Список клиентов</h2>
+            <h2>Список заказов</h2>
             <table>
                 <thead>
                 <tr>
-                    <th>ID клиента</th>
-                    <th>Имя</th>
-                    <th>Фамилия</th>
-                    <th>Возраст</th>
-                    <th>Почта</th>
-                    <th>Номер телефона</th>
+                    <th>ID заказа</th>
+                    <th>клиент</th>
+                    <th>Продавец</th>
+                    <th>Дата</th>
+                    <th>Стоимость</th>
+                    <th>Статус</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="customer : ${customers}">
-                    <td th:text="${customer.customerId}"></td>
-                    <td th:text="${customer.name}"></td>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${}"></td>
                     <td th:text="${customer.surname}"></td>
                     <td th:text="${customer.age}"></td>
                     <td th:text="${customer.email}"></td>
                     <td th:text="${customer.phoneNumber}"></td>
-                    <td><a th:href="@{customer-update/{id}(id=${customer.customerId})}" class="btn">Редактировать </a></td>
-                    <td><a th:href="@{customer-delete/{id}(id=${customer.customerId})}" class="btn">Удалить</a></td>
+                    <td><a th:href="@{customer-update/{id}(id=${customer.id})}" class="btn">Редактировать </a></td>
+                    <td><a th:href="@{customer-delete/{id}(id=${customer.id})}" class="btn">Удалить</a></td>
                 </tr>
                 </tbody>
             </table>

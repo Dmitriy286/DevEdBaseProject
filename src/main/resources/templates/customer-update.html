@@ -10,8 +10,8 @@
     <th:block th:insert="fragments/navigation :: main-menu"></th:block>
     <div>
         <form action="#" th:action="@{/customer-update}" th:object="${customer}" method="post">
-            <label for="id">ID</label>
-            <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
+            <label for="customerId">ID</label>
+            <input readonly type="number" th:field="*{customerId}" id="customerId" placeholder="ID">
             <br/>
             <label for="name">Имя</label>
             <input type="text" th:field="*{name}" id="name" placeholder="Name">

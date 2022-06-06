@@ -18,4 +18,8 @@ public class Order {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name="customer_id")
+    private Customer customer;
+
 }

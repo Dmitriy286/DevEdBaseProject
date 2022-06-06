@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,8 +16,8 @@ public class Customer {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "customer_id")
+    private Long customerId;
 
     @Column(name="customer_name")
     private String name;
@@ -29,4 +30,6 @@ public class Customer {
     @Column(name="customer_phone_number")
     private String phoneNumber;
 
+    @OneToMany(mappedBy = "customerId")
+    private List<Order> orderList;
 }
