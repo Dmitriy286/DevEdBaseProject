@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Customers</title>
+    <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 <div class="container">
@@ -31,13 +32,14 @@
                     <td th:text="${customer.age}"></td>
                     <td th:text="${customer.email}"></td>
                     <td th:text="${customer.phoneNumber}"></td>
-                    <td><a th:href="@{customer-update/{id}(id=${customer.id})}">Редактировать </a></td>
-                    <td><a th:href="@{customer-delete/{id}(id=${customer.id})}">Удалить</a></td>
+                    <td><a th:href="@{customer-update/{id}(id=${customer.id})}" class="btn">Редактировать </a></td>
+                    <td><a th:href="@{customer-delete/{id}(id=${customer.id})}" class="btn">Удалить</a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <p><a href="/customer-create">Создать клиентов</a></p>
+        <p><a href="/" class="btn">Назад</a></p>
     </div>
 </div>
 </body>
