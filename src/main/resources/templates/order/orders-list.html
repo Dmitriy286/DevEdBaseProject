@@ -27,18 +27,17 @@
                 <tbody>
                 <tr th:each="order : ${orders}">
                     <td th:text="${order.id}"></td>
-                    <td th:text="${}"></td>
-                    <td th:text="${customer.surname}"></td>
-                    <td th:text="${customer.age}"></td>
-                    <td th:text="${customer.email}"></td>
-                    <td th:text="${customer.phoneNumber}"></td>
-                    <td><a th:href="@{customer-update/{id}(id=${customer.id})}" class="btn">Редактировать </a></td>
-                    <td><a th:href="@{customer-delete/{id}(id=${customer.id})}" class="btn">Удалить</a></td>
+                    <td th:text="${order.customerId.name}"></td>
+                    <td th:text="${order.employee.name}"></td>
+                    <td th:text="${order.currentDate}"></td>
+                    <td th:text="${order.orderCost}"></td>
+                    <td th:text="${order.orderStatus}"></td>
+                    <td><a th:href="@{order-update/{id}(id=${order.id})}" class="btn">Редактировать </a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <p><a href="/customer-create">Создать клиентов</a></p>
+        <p><a href="/order-create">Сделать заказ</a></p>
         <p><a href="/" class="btn">Назад</a></p>
     </div>
 </div>

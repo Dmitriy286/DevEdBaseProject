@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create product</title>
+    <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div>
+        <form action="#" th:action="@{/order-create}" th:object="${order}" method="post">
+            <div class="container my-2">
+                <h2 class="my-3">Сформировать заказ:</h2>
+                <div class="form-group">
+                    <input class="form-control col-md-5" list="customers" id="customer-choice" placeholder="Найти клиента ..."/>
+                </div>
+                <datalist id="customers">
+                    <option th:each="customer : ${customers}"
+                            th:data-value="${customer.customerId}"
+                            th:text="${customer.surname +' '+ customer.name}">
+                    </option>
+                </datalist>
+            </div>
+            <br>
+            <br>
+            <div class="container my-3">
+                <a href="/customer-create" class="btn btn-primary" role="button">Добавить нового клиента</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -81,6 +81,9 @@ public class Employee {
     @OneToMany
     private List<Role> roles;
 
+    @OneToMany(mappedBy="id")
+    private List<Order> orderList;
+
     @Override
     public String toString() {
         return "Employee{" +
