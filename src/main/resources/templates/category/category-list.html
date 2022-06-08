@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Category</title>
+    <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div th:switch="${category}">
+        <h2 th:case="null">No categories found!</h2>
+        <div th:case="*">
+            <h2>Categories</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Category Id</th>
+                    <th>Category Name</th>
+                    <th>Category Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="category : ${category}">
+                    <!--                            ПОЛЯ КЛАССА!!!!-->
+                    <td th:text="${category.id}"></td>
+                    <td th:text="${category.categoryName}"></td>
+                    <td th:text="${category.categoryDescription}"></td>
+
+                    <td><a th:href="@{category-update/{id}(id=${category.id})}" class="btn">Edit</a></td>
+                    <td><a th:href="@{category-delete/{id}(id=${category.id})}" class="btn">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><a href="/category-create" class="btn">Create category</a></p>
+    </div>
+
+    <div th:switch="${productType}">
+        <h2 th:case="null">No types found!</h2>
+        <div th:case="*">
+            <h2>Types</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Type Id</th>
+                    <th>Type Name</th>
+                    <th>Type Description</th>
+                    <th>Category</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="type : ${productType}">
+                    <!--                            ПОЛЯ КЛАССА!!!!-->
+                    <td th:text="${type.id}"></td>
+                    <td th:text="${type.productTypeName}"></td>
+                    <td th:text="${type.productTypeDescription}"></td>
+                    <td th:text="${type.category.categoryName}"></td>
+
+                    <td><a th:href="@{type-update/{id}(id=${type.id})}" class="btn">Edit</a></td>
+                    <td><a th:href="@{type-delete/{id}(id=${type.id})}" class="btn">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><a href="/type-create" class="btn">Create type</a></p>
+    </div>
+
+    <div th:switch="${productSubtype}">
+        <h2 th:case="null">No subtypes found!</h2>
+        <div th:case="*">
+            <h2>Subtypes</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Subtype Id</th>
+                    <th>Subtype Name</th>
+                    <th>Subtype Description</th>
+                    <th>Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="subtype : ${productSubtype}">
+                    <!--                            ПОЛЯ КЛАССА!!!!-->
+                    <td th:text="${subtype.id}"></td>
+                    <td th:text="${subtype.productSubtypeName}"></td>
+                    <td th:text="${subtype.productSubtypeDescription}"></td>
+                    <td th:text="${subtype.productType.productTypeName}"></td>
+
+                    <td><a th:href="@{subtype-update/{id}(id=${subtype.id})}" class="btn">Edit</a></td>
+                    <td><a th:href="@{subtype-delete/{id}(id=${subtype.id})}" class="btn">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><a href="/subtype-create" class="btn">Create subtype</a></p>
+    </div>
+
+    <p><a href="/" class="btn">Back</a></p>
+</div>
+</body>
+</html>
