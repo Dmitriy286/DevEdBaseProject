@@ -24,6 +24,7 @@ public class Product {
         this.description = description;
         this.productQuantity = productQuantity;
         this.productSubtypeId = productSubtypeId;
+        this.manufacturerId = new Manufacturer();
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,4 +46,5 @@ public class Product {
 
     @Column(name = "product_subtype_id")
     private Long productSubtypeId;
+
 }
