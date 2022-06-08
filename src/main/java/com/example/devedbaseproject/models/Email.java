@@ -30,7 +30,7 @@ public class Email {
     @JoinColumn(name = "customerId")
     private Customer customer;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "products")
     private List<Product> products;
 
