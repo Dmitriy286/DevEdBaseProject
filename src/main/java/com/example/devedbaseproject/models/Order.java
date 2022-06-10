@@ -15,8 +15,8 @@ import java.util.Date;
 @Table(name="orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "order_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     private Long id;
 
     @ManyToOne
@@ -24,8 +24,8 @@ public class Order {
     private Customer customerId;
 
     @ManyToOne
-    @JoinColumn(name="id")
-    private Employee employee;
+    @JoinColumn(name="employee_id")
+    private Employee employeeId;
 
     @Column(name="date")
     private Date currentDate;
