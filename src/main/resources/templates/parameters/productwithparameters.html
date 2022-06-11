@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product with params</title>
+</head>
+<body>
+<div>
+<p th:text="${product.getProductName()}">value</p>
+<p th:text="${product.getProductId()}">value</p>
+</div>
+<div>
+    <form th:action="@{/productparams/{id}(id=${product.getProductId})}" th:method="POST" th:object="${prodparam}" >
+<!--          th:object="${parameter}" -->
+
+<!--        <label for="Parameter">Parameter:</label>-->
+<!--        <input type="text" th:field="*{parameters}" id="Parameter">-->
+        <div class="form">
+        <select class="form-control" id="selectParameter" th:field="*{parameters}">
+            <option value="default">Select parameter</option>
+            <option th:each = "parameter: ${parameters}" th:value="${parameter}" th:text="${parameter.getName()}"/>
+        </select>
+        </div>
+        <br>
+        <p>
+            <label for="string">String parameter:</label>
+            <input type="text" th:field="*{stringValue}" id="string"/>
+        </p>
+
+        <p>
+            <label for="int">Integer parameter:</label>
+            <input type="text" th:field="*{intValue}" id="int"/>
+        </p>
+
+        <input type="submit" value="Add parameter details">
+    </form>
+
+</div>
+</body>
+</html>

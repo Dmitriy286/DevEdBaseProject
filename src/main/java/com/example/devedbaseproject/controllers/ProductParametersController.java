@@ -1,8 +1,11 @@
 package com.example.devedbaseproject.controllers;
 
+import com.example.devedbaseproject.models.Product;
 import com.example.devedbaseproject.models.ProductParameter;
+import com.example.devedbaseproject.models.ProductParameterValue;
 import com.example.devedbaseproject.repository.IProductParameterRepository;
 import com.example.devedbaseproject.repository.IProductParameterValueRepository;
+import com.example.devedbaseproject.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +19,15 @@ import java.util.Optional;
 public class ProductParametersController {
     private final IProductParameterRepository repository;
     private final IProductParameterValueRepository ppvalueRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public ProductParametersController(IProductParameterRepository repository, IProductParameterValueRepository ppvalueRepository) {
+    public ProductParametersController(IProductParameterRepository repository,
+                                       IProductParameterValueRepository ppvalueRepository,
+                                       ProductRepository productRepository) {
         this.repository = repository;
         this.ppvalueRepository = ppvalueRepository;
+        this.productRepository = productRepository;
     }
 
     @GetMapping()
@@ -82,6 +89,43 @@ public class ProductParametersController {
     public String delete(@PathVariable("id") Long id) {
         repository.deleteById(id);
         return "redirect:/parameters";
+    }
+
+
+    @GetMapping("/productparams/{id}")
+    public String getParams(@PathVariable("id") Long id,
+                            @ModelAttribute("parameter") ProductParameterValue prodparam,
+                            Model model) {
+        List<ProductParameter> parameters = repository.findAll();
+        Optional<Product> product = productRepository.findById(id);
+        if (product.isPresent()) {
+            model.addAttribute("product", product.get());
+            model.addAttribute("prodparam", prodparam);
+            model.addAttribute("parameters", parameters);
+        }
+        else {
+            System.out.println("Error Found");
+        }
+        return "parameters/productwithparameters";
+    }
+
+
+    @PostMapping("/productparams/{id}")
+    public String setParameters(@ModelAttribute("parameter") ProductParameter parameter,
+                                @ModelAttribute("prodparam") ProductParameterValue prodparam,
+                                @ModelAttribute("product") Product product,
+                                @PathVariable("id") Long id) {
+
+        Optional<Product> newproduct = productRepository.findById(id);
+        ProductParameterValue newprodparam = new ProductParameterValue();
+        newprodparam.getProducts().add(newproduct.get());
+        newprodparam.getParameters().add(parameter);
+        newprodparam.setIntValue(prodparam.getIntValue());
+        newprodparam.setStringValue(prodparam.getStringValue());
+
+        ppvalueRepository.save(newprodparam);
+
+        return "redirect:/productwithparameters";
     }
 
 
