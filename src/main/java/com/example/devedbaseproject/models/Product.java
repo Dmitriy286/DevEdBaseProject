@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,6 +27,8 @@ public class Product {
         this.productQuantity = productQuantity;
         this.productSubtypeId = productSubtypeId;
         this.manufacturerId = new Manufacturer();
+//        this.ppvalue = new ProductParameterValue();
+        this.parameterValues = new ArrayList<>();
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,5 +50,22 @@ public class Product {
 
     @Column(name = "product_subtype_id")
     private Long productSubtypeId;
+    //не коммитить, отправить код (вместе с 30 строчкой)
+
+//    @JoinTable(name="product_productparameters",
+//            joinColumns = {@JoinColumn(name = "productId",
+//                    referencedColumnName = "product_id"
+//            )},
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "productParameterId",
+//                    referencedColumnName = "product_parameter_id"
+//            )
+//    )
+//
+//    @ManyToMany
+//    private List<ProductParameter> parameters;
+    @OneToMany
+    @JoinColumn(name="parameterValues")
+    private List<ProductParameterValue> parameterValues;
 
 }

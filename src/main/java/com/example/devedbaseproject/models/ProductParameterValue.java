@@ -18,10 +18,12 @@ public class ProductParameterValue {
     }
 
     public ProductParameterValue(int intValue, String stringValue) {
-        this.products = new ArrayList<>();
-        this.parameters = new ArrayList<>();
+//        this.products = new ArrayList<>();
+//        this.parameters = new ArrayList<>();
+        this.parameter = new ProductParameter();
         this.intValue = intValue;
         this.stringValue = stringValue;
+        this.product = new Product();
     }
 
     @Id
@@ -29,11 +31,19 @@ public class ProductParameterValue {
     @Column(name = "product_parameter_value_id")
     private Long Id;
 
-    @OneToMany(mappedBy = "ppvalue")
-    private List<Product> products;
+//    @OneToMany(mappedBy = "ppvalue")
+//    private List<Product> products;
 
-    @OneToMany(mappedBy = "ppvalue")
-    private List<ProductParameter> parameters;
+//    @OneToMany(mappedBy = "ppvalue")
+//    private List<ProductParameter> parameters;
+
+    @ManyToOne//(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne//(cascade = { CascadeType.ALL })
+//    @JoinColumn(name = "parameter_id")
+    private ProductParameter parameter;
 
     @Column(name = "intValue")
     private int intValue;

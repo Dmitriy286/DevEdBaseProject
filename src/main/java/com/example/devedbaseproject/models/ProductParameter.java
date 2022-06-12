@@ -16,7 +16,7 @@ public class ProductParameter {
     public ProductParameter(String name, boolean valueType) {
         this.name = name;
         this.valueType = valueType;
-        this.ppvalue = new ProductParameterValue();
+//        this.ppvalue = new ProductParameterValue();
     }
 
     @Id
@@ -32,9 +32,9 @@ public class ProductParameter {
     //false - int
     //true - String
 
-    @ManyToOne
-    @JoinColumn(name="ppvalue")
-    private ProductParameterValue ppvalue;
+//    @ManyToOne
+//    @JoinColumn(name="ppvalue")
+//    private ProductParameterValue ppvalue;
 
 
 //    @Column(name = "stringValue")

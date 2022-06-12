@@ -8,33 +8,77 @@
 <div>
 <p th:text="${product.getProductName()}">value</p>
 <p th:text="${product.getProductId()}">value</p>
+<!--<p th:text="${product.getParameterValues()}">values</p>-->
+    <div th:each = "paramval: ${product.getParameterValues()}">
+    <p th:text = "${paramval.getParameter().getName()}">value</p>
+    <p th:text = "${paramval.getStringValue}">value</p>
+    <p th:text = "${paramval.getIntValue}">value</p>
+    </div>
 </div>
 <div>
-    <form th:action="@{/productparams/{id}(id=${product.getProductId})}" th:method="POST" th:object="${prodparam}" >
-<!--          th:object="${parameter}" -->
+    <h2>Parameters</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ParametrID</th>
+            <th>Name</th>
+            <th>valueType</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "parameter: ${parameters}">
+            <td th:text = "${parameter.Id}">ParameterID</td>
+            <td th:text = "${parameter.name}">Parametername</td>
+            <td th:text = "${parameter.valueType}">valueType</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <form th:action="@{/parameters/productparams/{productId}(productId=${product.getProductId})}"
+          th:method="POST" th:object="${prodparamvalue}">
 
-<!--        <label for="Parameter">Parameter:</label>-->
-<!--        <input type="text" th:field="*{parameters}" id="Parameter">-->
-        <div class="form">
-        <select class="form-control" id="selectParameter" th:field="*{parameters}">
+        <select th:class="form-control" th:name="selectParameter" th:id="selectParameter">
             <option value="default">Select parameter</option>
-            <option th:each = "parameter: ${parameters}" th:value="${parameter}" th:text="${parameter.getName()}"/>
+            <option th:each="parameter: ${parameters}"
+                    th:value="${parameter}"
+                    th:text="${parameter.name}"
+                    th:data-name="${parameter.name}">
+            </option>
         </select>
-        </div>
-        <br>
-        <p>
-            <label for="string">String parameter:</label>
-            <input type="text" th:field="*{stringValue}" id="string"/>
-        </p>
 
-        <p>
-            <label for="int">Integer parameter:</label>
-            <input type="text" th:field="*{intValue}" id="int"/>
-        </p>
+        <input type="hidden" th:field="*{parameter.name}" class="form-control" id="parameterName"
+               placeholder="parameterName">
+
+<!--        </div>-->
+        <br>
+
+        <label for="string">String parameter:</label>
+        <input type="text" th:field="*{stringValue}" id="string"/>
+
+        <br>
+
+        <label for="int">Integer parameter:</label>
+        <input type="text" th:field="*{intValue}" id="int"/>
+
+        <br>
 
         <input type="submit" value="Add parameter details">
+
     </form>
 
 </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        console.log("ready!");
+    });
+    $(document).ready(function () {
+        $("#selectParameter").change(function() {
+            $("#parameterName").val($("#selectParameter option:selected").attr("data-name"));
+        });
+    });
+
+</script>
 </html>
