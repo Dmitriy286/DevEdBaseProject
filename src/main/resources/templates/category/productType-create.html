@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create type</title>
+  <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div>
+        <form action="#" th:action="@{/type-create}" th:object="${productType}" method="post">
+            <label for="product_type_name">Name</label>
+            <input type="text" th:field="*{productTypeName}" id="product_type_name" placeholder="Введите тип">
+            <br/>
+            <label for="product_type_description">Description</label>
+            <input type="text" th:field="*{productTypeDescription}" id="product_type_description" placeholder="Введите описание">
+            <br/>
+            <label for="category_id">Category</label>
+            <select class = "form-control" th:id="selectCategory" th:name="selectCategory">
+                <option disabled selected>Категория</option>
+                <option id="category_id"
+                th:each= "category: ${category}" th:value="${category}"
+                th:text="${category.categoryName}"
+                th:category-id="${category.id}">
+                </option>
+            </select>
+            <input type="hidden" th:field="*{category.id}" class="form-control" id="categoryId" placeholder="categoryId">
+            <br/>
+            <input type="submit" value="Create Type" class="btn">
+        </form>
+    </div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        console.log("ready!");
+    });
+    $(document).ready(function () {
+        $("#selectCategory").change(function() {
+            $("#categoryId").val($("#selectCategory option:selected").attr("category-id"));
+        });
+    });
+</script>
+</html>
