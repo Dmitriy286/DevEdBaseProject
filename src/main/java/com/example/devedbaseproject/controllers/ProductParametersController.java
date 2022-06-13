@@ -18,16 +18,12 @@ import java.util.Optional;
 @RequestMapping("/parameters")
 public class ProductParametersController {
     private final IProductParameterRepository repository;
-    private final IProductParameterValueRepository ppvalueRepository;
-    private final ProductRepository productRepository;
 
     @Autowired
     public ProductParametersController(IProductParameterRepository repository,
                                        IProductParameterValueRepository ppvalueRepository,
                                        ProductRepository productRepository) {
         this.repository = repository;
-        this.ppvalueRepository = ppvalueRepository;
-        this.productRepository = productRepository;
     }
 
     @GetMapping()
@@ -76,7 +72,6 @@ public class ProductParametersController {
         return "parameters/edit";
     }
 
-//    @PatchMapping("/{id}")
     @PostMapping("/{id}")
     public String update(@ModelAttribute("parameter") ProductParameter parameter, @PathVariable("id") Long id) {
         repository.save(parameter);
@@ -84,64 +79,10 @@ public class ProductParametersController {
         return "redirect:/parameters";
     }
 
-    //    @DeleteMapping("/{id}/delete")
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         repository.deleteById(id);
         return "redirect:/parameters";
-    }
-
-
-
-
-    @GetMapping("/productparams/{productId}")
-    public String getParameters(@PathVariable("productId") Long productId,
-                            @ModelAttribute("prodparamvalue") ProductParameterValue prodparamvalue,
-                            Model model) {
-        List<ProductParameter> parameters = repository.findAll();
-        model.addAttribute("parameters", parameters);
-//        model.addAttribute("prodparamvalue", prodparamvalue);
-
-        Optional<Product> product = productRepository.findById(productId);
-        if (product.isPresent()) {
-            model.addAttribute("product", product.get());
-        }
-        else {
-            System.out.println("Error Found");
-        }
-        return "parameters/productwithparameters";
-    }
-
-
-    @PostMapping("/productparams/{productId}")
-    public String setParameters(ProductParameterValue prodparamvalue,
-                                @PathVariable("productId") Long productId) {
-
-        Optional<Product> tempproduct = productRepository.findById(productId);
-
-        Optional<ProductParameter> newparameter = repository.findByName(prodparamvalue.getParameter().getName());
-
-        if (newparameter.isPresent()) {
-            prodparamvalue.setParameter(newparameter.get());
-        }
-        else {
-            System.out.println("Error Found, likely no parameter");
-        }
-
-        if (tempproduct.isPresent()) {
-            Product product = tempproduct.get();
-            prodparamvalue.setProduct(product);
-            ppvalueRepository.save(prodparamvalue);
-            product.getParameterValues().add(prodparamvalue);
-            productRepository.save(product);
-        }
-        else {
-            System.out.println("Error Found, likely no product");
-        }
-
-
-
-        return "redirect:/parameters/productparams/" + productId;
     }
 
 
