@@ -10,10 +10,12 @@ import com.example.devedbaseproject.repository.IProductTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -47,10 +49,21 @@ public class CategoryController {
 
     @GetMapping("/type-create")
     public String createTypeForm(ProductType productType, Model model) {
-        List<ProductType> productTypeList = productTypeRepository.findAll();
-        model.addAttribute("productTypeList", productTypeList);
+        model.addAttribute("category", categoryRepository.findAll());
         return "category/productType-create";
     }
+
+    @PostMapping("/type-create")
+    public String createType(@Valid ProductType productType, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "productType-create";
+        }
+        var categoryId = categoryRepository.findById(productType.getCategory().getId()).orElseThrow();
+        productType.setCategory(categoryId);
+        productTypeRepository.save(productType);
+        return "redirect:/category";
+    }
+
     @GetMapping("/subtype-create")
     public String createSubtypeForm(ProductSubtype productSubtype, Model model) {
         List<ProductSubtype> productSubtypeList = productSubtypeRepository.findAll();
@@ -64,11 +77,8 @@ public class CategoryController {
         categoryRepository.save(category);
         return "redirect:/category";
     }
-    @PostMapping("/type-create")
-    public String createType(ProductType productType){
-        productTypeRepository.save(productType);
-        return "redirect:/category";
-    }
+
+
     @PostMapping("/subtype-create")
     public String createSubtype(ProductSubtype productSubtype){
         productSubtypeRepository.save(productSubtype);
