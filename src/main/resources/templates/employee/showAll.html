@@ -40,7 +40,7 @@
             <td th:text = "${employee.password}"></td>
             <td th:text = "${employee.email}"></td>
             <td th:text = "${employee.phonenumber}"></td>
-            <td><img th:src = "@{/static/img/employee_id_{id}.png(id = ${employee.Id})}" alt="Employee photo"></td>
+            <td><img th:src = "@{/static/employee_id_{id}.png(id = ${employee.Id})}" alt="Employee photo"></td>
             <td><a th:href = "@{/employees/{id}/edit(id = ${employee.Id})}">Update</a></td>
             <td><a th:href = "@{/employees/{id}/delete(id = ${employee.Id})}">Delete</a></td>
         </tr>
@@ -51,7 +51,8 @@
     <br>
     <hr>
     <p><a href="/employees/new">Create employee</a></p>
-    <p><a href="/employees/">Show all employee</a></p>
+    <p><a href="/employees">Show all employee</a></p>
+    <p><a href="/index">Back to main</a></p>
 </div>
 </body>
 </html>
