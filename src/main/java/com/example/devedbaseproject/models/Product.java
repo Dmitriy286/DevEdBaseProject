@@ -12,22 +12,17 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-
-
 @Entity // сущность связана с БД
 @Table(name = "product") // имя, связанной таблицы
 public class Product {
-//    public Product(Long id) {
-//        this.productId = productId;
-//    }
-    public Product( Long productId, String productName, String description, String manufacturerId, Long productQuantity, Long productSubtypeId) {
+
+    public Product(Long productId, String productName, String description, String manufacturerId, Long productQuantity, Long productSubtypeId) {
         this.productId = productId;
         this.productName = productName;
         this.description = description;
         this.productQuantity = productQuantity;
         this.productSubtypeId = productSubtypeId;
         this.manufacturerId = new Manufacturer();
-//        this.ppvalue = new ProductParameterValue();
         this.parameterValues = new ArrayList<>();
     }
     @Id
@@ -50,20 +45,7 @@ public class Product {
 
     @Column(name = "product_subtype_id")
     private Long productSubtypeId;
-    //не коммитить, отправить код (вместе с 30 строчкой)
 
-//    @JoinTable(name="product_productparameters",
-//            joinColumns = {@JoinColumn(name = "productId",
-//                    referencedColumnName = "product_id"
-//            )},
-//            inverseJoinColumns = @JoinColumn(
-//                    name = "productParameterId",
-//                    referencedColumnName = "product_parameter_id"
-//            )
-//    )
-//
-//    @ManyToMany
-//    private List<ProductParameter> parameters;
     @OneToMany
     @JoinColumn(name="parameterValues")
     private List<ProductParameterValue> parameterValues;
