@@ -40,7 +40,8 @@ public class Product {
 
     @ManyToOne//(cascade = { CascadeType.ALL })
     @JoinColumn(name = "manufacturer_id")
-    private Manufacturer manufacturerId;
+    private Manufacturer manufacturerId; // идет в класс Manufacturer
+                                        // и связывается по primary key
 
     @Column(name = "product_quantity")
     private Long productQuantity;
