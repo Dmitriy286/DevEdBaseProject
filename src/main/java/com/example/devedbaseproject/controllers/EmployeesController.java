@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/employees/")
+@RequestMapping("/employees")
 public class EmployeesController {
     private final IEmployeeRepository repository;
 
