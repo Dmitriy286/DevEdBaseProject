@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>${servicemessage}</title>
+</head>
+<body>
+
+<form th:action="@{/emails/{id}(id=${email.getId})}" th:method="PATCH" th:object="${email}">
+
+    <table>
+        <thead>
+        <tr>
+            <th>EmailId</th>
+            <th>Date</th>
+            <th>Message</th>
+            <th>CustomerId</th>
+            <th>Products</th>
+            <th>EmployeeId</th>
+            <th>Sending status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <td th:text = "${email.getId()}"></td>
+        <td>
+            <label for="Date">Date:</label>
+            <input id="Date" type="text" th:field="*{date}">
+        </td>
+<!--            todo сделать автогенерацию для даты-->
+        <td>
+            <label for="Message">Message:</label>
+            <input id="Message" type="text" th:field="*{message}">
+        </td>
+        <td>
+            <label for="Customer">Customer:</label>
+            <input id="Customer" type="text" th:field="*{customer}">
+        </td>
+        <td>
+            <ul>
+                <th:block th:each="product : ${email.products}">
+                    <li th:utext="${product.getProductId()}"></li>
+                </th:block>
+            </ul>
+        </td>
+        <!--            todo сделать добавление продуктов-->
+        <td>
+            <label for="Employee">Employee:</label>
+            <input id="Employee" type="text" th:field="*{employee}">
+        </td>
+        <td th:text = "${email.send}"></td>
+
+        </tbody>
+    </table>
+
+
+<!--    <label for="EmailId">EmailId:</label>-->
+<!--    <input type="text" th:field="*{Id}" id="EmailId">-->
+
+<!--    <br>-->
+
+<!--    <label for="Date">Username:</label>-->
+<!--    <input id="Date" type="text" th:field="*{date}">-->
+
+<!--    <br>-->
+
+<!--    <label for="Message">Message:</label>-->
+<!--    <input id="Message" type="text" th:field="*{message}">-->
+
+<!--    <br>-->
+
+<!--    <label for="Email">Email:</label>-->
+<!--    <input id="Email" type="text" th:field="*{email}">-->
+
+<!--    <br>-->
+
+<!--    <label for="Phonenumber">Phonenumber:</label>-->
+<!--    <input id="Phonenumber" type="text" th:field="*{phonenumber}">-->
+
+<!--    <br>-->
+
+<!--    <label for="Photo">Photo:</label>-->
+<!--    <input id="Photo" type="image" th:field="*{photo}">-->
+
+<!--    <br>-->
+
+    <input type="submit" value="Change email details">
+</form>
+
+</body>
+</html>

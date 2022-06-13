@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emails List</title>
+</head>
+<body>
+
+<div th:switch="${emails.size()}">
+    <p th:case="0">List is empty</p>
+    <div th:case="*">
+    <h2>E-mails to send</h2>
+    <form action="newemails" method="POST">
+<!--        <label for="filter">Choose sent/unsent:</label>-->
+        <p><b>Choose sent/unsent:</b><Br>
+            <input type="radio" name="sent" value="true">sent<Br>
+            <input type="radio" name="sent" value="false">unsent<Br>
+        </p>
+        <button type="submit">Filter</button>
+    </form>
+<!--        todo допилить фильтр-->
+
+        <br>
+    <table>
+        <thead>
+        <tr>
+            <th>EmailId</th>
+            <th>Date</th>
+            <th>Message</th>
+            <th>CustomerId</th>
+            <th>Products</th>
+            <th>EmployeeId</th>
+            <th>Sending status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each = "email: ${emails}">
+            <td><a th:href = "@{/emails/{id}(id=${email.getId()})}" th:text = "${email.Id}">EmailId</a></td>
+            <td th:text = "${email.date}"></td>
+            <td th:text = "${email.message}"></td>
+            <td th:text = "${email.customer.getId}"></td>
+            <td>
+            <ul>
+                <th:block th:each="product : ${email.products}">
+                    <li th:utext="${product.getProductId()}"></li>
+                </th:block>
+            </ul>
+            </td>
+<!--            <td th:text = "${email.products}"></td>-->
+<!--            todo Как выводить айдишники из списка продуктов иным способом?-->
+            <td th:text = "${email.employee.getId}"></td>
+            <td th:text = "${email.send}"></td>
+            <div th:switch="${email.send}">
+            <p th:case="false">
+            <td><a th:href = "@{/emails/{id}/edit(id = ${email.Id})}">Update</a></td>
+            <td><a th:href = "@{/emails/{id}/send(id = ${email.Id})}">Send</a></td>
+            <td><a th:href = "@{/emails/{id}/delete(id = ${email.Id})}">Delete</a></td>
+            </p>
+            <div th:case="*"></div>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+
+    </div>
+    <br>
+    <hr>
+    <p><a href="/emails/new">Create email</a></p>
+    <p><a href="/emails/">Show all emails</a></p>
+    <p><a href="/index">Back to main</a></p>
+</div>
+</body>
+</html>

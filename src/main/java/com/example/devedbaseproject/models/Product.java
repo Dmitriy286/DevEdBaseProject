@@ -1,13 +1,14 @@
 package com.example.devedbaseproject.models;
 
 
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -16,12 +17,14 @@ import java.util.List;
 @Table(name = "product") // имя, связанной таблицы
 public class Product {
 
-    public Product( Long productId, String productName, String description, String manufacturerId, Long productQuantity, Long productSubtypeId) {
+    public Product(Long productId, String productName, String description, String manufacturerId, Long productQuantity, Long productSubtypeId) {
         this.productId = productId;
         this.productName = productName;
         this.description = description;
         this.productQuantity = productQuantity;
         this.productSubtypeId = productSubtypeId;
+        this.manufacturerId = new Manufacturer();
+        this.parameterValues = new ArrayList<>();
     }
 
     @Id
@@ -50,4 +53,9 @@ public class Product {
             joinColumns = @JoinColumn(name="product_id"),
             inverseJoinColumns = @JoinColumn(name="orderdetails_id"))
     private List<OrderDetails> orderDetailsList;
+
+    @OneToMany
+    @JoinColumn(name="parameterValues")
+    private List<ProductParameterValue> parameterValues;
+
 }

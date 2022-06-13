@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Creating Form</title>
+</head>
+<body>
+<h1>Creating form</h1>
+
+<form th:action="@{/parameters}" th:method="POST" th:object="${parameter}">
+    <label for="Name">Name:</label>
+    <input type="text" th:field="*{name}" id="Name">
+
+    <br>
+    <p>
+    <label for="string">String parameter:</label>
+    <input type="radio" th:field="*{valueType}" th:value="true" id="string"/>
+    </p>
+    <p>
+    <label for="int">Integer parameter:</label>
+    <input type="radio" th:field="*{valueType}" th:value="false" id="int"/>
+    </p>
+    <br>
+
+    <input type="submit" value="Add parameter">
+</form>
+
+</body>
+</html>

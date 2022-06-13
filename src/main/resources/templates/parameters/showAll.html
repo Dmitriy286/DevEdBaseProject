@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parameters List</title>
+</head>
+<body>
+
+<div th:switch="${parameters.size()}">
+    <p th:case="0">List is empty</p>
+    <div th:case="*">
+<div>
+    <h2>Parameters</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ParametrID</th>
+            <th>Name</th>
+<!--            <th>StringValue</th>-->
+<!--            <th>IntValue</th>-->
+            <th>valueType</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "parameter: ${parameters}">
+            <td th:text = "${parameter.Id}">ParameterID</td>
+            <td><a th:href = "@{/parameters/{name}(name=${parameter.getName()})}" th:text = "${parameter.name}">Parametername</a></td>
+<!--            <td th:text = "${parameter.stringValue}">None</td>-->
+<!--            <td th:text = "${parameter.intValue}">None</td>-->
+            <td th:text = "${parameter.valueType}">valueType</td>
+            <td><a th:href = "@{/parameters/{id}/edit(id = ${parameter.Id})}">Update</a></td>
+            <td><a th:href = "@{/parameters/{id}/delete(id = ${parameter.Id})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+    </div>
+    <br>
+    <hr>
+    <p><a href="/parameters/new">Create parameter</a>
+    <p><a href="/index">Back to main</a></p>
+</div>
+</body>
+</html>

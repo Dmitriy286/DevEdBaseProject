@@ -57,6 +57,7 @@ public class Employee {
     @Column(name = "password")
     private String password;
 
+//    @Email
     @Column(name = "email")
     private String email;
 
@@ -78,7 +79,7 @@ public class Employee {
             )
     )
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Role> roles;
 
     @OneToMany(mappedBy="id")
