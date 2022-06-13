@@ -66,13 +66,13 @@ public class ProductController {
     @PostMapping("/product-create")
     public String createProduct(Product product){
         productRepository.save(product);
-        return "redirect:/product";
+        return "redirect:/products";
     }
 
     @GetMapping("/product-delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id){
         productRepository.deleteById(id);
-        return "redirect:/product";
+        return "redirect:/products";
     }
 
     @GetMapping("/product-update/{id}")
@@ -85,7 +85,7 @@ public class ProductController {
     @PostMapping("/product-update")
     public String updateProduct(Product product){
         productRepository.save(product);
-        return "redirect:/product";
+        return "redirect:/products";
     }
 
     @GetMapping("/products/{productId}")
