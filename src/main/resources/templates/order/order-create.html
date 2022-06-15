@@ -2,49 +2,62 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create product</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"-->
-<!--          rel="stylesheet"-->
-<!--          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"-->
-<!--          crossorigin="anonymous">-->
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-          crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-            crossorigin="anonymous"></script>
+    <title>Create type</title>
+    <link rel="stylesheet" href="/list.css">
 </head>
 <body>
-<nav class ="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a href="#" class="navbar-brand">Orders</a>
-        </div>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div>
+        <form action="#" th:action="@{/order-create}" th:object="${order}" method="post">
 
-        <div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Main</a></li>
-                <li ><a href="#">Other</a></li>
-                <li ><a href="#">Auter</a></li>
-            </ul>
-        </div>
+            <label for="customer_choice">Выберите покупателя</label>
+            <input class="form-control col-md-5" list="customers_list" id="customer_choice" placeholder="Найти клиента ">
+            <datalist id="customers_list" th:name="customers_list">
+                <option
+                    th:each="customer : ${customers}"
+                    th:data-value="${customer}"
+                    th:text="${customer.name +' '+ customer.surname}">
+                </option>
+            </datalist>
+<!--            <input type="hidden" th:field="*{customer.customerid}" class="form-control" id="customerId"-->
+<!--                   placeholder="customerId">-->
+            <br/>
+            <table th:id="productTable">
+                <input type="hidden" th:id="productNumber" th:value="1">
+                <tr>
+                    <td>
+                        <select th:class="form-control" th:id="products" th:name="products"
+                                th:data-name="productSelector">
+                            <option value="">Выберите товар...</option>
+                            <option th:each="product : ${products}"
+                                    th:value="${product}"
+                                    th:text="${product.productName}">
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" th:class="form-control" th:id="productAmount" th:value="1">
+                    </td>
+                </tr>
 
+            </table>
+
+            
+            <input type="submit" value="Создать заказ" class="btn">
+        </form>
     </div>
-</nav>
-<!--    <div class="container-fluid">-->
-<!--        <h1>4 columns</h1>-->
-<!--        <div class="row">-->
-<!--            <div class="col-md-3"style="background-color: aqua">Left</div>-->
-<!--            <div class="col-md-3"style="background-color: red">Left_center</div>-->
-<!--            <div class="col-md-3"style="background-color: black">Right_center</div>-->
-<!--            <div class="col-md-3"style="background-color: blue">Right</div>-->
-<!--        </div>-->
-<!--    </div>-->
+</div>
 </body>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+<!--<script type="text/javascript">-->
+<!--    $(document).ready(function () {-->
+<!--        console.log("ready!");-->
+<!--    });-->
+<!--    $(document).ready(function () {-->
+<!--        $("#selectCategory").change(function () {-->
+<!--            $("#categoryId").val($("#selectCategory option:selected").attr("category-id"));-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 </html>

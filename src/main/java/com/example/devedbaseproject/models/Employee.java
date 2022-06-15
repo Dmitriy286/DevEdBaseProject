@@ -1,10 +1,14 @@
 package com.example.devedbaseproject.models;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@AllArgsConstructor
 @Table(name = "Employees")
 public class Employee {
 
@@ -98,6 +102,7 @@ public class Employee {
                 '}';
     }
 
+    //region Setters, Getters
     public Long getId() {
         return Id;
     }
@@ -161,4 +166,5 @@ public class Employee {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+    //endregion
 }

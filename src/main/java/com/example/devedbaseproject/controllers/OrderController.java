@@ -2,24 +2,32 @@ package com.example.devedbaseproject.controllers;
 
 import com.example.devedbaseproject.models.Customer;
 import com.example.devedbaseproject.models.Order;
+import com.example.devedbaseproject.repository.CustomerRepository;
 import com.example.devedbaseproject.repository.OrderRepository;
+import com.example.devedbaseproject.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 public class OrderController {
 
     private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public OrderController(OrderRepository orderRepository) {
+    public OrderController(OrderRepository orderRepository, CustomerRepository customerRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository;
+        this.productRepository = productRepository;
     }
 
     @GetMapping("/orders")
@@ -29,17 +37,17 @@ public class OrderController {
         return "order/orders-list";
     }
 
-    @GetMapping("/order-create")
-    public String createOrderForm(Order order){
-        return "order/order-create";
-    }
-
-
-    @PostMapping("/order-create")
-    public String createOrder(Order order){
-        orderRepository.save(order);
-        return "redirect:/orders";
-    }
+//    @GetMapping("/order-create")
+//    public String createOrderForm(Order order){
+//        return "order/order-create";
+//    }
+//
+////
+//    @PostMapping("/order-create")
+//    public String createOrder(Order order){
+//        orderRepository.save(order);
+//        return "redirect:/orders";
+//    }
 
 
     @GetMapping("/order-update/{id}")
@@ -51,6 +59,22 @@ public class OrderController {
 
     @PostMapping("/order-update")
     public String updateOrder(Order order){
+        orderRepository.save(order);
+        return "redirect:/orders";
+    }
+
+    @GetMapping("/order-create")
+    public String createOrderFrom(Customer customer, Model model) {
+        model.addAttribute("customers", customerRepository.findAll());
+        model.addAttribute("products", productRepository.findAll());
+        return "order/order-create";
+    }
+
+    @PostMapping("/order-create")
+    public String createOrder (@Valid Order order, BindingResult result, Model model){
+        if (result.hasErrors()){
+            return "add-order";
+        }
         orderRepository.save(order);
         return "redirect:/orders";
     }

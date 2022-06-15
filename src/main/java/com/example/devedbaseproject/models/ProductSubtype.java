@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "product_subtype")
 public class ProductSubtype {

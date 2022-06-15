@@ -12,8 +12,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-
 @Entity // сущность связана с БД
 @Table(name = "manufacturer") // имя, связанной таблицы
 public class Manufacturer {

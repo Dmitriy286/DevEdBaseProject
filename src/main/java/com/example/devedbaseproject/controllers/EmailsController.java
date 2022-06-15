@@ -106,7 +106,7 @@ public class EmailsController {
     public String sendEmail(@PathVariable("id") Long id, Model model) {
         Optional<Email> email = repository.findById(id);
         String servicemessage = "Email with id " + email.get().getId() +
-        "for customer with id " + email.get().getCustomer().getId() +
+        "for customer with id " + email.get().getCustomer().getCustomerId() +
         "is sending to the e-mail adress: " + email.get().getCustomer().getEmail();
         System.out.println(servicemessage);
         email.get().setSend(true);
