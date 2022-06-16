@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Update product</title>
-  <link rel="stylesheet" href="/list.css">
+    <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 <div class="container">
@@ -12,21 +12,33 @@
         <form action="#" th:action="@{/product-update}" th:object="${product}" method="post">
             <label for="product_id">ID</label>
             <input readonly type="number" th:field="*{productId}" id="product_id" placeholder="ID">
-  <br/>
-  <label for="product_name">Name</label>
-  <input type="text" th:field="*{productName}" id="product_name" placeholder="Введите наименование">
-  <br/>
-  <label for="description">Description</label>
-  <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
-  <br/>
-  <label for="manufacturer_id">Manufacturer ID</label>
-  <input type="text" th:field="*{manufacturerId}" id="manufacturer_id" placeholder="Введите ID производителя">
+            <br/>
+            <label for="product_name">Name</label>
+            <input type="text" th:field="*{productName}" id="product_name" placeholder="Введите наименование">
+            <br/>
+            <label for="description">Description</label>
+            <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
+            <br/>
+            <label>Manufacturer ID</label>
+            <select th:name="manufacturerId"> // имя поля класса!
+                <option th:each= "manufacturer: ${manufacturer}"
+                        th:value="${manufacturer.manufacturerId}"
+                        th:text="${manufacturer.name}"
+                        th:selected="${product.manufacturerId.manufacturerId == manufacturer.manufacturerId}">
+                </option>
+            </select>
             <br/>
             <label for="product_quantity">Quantity</label>
             <input type="text" th:field="*{productQuantity}" id="product_quantity" placeholder="Введите количество">
             <br/>
-            <label for="product_subtype_id">Subtype ID</label>
-            <input type="text" th:field="*{productSubtypeId}" id="product_subtype_id" placeholder="Введите ID подтип">
+            <label>Subtype ID</label>
+            <select th:name="productSubtypeId"> // имя поля класса!
+                <option th:each= "subtype: ${subtype}"
+                        th:value="${subtype.id}"
+                        th:text="${subtype.productSubtypeName}"
+                        th:selected="${product.productSubtypeId.id == subtype.id}">
+                </option>
+            </select>
             <br/>
             <input type="submit" value="Update Product" class="btn">
         </form>

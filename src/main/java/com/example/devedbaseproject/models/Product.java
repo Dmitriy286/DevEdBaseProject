@@ -16,12 +16,11 @@ import java.util.List;
 @Table(name = "product") // имя, связанной таблицы
 public class Product {
 
-    public Product(Long productId, String productName, String description, String manufacturerId, Long productQuantity, Long productSubtypeId) {
+    public Product(Long productId, String productName, String description, Long productQuantity) {
         this.productId = productId;
         this.productName = productName;
         this.description = description;
         this.productQuantity = productQuantity;
-        this.productSubtypeId = productSubtypeId;
         this.manufacturerId = new Manufacturer();
         this.parameterValues = new ArrayList<>();
     }
@@ -44,8 +43,9 @@ public class Product {
     @Column(name = "product_quantity")
     private Long productQuantity;
 
-    @Column(name = "product_subtype_id")
-    private Long productSubtypeId;
+    @ManyToOne //(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "product_subtype_id")
+    private ProductSubtype productSubtypeId;
 
     @OneToMany
     @JoinColumn(name="parameterValues")

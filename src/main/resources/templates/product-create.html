@@ -16,18 +16,61 @@
             <label for="description">Description</label>
             <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
   <br/>
-  <label for="manufacturer_id">Manufacturer ID</label>
-  <input type="text" th:field="*{manufacturerId}" id="manufacturer_id" placeholder="Введите ID производителя">
+  <label>Manufacturer</label>
+            <select th:name="manufacturerId"> // имя поля класса!
+                <option th:each= "manufacturer: ${manufacturer}"
+                        th:value="${manufacturer.manufacturerId}"
+                        th:text="${manufacturer.name}">
+                </option>
+            </select>
+<!--            <select class = "form-control" th:id="selectManufacturer" th:name="selectManufacturer">-->
+<!--                <option disabled selected>Производитель</option>-->
+<!--                <option id="manufacturer_id"-->
+<!--                        th:each= "manufacturer: ${manufacturer}" th:value="${manufacturer}"-->
+<!--                        th:text="${manufacturer.name}"-->
+<!--                        th:manufacturer-id="${manufacturer.manufacturerId}">-->
+<!--                </option>-->
+<!--            </select>-->
+<!--            <input type="hidden" th:field="*{manufacturerId.manufacturerId}" class="form-control" id="manufacturerId" placeholder="manufacturerId">-->
   <br/>
   <label for="product_quantity">Quantity</label>
   <input type="text" th:field="*{productQuantity}" id="product_quantity" placeholder="Введите количество">
   <br/>
-  <label for="product_subtype_id">Subtype ID</label>
-  <input type="text" th:field="*{productSubtypeId}" id="product_subtype_id" placeholder="Введите ID подтип">
-  <br/>
+  <label>Subtype ID</label>
+            <select th:name="productSubtypeId"> // имя поля класса!
+                <option th:each= "subtype: ${subtype}"
+                        th:value="${subtype.id}"
+                        th:text="${subtype.productSubtypeName}">
+                </option>
+            </select>
+            <!--            <select class = "form-control" th:id="selectSubtype" th:name="selectSubtype">-->
+<!--                <option disabled selected>Подтип</option>-->
+<!--                <option id="product_subtype_id"-->
+<!--                        th:each= "subtype: ${subtype}" th:value="${subtype}"-->
+<!--                        th:text="${subtype.productSubtypeName}"-->
+<!--                        th:subtype-id="${subtype.id}">-->
+<!--                </option>-->
+<!--            </select>-->
+<!--            <input type="hidden" th:field="*{productSubtypeId.id}" class="form-control" id="subtypeId" placeholder="subtypeId">-->
+            <br/>
             <input type="submit" value="Create Product" class="btn">
         </form>
     </div>
 </div>
 </body>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+<!--<script type="text/javascript">-->
+<!--    $(document).ready(function () {-->
+<!--        console.log("ready!");-->
+<!--    });-->
+<!--    $(document).ready(function () {-->
+<!--        $("#selectManufacturer").change(function() {-->
+<!--            $("#manufacturerId").val($("#selectManufacturer option:selected").attr("manufacturer-id"));-->
+<!--        });-->
+<!--        $("#selectSubtype").change(function() {-->
+<!--            $("#subtypeId").val($("#selectSubtype option:selected").attr("subtype-id"));-->
+<!--        });-->
+
+<!--    });-->
+<!--</script>-->
 </html>
