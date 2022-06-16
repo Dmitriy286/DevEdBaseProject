@@ -3,26 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Create type</title>
-  <link rel="stylesheet" href="/list.css">
+    <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 <div class="container">
     <th:block th:insert="fragments/navigation :: main-menu"></th:block>
     <div>
         <form action="#" th:action="@{/subtype-create}" th:object="${productSubtype}" method="post">
+            <label for="product_subtype_id">ID</label>
+            <input readonly type="number" th:field="*{id}" id="product_subtype_id" placeholder="ID">
+            <br/>
             <label for="product_subtype_name">Name</label>
             <input type="text" th:field="*{productSubtypeName}" id="product_subtype_name" placeholder="Введите подтип">
             <br/>
             <label for="product_subtype_description">Description</label>
-            <input type="text" th:field="*{productSubtypeDescription}" id="product_subtype_description" placeholder="Введите описание">
+            <input type="text" th:field="*{productSubtypeDescription}" id="product_subtype_description"
+                   placeholder="Введите описание">
             <br/>
             <label>Type</label>
             <select th:name="productType"> // имя поля класса!
-                <option th:each= "type: ${productType}"
-                    th:value="${type.id}"
-                    th:text="${type.productTypeName}">
+                <option th:each="type: ${productType}"
+                        th:value="${type.id}"
+                        th:text="${type.productTypeName}"
+                        th:selected="${productSubtype.productType.id == type.id}">
                 </option>
             </select>
+
             <br/>
             <input type="submit" value="Create Subtype" class="btn">
         </form>
