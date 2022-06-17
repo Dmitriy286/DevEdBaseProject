@@ -27,17 +27,17 @@ public class EmployeesController {
         return "employee/showAll";
     }
 
-    @GetMapping("/{id}")
-    public String findEmployeeById(@PathVariable("id") Long id, Model model) {
-
-        Optional<Employee> employee = repository.findById(id);
-        if (employee.isPresent()) {
-            model.addAttribute("employee", employee.get());
-            System.out.println(employee);
-        }
-        else {
-            System.out.println("Error Found");
-        }
+    @GetMapping("{employee}")
+    public String findEmployeeById(@PathVariable Employee employee, Model model) {
+        model.addAttribute("employee", employee);
+//        Optional<Employee> employee = repository.findById(id);
+//        if (employee.isPresent()) {
+//            model.addAttribute("employee", employee.get());
+//            System.out.println(employee);
+//        }
+//        else {
+//            System.out.println("Error Found");
+//        }
         return "employee/employee";
     }
 
