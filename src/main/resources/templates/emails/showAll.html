@@ -14,12 +14,13 @@
     <form action="newemails" method="POST">
 <!--        <label for="filter">Choose sent/unsent:</label>-->
         <p><b>Choose sent/unsent:</b><Br>
-            <input type="radio" name="sent" value="true">sent<Br>
-            <input type="radio" name="sent" value="false">unsent<Br>
+            <input type="radio" th:field="*{valueType}" th:value="true" />sent<Br>
+            <input type="radio" th:field="*{valueType}" th:value="false" />unsent<Br>
         </p>
         <button type="submit">Filter</button>
     </form>
-<!--        todo допилить фильтр-->
+
+        <!--        todo допилить фильтр-->
 
         <br>
     <table>

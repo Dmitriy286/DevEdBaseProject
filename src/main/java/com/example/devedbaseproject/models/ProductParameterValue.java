@@ -50,4 +50,7 @@ public class ProductParameterValue {
 
     @Column(name = "stringValue")
     private String stringValue;
+
+    public ProductParameterValue(ProductParameter productParameter, int i, String s, Product product) {
+    }
 }
