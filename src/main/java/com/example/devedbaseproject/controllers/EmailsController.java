@@ -6,6 +6,7 @@ import com.example.devedbaseproject.repository.IEmailRepository;
 import com.example.devedbaseproject.repository.IEmployeeRepository;
 import com.example.devedbaseproject.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,18 +38,13 @@ public class EmailsController {
         return "emails/showAll";
     }
 
-    @GetMapping("/{customerId}")
+    @GetMapping("/customer/{customerId}")
     public String findEmailByCustomerID(@PathVariable("customerId") Long customerId, Model model) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID" + customerId));
-        Optional<Email> email = repository.findByCustomer(customer);
-        if (email.isPresent()) {
-            model.addAttribute("email", email.get());
-            System.out.println(email);
-        }
-        else {
-            System.out.println("No e-mails where sent to this customer");
-        }
-        return "emails/email";
+        List<Email> emailList = repository.findByCustomer(customer);
+        model.addAttribute("emails", emailList);
+
+        return "emails/showAll";
     }
 
     @GetMapping("/new")
@@ -57,20 +53,19 @@ public class EmailsController {
     }
 
     @PostMapping()
-    public String createEmail(@ModelAttribute("email") Email email) {
+    public String createEmail(@AuthenticationPrincipal Employee employee,
+            @ModelAttribute("email") Email email) {
 
         Customer customer = customerRepository.findById(1L).orElseThrow();
         // этот клиент должен приходить из стэка или очереди предложки,
         // может быть отдельной сущности с таблице в БД "Предложения по клиентам"
         Product product = productRepository.findById(1L).orElseThrow(); //исправить на ввод айдишника
         // аналогично по продукту
-        Employee currentEmployee = employeeRepository.findByUsername("q");
-        //необходимо вытаскивать работника, который в текущий момент работает с базой
         Email newemail = new Email(email.getDate(), email.getMessage());
 
         newemail.getProducts().add(product);
         newemail.setCustomer(customer);
-        newemail.setEmployee(currentEmployee);
+        newemail.setEmployee(employee);
         newemail.setSend(false);
 
         repository.save(newemail);
@@ -80,7 +75,6 @@ public class EmailsController {
 
     @PostMapping("/newemails")
     public String sendEmailFilter(@RequestParam("sent") boolean sent, Model model) {
-
         List<Email> emailList = repository.findAll();
         List<Email> emailListToSend = new ArrayList<>();
         List<Email> sentEmails = new ArrayList<>();

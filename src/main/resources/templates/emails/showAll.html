@@ -4,22 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Emails List</title>
+    <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 
 <div th:switch="${emails.size()}">
     <p th:case="0">List is empty</p>
     <div th:case="*">
-    <h2>E-mails to send</h2>
-    <form action="newemails" method="POST">
-<!--        <label for="filter">Choose sent/unsent:</label>-->
-        <p><b>Choose sent/unsent:</b><Br>
+    <label for="radioform"><b>Choose sent/unsent:</b></label>
+    <form th:action="@{/emails/newemails}" th:method="POST" id="radioform">
             <input type="radio" name="sent" value="true">sent<Br>
             <input type="radio" name="sent" value="false">unsent<Br>
         </p>
         <button type="submit">Filter</button>
     </form>
-<!--        todo допилить фильтр-->
 
         <br>
     <table>
@@ -37,10 +35,12 @@
 
         <tbody>
         <tr th:each = "email: ${emails}">
-            <td><a th:href = "@{/emails/{id}(id=${email.getId()})}" th:text = "${email.Id}">EmailId</a></td>
+<!--            <td><a th:href = "@{/emails/{id}(id=${email.getId()})}" th:text = "${email.Id}">EmailId</a></td>-->
+            <td th:text = "${email.getId()}"></td>
             <td th:text = "${email.date}"></td>
             <td th:text = "${email.message}"></td>
-            <td th:text = "${email.customer.getId}"></td>
+<!--            <td th:text = "${email.customer.getId}"></td>-->
+            <td><a th:href = "@{/emails/customer/{customerId}(customerId=${email.customer.getId()})}" th:text = "${email.customer.getId()}">CustomerId</a></td>
             <td>
             <ul>
                 <th:block th:each="product : ${email.products}">

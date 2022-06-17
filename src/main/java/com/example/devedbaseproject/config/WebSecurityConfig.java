@@ -1,14 +1,13 @@
 package com.example.devedbaseproject.config;
 
+import com.example.devedbaseproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -17,8 +16,11 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    //ниже строки из работающего кода!!!
+//    @Autowired
+//    private DataSource dataSource;
     @Autowired
-    private DataSource dataSource;
+    private UserService userService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -34,10 +36,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery("select username, password, active from Employees where username=?")
-                .authoritiesByUsernameQuery("select e.username, r.name from employees as e inner join employee_role as er on e.id = er.employee_id inner join roles as r on r.id = er.role_id where e.username=?");
+        auth.userDetailsService(userService);
+                //ниже строки из работающего кода!!!
+//                jdbcAuthentication()
+//                .dataSource(dataSource)
+//                .usersByUsernameQuery("select username, password, active from Employees where username=?")
+//                .authoritiesByUsernameQuery("select e.username, r.name from employees as e inner join employee_role as er on e.id = er.employee_id inner join roles as r on r.id = er.role_id where e.username=?");
     }
 
 //                .passwordEncoder(NoOpPasswordEncoder.getInstance())

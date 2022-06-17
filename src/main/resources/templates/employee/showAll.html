@@ -12,7 +12,7 @@
     <div th:case="*">
 <!--    todo Как убрать блок кода во второй case?-->
     <h2>Employees</h2>
-    <form action="filter" method="POST">
+    <form th:action="@{/employees/filter}" th:method="POST">
         <label for="filter">Enter name:</label>
         <input type="text" name="filter" id="filter">
         <button type="submit">Find</button>

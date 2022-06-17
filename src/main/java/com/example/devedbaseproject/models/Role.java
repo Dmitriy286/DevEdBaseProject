@@ -1,11 +1,13 @@
 package com.example.devedbaseproject.models;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "Roles")
-public class Role {
+public class Role implements GrantedAuthority {
 
     public Role(){}
 
@@ -51,4 +53,8 @@ public class Role {
         this.name = name;
     }
 
+    @Override
+    public String getAuthority() {
+        return name;
     }
+}
