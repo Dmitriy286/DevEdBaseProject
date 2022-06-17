@@ -1,0 +1,133 @@
+
+   body {
+	margin: 60px;
+	background-image: url(https://thumbs.dreamstime.com/b/%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D1%8B%D0%B9-%D1%84%D0%BE%D0%BD-%D1%81-%D1%81%D0%BB%D0%B0%D0%B1%D0%BE-%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9-%D1%81%D1%82%D0%B0%D1%80%D0%BE%D0%B9-%D1%82%D0%B5%D0%BA%D1%81%D1%82%D1%83%D1%80%D0%BE%D0%B9-%D0%B8%D0%B7-%D1%81%D1%82%D0%B0%D1%80%D0%B8%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-160760145.jpg);
+	background-size: cover; 
+	font-family: 'Roboto Slab', serif;
+	
+   }
+   
+   .container {
+	   padding: 1px;
+	   width: 1145px;
+	   height: 794px;
+	   margin: 0 auto;
+	   background: #D9D9D9;
+   }
+   
+   .top {
+	    padding: 1px;
+		margin: 0 auto;
+		margin-top: 51px;
+	    width: 1022px;
+	    height: 151px;
+		background: #E1B6B6;
+		border-radius: 34px;
+		
+   }
+   
+   h1{
+	   margin: 0 auto;
+	   border: 1px;
+	   padding: 1px;
+	   text-align: center;
+	   line-height: 151px;
+   }
+   
+   .left {
+	   
+	   float: left;
+	   margin: 0 5px 5px 20px;
+	   padding-top: 380px;
+	   width: 180px;
+	   height: 190px;
+   }
+   
+   
+   .center {
+	    padding: 15px;
+	    border: 1px;
+		margin: 0 auto;
+		margin-top: 51px;
+		width: 709px;
+		height: 336px;
+		background: #91B9C6;
+	   }
+   
+   p {
+	    margin: 35px auto;
+		margin-left: 35px;
+   }
+   
+
+	input {
+    font-size: 38px;
+	width: 631px;
+	height: 92px;
+}
+   
+   .login {
+		
+	    margin: 0 auto;
+		margin-top: 35px;
+		width: 639px;
+		height: 100px;
+		background: #FFFFFF;
+
+   }
+   
+   .password {
+	    border: 1px;
+	    margin: 0 auto;
+		margin-top: 25px;
+		width: 639px;
+		height: 100px;
+		background: #FFFFFF;
+
+   }
+
+   }
+   .allGoCenter {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		
+   }
+   
+   .right {
+		float: right; /* Выравнивание по правому краю */
+		margin: 0 0 5px 38px;
+		padding-top: 380px;
+		width: 165px;
+		height: 190px;
+   }
+   /* Rectangle 112 */
+
+
+   button {
+	   
+	
+    font-weight:bold;
+	min-height: 79px;   
+    min-width: 279px;
+	background-color: #E1B6B6;
+    border: 1px solid #75aeca;
+
+    color: black;
+    cursor: pointer;
+    display: inline-block;
+    font-size:1.4vw;
+    height: 36px;
+    line-height: 2.25rem;
+    margin-top: 18px;
+    padding: 0 13px;
+    text-decoration: none;
+		border-radius: 34px;
+	    margin: 45px auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 0px;
+   }
+
+      

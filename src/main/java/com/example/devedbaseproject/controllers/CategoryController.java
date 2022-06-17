@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CategoryController {
@@ -33,7 +34,7 @@ public class CategoryController {
     }
 
     @GetMapping("/category")
-        public String findAll(Model model){
+    public String findAll(Model model) {
         List<Category> category = categoryRepository.findAll();
         List<ProductType> productType = productTypeRepository.findAll();
         List<ProductSubtype> productSubtype = productSubtypeRepository.findAll();
@@ -42,9 +43,16 @@ public class CategoryController {
         model.addAttribute("productSubtype", productSubtype);
         return "category/category-list";
     }
+
     @GetMapping("/category-create")
-    public String createCategoryForm(Category category){
+    public String createCategoryForm(Category category) {
         return "category/category-create";
+    }
+
+    @PostMapping("/category-create")
+    public String createCategory(Category category) {
+        categoryRepository.save(category);
+        return "redirect:/category";
     }
 
     @GetMapping("/type-create")
@@ -54,47 +62,35 @@ public class CategoryController {
     }
 
     @PostMapping("/type-create")
-    public String createType(@Valid ProductType productType, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "productType-create";
-        }
-        var categoryId = categoryRepository.findById(productType.getCategory().getId()).orElseThrow();
-        productType.setCategory(categoryId);
+    public String createType(@Valid ProductType productType) {
         productTypeRepository.save(productType);
         return "redirect:/category";
     }
 
     @GetMapping("/subtype-create")
     public String createSubtypeForm(ProductSubtype productSubtype, Model model) {
-        List<ProductSubtype> productSubtypeList = productSubtypeRepository.findAll();
-        model.addAttribute("productSubtypeList", productSubtypeList);
+        model.addAttribute("productType", productTypeRepository.findAll());
         return "category/productSubtype-create";
     }
 
-
-    @PostMapping("/category-create")
-    public String createCategory(Category category){
-        categoryRepository.save(category);
-        return "redirect:/category";
-    }
-
-
     @PostMapping("/subtype-create")
-    public String createSubtype(ProductSubtype productSubtype){
+    public String createSubtype(@Valid ProductSubtype productSubtype) {
         productSubtypeRepository.save(productSubtype);
         return "redirect:/category";
     }
 
     @GetMapping("/category-delete/{id}")
-    public String deleteCategory(@PathVariable("id") Long id){
+    public String deleteCategory(@PathVariable("id") Long id) {
         categoryRepository.deleteById(id);
         return "redirect:/category";
     }
+
     @GetMapping("/type-delete/{id}")
-    public String deleteType(@PathVariable("id") Long id){
+    public String deleteType(@PathVariable("id") Long id) {
         productTypeRepository.deleteById(id);
         return "redirect:/category";
     }
+
     @GetMapping("/subtype-delete/{id}")
     public String deleteSubtype(@PathVariable("id") Long id) {
         productSubtypeRepository.deleteById(id);
@@ -102,7 +98,7 @@ public class CategoryController {
     }
 
     @GetMapping("/category-update/{id}")
-    public String updateCategoryForm(@PathVariable("id") Long id, Model model){
+    public String updateCategoryForm(@PathVariable("id") Long id, Model model) {
         Category category = categoryRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Invalid category ID" + id));
         model.addAttribute("category", category);
@@ -110,8 +106,38 @@ public class CategoryController {
     }
 
     @PostMapping("/category-update")
-    public String updateCategory(Category category){
+    public String updateCategory(Category category) {
         categoryRepository.save(category);
+        return "redirect:/category";
+    }
+
+    @GetMapping("/type-update/{id}")
+    public String updateTypeForm(@PathVariable("id") Long id, Model model) {
+        ProductType productType = productTypeRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("Invalid type ID" + id));
+        model.addAttribute("productType", productType);
+        model.addAttribute("category", categoryRepository.findAll());
+        return "category/productType-update";
+    }
+
+    @PostMapping("/type-update")
+    public String updateType(@Valid ProductType productType) {
+        productTypeRepository.save(productType);
+        return "redirect:/category";
+    }
+
+    @GetMapping("/subtype-update/{id}")
+    public String updateSubtypeForm(@PathVariable("id") Long id, Model model) {
+        ProductSubtype productSubtype = productSubtypeRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("Invalid type ID" + id));
+        model.addAttribute("productSubtype", productSubtype);
+        model.addAttribute("productType", productTypeRepository.findAll());
+        return "category/productSubtype-update";
+    }
+
+    @PostMapping("/subtype-update")
+    public String updateSubtype(@Valid ProductSubtype productSubtype) {
+        productSubtypeRepository.save(productSubtype);
         return "redirect:/category";
     }
 }

@@ -19,9 +19,9 @@ public class Manufacturer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "manufacturer_id")
-    private Long manufacturerId;
+    private Long id;
 
-    @OneToMany(mappedBy = "manufacturerId") // поле класса
+    @OneToMany(mappedBy = "manufacturer") // поле класса
     private List<Product> productList;
 
     @Column(name = "name")

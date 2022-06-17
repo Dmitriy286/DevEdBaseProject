@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Error</title>
 </head>
 <body>
 <h1>Error found</h1>
-<p th:text = "${servicemessage}"></p>
+<p th:text = "${serviceMessage}"></p>
 <img th:src="@{src/main/resources/static/img/404.webp}">
 <hr>
 <p><a href="/emails">Back to e-mail list</a></p>

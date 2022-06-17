@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,7 @@
     <div th:case="*">
 <!--    todo Как убрать блок кода во второй case?-->
     <h2>Employees</h2>
-    <form action="filter" method="POST">
+    <form th:action="@{/employees/filter}" th:method="POST">
         <label for="filter">Enter name:</label>
         <input type="text" name="filter" id="filter">
         <button type="submit">Find</button>
@@ -27,7 +27,7 @@
             <th>Username</th>
             <th>Password</th>
             <th>Email</th>
-            <th>Phonenumber</th>
+            <th>Phone Number</th>
             <th>Photo</th>
         </tr>
         </thead>
@@ -39,7 +39,7 @@
             <td th:text = "${employee.username}"></td>
             <td th:text = "${employee.password}"></td>
             <td th:text = "${employee.email}"></td>
-            <td th:text = "${employee.phonenumber}"></td>
+            <td th:text = "${employee.phoneNumber}"></td>
             <td><img th:src = "@{/static/employee_id_{id}.png(id = ${employee.Id})}" alt="Employee photo"></td>
             <td><a th:href = "@{/employees/{id}/edit(id = ${employee.Id})}">Update</a></td>
             <td><a th:href = "@{/employees/{id}/delete(id = ${employee.Id})}">Delete</a></td>
