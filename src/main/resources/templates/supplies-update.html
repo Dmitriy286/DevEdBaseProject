@@ -8,13 +8,19 @@
 <body>
 <form action="#" th:action="@{/supplies-update}" th:object="${supplies}" method="post">
   <label for="supplies_id">ID</label>
-  <input readonly type="number" th:field="*{suppliesId}" id="supplies_id" placeholder="ID">
-  <br/>
-  <label for="manufacturer_id">Manufacturer</label>
-  <input type="text" th:field="*{manufacturerId}" id="manufacturer_id" placeholder="Введите ID">
+  <input readonly type="number" th:field="*{id}" id="supplies_id" placeholder="ID">
   <br/>
   <label for="supplies_date">Date</label>
-  <input type="text" th:field="*{suppliesDate}" id="supplies_date" placeholder="Введите дату">
+  <input readonly type="text" th:field="*{suppliesDate}" id="supplies_date" placeholder="Введите дату">
+  <br/>
+  <label>Manufacturer</label>
+  <select th:name="manufacturer"> // имя поля класса!
+    <option th:each= "manufacturer: ${manufacturer}"
+            th:value="${manufacturer.id}"
+            th:text="${manufacturer.name}"
+            th:selected="${supplies.manufacturer.id == manufacturer.id}">
+    </option>
+  </select>
   <br/>
 
   <input type="submit" value="Update supplies" class="btn">

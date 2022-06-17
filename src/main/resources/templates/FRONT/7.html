@@ -27,24 +27,24 @@
 									<th>Product Id</th>
 									<th>Product Name</th>
 									<th>Product Description</th>
-									<th>Manufacturer Id</th>
+									<th>Manufacturer</th>
 									<th>Product Quantity</th>
-									<th>Product Subtype Id</th>
+									<th>Product Subtype</th>
 
 								</tr>
 								</thead>
 								<tbody>
 								<tr th:each="product : ${products}">
 									<!--                            ПОЛЯ КЛАССА!!!!-->
-									<td th:text="${product.productId}"></td>
+									<td th:text="${product.id}"></td>
 									<td th:text="${product.productName}"></td>
 									<td th:text="${product.description}"></td>
-									<td th:text="${product.manufacturerId.getName()}"></td>
+									<td th:text="${product.manufacturer.name}"></td>
 									<td th:text="${product.productQuantity}"></td>
-									<td th:text="${product.productSubtypeId.productSubtypeName}"></td>
+									<td th:text="${product.productSubtype.productSubtypeName}"></td>
 
-									<td><a th:href="@{product-update/{id}(id=${product.productId})}" class="btn">Edit</a></td>
-									<td><a th:href="@{product-delete/{id}(id=${product.productId})}" class="btn">Delete</a></td>
+									<td><a th:href="@{product-update/{id}(id=${product.id})}" class="btn">Edit</a></td>
+									<td><a th:href="@{product-delete/{id}(id=${product.id})}" class="btn">Delete</a></td>
 								</tr>
 								</tbody>
 							</table>

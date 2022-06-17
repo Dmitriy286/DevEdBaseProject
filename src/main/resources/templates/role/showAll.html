@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -24,10 +24,10 @@
         </thead>
         <tbody>
         <tr th:each = "role: ${roles}">
-            <td th:text = "${role.Id}">userid</td>
+            <td th:text = "${role.id}">userid</td>
             <td><a th:href = "@{/roles/{name}(name=${role.getName()})}" th:text = "${role.name}">username</a></td>
-            <td><a th:href = "@{/roles/{id}/edit(id = ${role.Id})}">Update</a></td>
-            <td><a th:href = "@{/roles/{id}/delete(id = ${role.Id})}">Delete</a></td>
+            <td><a th:href = "@{/roles/{id}/edit(id = ${role.id})}">Update</a></td>
+            <td><a th:href = "@{/roles/{id}/delete(id = ${role.id})}">Delete</a></td>
         </tr>
         </tbody>
     </table>

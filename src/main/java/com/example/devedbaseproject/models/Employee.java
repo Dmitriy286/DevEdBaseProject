@@ -57,25 +57,25 @@ public class Employee implements UserDetails {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phonenumber")
+    @Column(name = "phone_number")
     private String phonenumber;
 
     @Column(name = "photo")
     private String photo;
 
     @JoinTable(
-            name = "employeeRole",
+            name = "employee_role",
             joinColumns = {@JoinColumn(
-                    name = "EmployeeId",
+                    name = "employee_id",
                     referencedColumnName = "id"
             )},
             inverseJoinColumns = @JoinColumn(
-                    name = "RoleId",
+                    name = "role_id",
                     referencedColumnName = "id"
             )
     )
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Role> roles;
 
     @Override
