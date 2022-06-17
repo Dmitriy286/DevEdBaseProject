@@ -2,19 +2,22 @@ package com.example.devedbaseproject.models;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
-import java.util.List;
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
-@Table(name = "Roles")
+@Table(name = "roles")
 public class Role implements GrantedAuthority {
-
-    public Role(){}
-
-    public Role(Long Id, String name) {
-        this.Id = Id;
-        this.name = name;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,18 +26,12 @@ public class Role implements GrantedAuthority {
     @Column(name = "name")
     private String name;
 
-//    @ManyToMany
-//    @JoinTable(name="Employees",
-//            joinColumns=@JoinColumn(name="roleId"),
-//            inverseJoinColumns=@JoinColumn(name="employeeId"))
-//    private List<Employee> employees;
-
     @Override
     public String toString() {
         return "Employee{" +
                 "Id=" + Id +
                 ", name='" + name + '\'' +
-               '}';
+                '}';
     }
 
     public Long getId() {

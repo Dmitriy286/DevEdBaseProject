@@ -4,12 +4,10 @@ package com.example.devedbaseproject.controllers;
 import com.example.devedbaseproject.models.Product;
 import com.example.devedbaseproject.models.ProductParameter;
 import com.example.devedbaseproject.models.ProductParameterValue;
-import com.example.devedbaseproject.models.ProductSubtype;
 import com.example.devedbaseproject.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,16 +20,16 @@ import java.util.Optional;
 @Controller
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final IProductRepository productRepository;
     private final IProductParameterRepository productParameterRepository;
     private final IProductParameterValueRepository ppvalueRepository;
-    private final ManufacturerRepository manufacturerRepository;
+    private final IManufacturerRepository manufacturerRepository;
     private final IProductSubtypeRepository subtypeRepository;
 
 
     @Autowired
-    public ProductController(ProductRepository productRepository, IProductParameterRepository productParameterRepository,
-                             IProductParameterValueRepository ppvalueRepository, ManufacturerRepository manufacturerRepository,
+    public ProductController(IProductRepository productRepository, IProductParameterRepository productParameterRepository,
+                             IProductParameterValueRepository ppvalueRepository, IManufacturerRepository manufacturerRepository,
                              IProductSubtypeRepository subtypeRepository) {
         this.productRepository = productRepository;
         this.productParameterRepository = productParameterRepository;
@@ -59,16 +57,6 @@ public class ProductController {
 
     @PostMapping("/product-create")
     public String createProduct(@Valid Product product) {
-//    public String createProduct(@Valid Product product, BindingResult result, Model model ){
-//        if (result.hasErrors()) {
-//            return "product-create";
-//        }
-//        var manufacturerId = manufacturerRepository.findById(product.getManufacturerId().getManufacturerId()).orElseThrow();
-//        product.setManufacturerId(manufacturerId);
-//
-//        var subtypeId = subtypeRepository.findById(product.getProductSubtypeId().getId()).orElseThrow();
-//        product.setProductSubtypeId(subtypeId);
-
         productRepository.save(product);
         return "redirect:/products";
     }
@@ -81,7 +69,8 @@ public class ProductController {
 
     @GetMapping("/product-update/{id}")
     public String updateProductForm(@PathVariable("id") Long id, Model model) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid product ID" + id));
+        Product product = productRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("Invalid product ID" + id));
         model.addAttribute("product", product);
         model.addAttribute("manufacturer", manufacturerRepository.findAll());
         model.addAttribute("subtype", subtypeRepository.findAll());
@@ -94,8 +83,8 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/products/{productId}")
-    public String findProductById(@PathVariable("productId") Long productId,
+    @GetMapping("/products/{id}")
+    public String findProductById(@PathVariable("id") Long productId,
                                   @ModelAttribute("prodparamvalue") ProductParameterValue prodparamvalue,
                                   Model model) {
         List<ProductParameter> parameters = productParameterRepository.findAll();
@@ -110,11 +99,11 @@ public class ProductController {
         return "product";
     }
 
-    @PostMapping("/products/{productId}")
+    @PostMapping("/products/{id}")
     public String setParameters(ProductParameterValue prodparamvalue,
-                                @PathVariable("productId") Long productId) {
+                                @PathVariable("id") Long id) {
 
-        Optional<Product> tempproduct = productRepository.findById(productId);
+        Optional<Product> tempproduct = productRepository.findById(id);
 
         Optional<ProductParameter> newparameter = productParameterRepository.findByName(prodparamvalue.getParameter().getName());
 
@@ -134,7 +123,7 @@ public class ProductController {
             System.out.println("Error Found, likely no product");
         }
 
-        return "redirect:/products/" + productId;
+        return "redirect:/products/" + id;
     }
 
 }

@@ -5,7 +5,7 @@ import com.example.devedbaseproject.models.OrderDetails;
 import com.example.devedbaseproject.models.Product;
 import com.example.devedbaseproject.models.Role;
 import com.example.devedbaseproject.repository.IOrderDetailsRepository;
-import com.example.devedbaseproject.repository.ProductRepository;
+import com.example.devedbaseproject.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

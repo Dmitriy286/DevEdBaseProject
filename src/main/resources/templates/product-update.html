@@ -11,7 +11,7 @@
     <div>
         <form action="#" th:action="@{/product-update}" th:object="${product}" method="post">
             <label for="product_id">ID</label>
-            <input readonly type="number" th:field="*{productId}" id="product_id" placeholder="ID">
+            <input readonly type="number" th:field="*{id}" id="product_id" placeholder="ID">
             <br/>
             <label for="product_name">Name</label>
             <input type="text" th:field="*{productName}" id="product_name" placeholder="Введите наименование">
@@ -20,11 +20,11 @@
             <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
             <br/>
             <label>Manufacturer ID</label>
-            <select th:name="manufacturerId"> // имя поля класса!
+            <select th:name="manufacturer"> // имя поля класса!
                 <option th:each= "manufacturer: ${manufacturer}"
-                        th:value="${manufacturer.manufacturerId}"
+                        th:value="${manufacturer.id}"
                         th:text="${manufacturer.name}"
-                        th:selected="${product.manufacturerId.manufacturerId == manufacturer.manufacturerId}">
+                        th:selected="${product.manufacturer.id == manufacturer.id}">
                 </option>
             </select>
             <br/>
@@ -32,11 +32,11 @@
             <input type="text" th:field="*{productQuantity}" id="product_quantity" placeholder="Введите количество">
             <br/>
             <label>Subtype ID</label>
-            <select th:name="productSubtypeId"> // имя поля класса!
+            <select th:name="productSubtype"> // имя поля класса!
                 <option th:each= "subtype: ${subtype}"
                         th:value="${subtype.id}"
                         th:text="${subtype.productSubtypeName}"
-                        th:selected="${product.productSubtypeId.id == subtype.id}">
+                        th:selected="${product.productSubtype.id == subtype.id}">
                 </option>
             </select>
             <br/>
