@@ -35,7 +35,7 @@ public class Email {
     private List<Product> products;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "employeeId")
+    @JoinColumn(name = "employee_id")
     private Employee employee;
 
     @Column(name = "send")
