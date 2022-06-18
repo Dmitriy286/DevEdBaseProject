@@ -1,12 +1,16 @@
 package com.example.devedbaseproject.models;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "Employees")
-public class Employee {
+public class Employee implements UserDetails {
 
     public Employee(){}
 
@@ -18,35 +22,27 @@ public class Employee {
 
         this.name = "";
         this.email = "";
-        this.phonenumber = "";
+        this.phoneNumber = "";
         this.photo = "";
     }
 
-    public Employee(String name, String username, String password, String email, String phonenumber, String photo) {
+    public Employee(String name, String username, String password, String email, String phoneNumber, String photo) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.phonenumber = phonenumber;
+        this.phoneNumber = phoneNumber;
         this.photo = photo;
         this.roles = new ArrayList<>();
         this.active = false;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     @Column(name = "active")
     private boolean active;
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 
     @Column(name = "name")
     private String name;
@@ -61,26 +57,29 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phonenumber")
-    private String phonenumber;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @Column(name = "photo")
     private String photo;
 
     @JoinTable(
-            name = "employeeRole",
+            name = "employee_role",
             joinColumns = {@JoinColumn(
-                    name = "EmployeeId",
+                    name = "employee_id",
                     referencedColumnName = "id"
             )},
             inverseJoinColumns = @JoinColumn(
-                    name = "RoleId",
+                    name = "role_id",
                     referencedColumnName = "id"
             )
     )
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
+
+    @OneToMany(mappedBy="employee")
+    private List<Order> orderList;
 
     @Override
     public String toString() {
@@ -90,11 +89,12 @@ public class Employee {
                 ", login='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", phonenumber='" + phonenumber + '\'' +
+                ", phonenumber='" + phoneNumber + '\'' +
                 ", photo='" + photo + '\'' +
                 '}';
     }
 
+    //region Setters, Getters
     public Long getId() {
         return Id;
     }
@@ -135,12 +135,12 @@ public class Employee {
         this.email = email;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPhoto() {
@@ -151,6 +151,14 @@ public class Employee {
         this.photo = photo;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public List<Role> getRoles() {
         return roles;
     }
@@ -158,4 +166,30 @@ public class Employee {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isActive();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+    //endregion
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create product</title>
@@ -16,15 +16,25 @@
             <label for="description">Description</label>
             <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
   <br/>
-  <label for="manufacturer_id">Manufacturer ID</label>
-  <input type="text" th:field="*{manufacturerId}" id="manufacturer_id" placeholder="Введите ID производителя">
+  <label>Manufacturer</label>
+            <select th:name="manufacturer">
+                <option th:each= "manufacturer: ${manufacturer}"
+                        th:value="${manufacturer.id}"
+                        th:text="${manufacturer.name}">
+                </option>
+            </select>
   <br/>
   <label for="product_quantity">Quantity</label>
   <input type="text" th:field="*{productQuantity}" id="product_quantity" placeholder="Введите количество">
   <br/>
-  <label for="product_subtype_id">Subtype ID</label>
-  <input type="text" th:field="*{productSubtypeId}" id="product_subtype_id" placeholder="Введите ID подтип">
-  <br/>
+  <label>Subtype ID</label>
+            <select th:name="productSubtype"> // имя поля класса!
+                <option th:each= "subtype: ${subtype}"
+                        th:value="${subtype.id}"
+                        th:text="${subtype.productSubtypeName}">
+                </option>
+            </select>
+            <br/>
             <input type="submit" value="Create Product" class="btn">
         </form>
     </div>

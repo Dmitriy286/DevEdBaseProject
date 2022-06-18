@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Create Subtype</title>
+    <title>Create type</title>
   <link rel="stylesheet" href="/list.css">
 </head>
 <body>
@@ -11,18 +11,16 @@
     <div>
         <form action="#" th:action="@{/subtype-create}" th:object="${productSubtype}" method="post">
             <label for="product_subtype_name">Name</label>
-            <input type="text" th:field="*{productSubtypeName}" id="product_subtype_name" placeholder="Введите тип">
+            <input type="text" th:field="*{productSubtypeName}" id="product_subtype_name" placeholder="Введите подтип">
             <br/>
             <label for="product_subtype_description">Description</label>
             <input type="text" th:field="*{productSubtypeDescription}" id="product_subtype_description" placeholder="Введите описание">
             <br/>
-            <label for="type_id">Category</label>
-            <select id="productSubtypeList" name="productSubtypeList">
-                <option disabled selected>Тип</option>
-                <option id="type_id"
-                th:each= "subtype: ${productSubtypeList}"
-                th:value="${subtype.productType.productTypeName}"
-                th:text="${subtype.productType.productTypeName}">
+            <label>Type</label>
+            <select th:name="productType"> // имя поля класса!
+                <option th:each= "type: ${productType}"
+                    th:value="${type.id}"
+                    th:text="${type.productTypeName}">
                 </option>
             </select>
             <br/>

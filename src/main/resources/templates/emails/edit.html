@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>${servicemessage}</title>
+    <title>${serviceMessage}</title>
 </head>
 <body>
 
@@ -11,12 +11,12 @@
     <table>
         <thead>
         <tr>
-            <th>EmailId</th>
+            <th>Email Id</th>
             <th>Date</th>
             <th>Message</th>
-            <th>CustomerId</th>
+            <th>Customer Id</th>
             <th>Products</th>
-            <th>EmployeeId</th>
+            <th>Employee Id</th>
             <th>Sending status</th>
         </tr>
         </thead>
@@ -53,37 +53,6 @@
 
         </tbody>
     </table>
-
-
-<!--    <label for="EmailId">EmailId:</label>-->
-<!--    <input type="text" th:field="*{Id}" id="EmailId">-->
-
-<!--    <br>-->
-
-<!--    <label for="Date">Username:</label>-->
-<!--    <input id="Date" type="text" th:field="*{date}">-->
-
-<!--    <br>-->
-
-<!--    <label for="Message">Message:</label>-->
-<!--    <input id="Message" type="text" th:field="*{message}">-->
-
-<!--    <br>-->
-
-<!--    <label for="Email">Email:</label>-->
-<!--    <input id="Email" type="text" th:field="*{email}">-->
-
-<!--    <br>-->
-
-<!--    <label for="Phonenumber">Phonenumber:</label>-->
-<!--    <input id="Phonenumber" type="text" th:field="*{phonenumber}">-->
-
-<!--    <br>-->
-
-<!--    <label for="Photo">Photo:</label>-->
-<!--    <input id="Photo" type="image" th:field="*{photo}">-->
-
-<!--    <br>-->
 
     <input type="submit" value="Change email details">
 </form>

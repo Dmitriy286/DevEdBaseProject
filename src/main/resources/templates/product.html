@@ -8,29 +8,29 @@
 <body>
 <div>
 <p th:text="${product.getProductName()}">value</p>
-<p th:text="${product.getProductId()}">value</p>
+<p th:text="${product.getId()}">value</p>
 </div>
 <div>
     <h2>Parameters with values</h2>
     <table>
         <thead>
         <tr>
-            <th>Parametr name</th>
+            <th>Parameter name</th>
             <th>String value</th>
             <th>Int value</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each = "paramval: ${product.getParameterValues()}">
-            <td th:text = "${paramval.getParameter().getName()}"></td>
-            <td th:text = "${paramval.getStringValue}"></td>
-            <td th:text = "${paramval.getIntValue}"></td>
+        <tr th:each = "paramVal: ${product.getParameterValues()}">
+            <td th:text = "${paramVal.getParameter().getName()}"></td>
+            <td th:text = "${paramVal.getStringValue}"></td>
+            <td th:text = "${paramVal.getIntValue}"></td>
         </tr>
         </tbody>
     </table>
 </div>
 <div>
-    <form th:action="@{/products/{productId}(productId=${product.getProductId})}"
+    <form th:action="@{/products/{id}(id=${product.getId})}"
           th:method="POST" th:object="${prodparamvalue}">
 
         <select th:class="form-control" th:name="selectParameter" th:id="selectParameter">
@@ -44,19 +44,13 @@
 
         <input type="hidden" th:field="*{parameter.name}" class="form-control" id="parameterName"
                placeholder="parameterName">
-
         <br>
-
         <label for="string">String parameter:</label>
         <input type="text" th:field="*{stringValue}" id="string"/>
-
         <br>
-
         <label for="int">Integer parameter:</label>
         <input type="text" th:field="*{intValue}" id="int"/>
-
         <br>
-
         <input type="submit" value="Add parameter details">
     </form>
 

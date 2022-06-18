@@ -3,6 +3,7 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Spring Security Example </title>
+
 </head>
 <body>
 <div th:if="${param.error}">
@@ -15,6 +16,7 @@
 <form th:action="@{/login}" method="post">
     <div><label> Login : <input type="text" name="username"/> </label></div>
     <div><label> Password: <input type="password" name="password"/> </label></div>
+    <input type="hidden" name="csrf" value="{{ csrf.token }}"/>
     <div><input type="submit" value="Sign In"/></div>
 </form>
 <a th:href="@{/registration}">Add new employee</a>

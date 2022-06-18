@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create type</title>
+    <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div>
+        <form action="#" th:action="@{/order-create}" th:object="${order}" method="post">
+
+<!--            <label for="customer_choice">Выберите покупателя</label>-->
+<!--            <input class="form-control col-md-5" list="customers_list" id="customer_choice"-->
+<!--                   placeholder="Найти клиента ">-->
+<!--            <datalist id="customers_list" th:name="customers">-->
+<!--                <option value="">Тут товары</option>-->
+<!--                <option-->
+<!--                        th:each="customer : ${customers}"-->
+<!--                        th:data-value="${customer.customerId}"-->
+<!--                        th:text="${customer.name +' '+ customer.surname}">-->
+<!--                </option>-->
+<!--            </datalist>-->
+            <label for="customer_list">Выберите клиента</label>
+            <select th:name="customer" id="customer_list">
+                <option th:each="customer:${customers}"
+                        th:value="${customer.id}"
+                        th:text="${customer.name +' '+ customer.surname}">
+                </option>
+            </select>
+            <br>
+            <label for="product_list">Выберите продукт</label>
+            <select th:name="product" id="product_list">
+                <option th:each="product:${products}"
+                        th:value="${product.id}"
+                        th:text="${product.productName}">Товар
+                </option>
+            </select>
+            <br>
+            <label for="employee_list">Выберите работника</label>
+            <select th:name="employee" id="employee_list">
+                <option th:each="employee:${employees}"
+                        th:value="${employee.id}"
+                        th:text="${employee.name}">Товар
+                </option>
+            </select>
+            <br><br>
+
+
+            <input type="submit" value="Создать заказ" class="btn">
+        </form>
+    </div>
+</div>
+</body>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+<!--<script type="text/javascript">-->
+<!--    $(document).ready(function () {-->
+<!--        console.log("ready!");-->
+<!--    });-->
+<!--    $(document).ready(function () {-->
+<!--        $("#selectCategory").change(function () {-->
+<!--            $("#categoryId").val($("#selectCategory option:selected").attr("category-id"));-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+</html>

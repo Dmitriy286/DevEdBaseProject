@@ -2,20 +2,25 @@
 <html>
 <head>
     <title>Getting Started: Serving Web Content</title>
+    <link rel="stylesheet" href="/list.css">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 <div>
     <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
+        <input type="submit" value="Sign Out" class="btn"/>
     </form>
 </div>
-<p>Get <a href="/products">products</a>.</p>
-<p>Get <a href="/customers">customers</a>.</p>
+<p>Products <a href="/products">here</a></p>
+<p>Manufacturer: <a href="/manufacturer">here</a></p>
+<p>Customers <a href="/customers">here</a></p>
 <p>Employees: <a href="/employees/">here</a></p>
 <p>Employee roles: <a href="/roles/">here</a></p>
 <p>Category: <a href="/category">here</a></p>
 <p>Emails: <a href="/emails/">here</a></p>
 <p>Product parameters: <a href="/parameters/">here</a></p>
+<p>Supplies: <a href="/supplies">here</a></p>
+
 </body>
 </html>

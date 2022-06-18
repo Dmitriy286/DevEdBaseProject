@@ -7,18 +7,19 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Getter
 @Setter
-@Entity
-//@ToString
-@Table(name = "emails")
-public class Email {
+@AllArgsConstructor
+@NoArgsConstructor
 
+@Entity
+@Table(name = "emails")
+
+public class Email {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "date")
     private String date;
@@ -27,37 +28,33 @@ public class Email {
     private String message;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "products")
     private List<Product> products;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "employeeId")
+    @JoinColumn(name = "employee_id")
     private Employee employee;
+
 
     @Column(name = "send")
     private boolean send;
-
 
     public Email(String date, String message) {
 
         this.date = date;
         this.message = message;
-
         this.customer = new Customer();
         this.products = new ArrayList<>();
         this.employee = new Employee();
-
         this.send = false;
     }
-
     @Override
     public String toString() {
         return "Email{" +
-                "Id=" + Id +
+                "id=" + id +
                 ", date='" + date + '\'' +
                 ", message='" + message + '\'' +
                 ", customer=" + customer +

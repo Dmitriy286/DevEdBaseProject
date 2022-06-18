@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "product_subtype")
 public class ProductSubtype {
@@ -26,7 +25,7 @@ public class ProductSubtype {
     @Column(name = "product_subtype_description")
     private String productSubtypeDescription;
 
-    @ManyToOne//(cascade = { CascadeType.ALL })
+    @ManyToOne //(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_type_id")
     private ProductType productType;
 }
