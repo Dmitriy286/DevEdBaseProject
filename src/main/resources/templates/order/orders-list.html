@@ -17,9 +17,10 @@
                 <thead>
                 <tr>
                     <th>ID заказа</th>
-                    <th>клиент</th>
-                    <th>Продавец</th>
                     <th>Дата</th>
+                    <th>Клиент</th>
+                    <th>Адрес</th>
+                    <th>Продавец</th>
                     <th>Стоимость</th>
                     <th>Статус</th>
                 </tr>
@@ -27,12 +28,14 @@
                 <tbody>
                 <tr th:each="order : ${orders}">
                     <td th:text="${order.id}"></td>
-                    <td th:text="${order.customer.name + ' ' + order.customer.surname}"></td>
-                    <td th:text="${order.employee.name}"></td>
                     <td th:text="${order.actionDateTime}"></td>
+                    <td th:text="${order.customer.name + ' ' + order.customer.surname}"></td>
+                    <td th:text="${order.deliveryAddress}"></td>
+                    <td th:text="${order.employee.name}"></td>
                     <td th:text="${order.orderCost}"></td>
                     <td th:text="${order.orderStatus}"></td>
                     <td><a th:href="@{order-update/{id}(id=${order.id})}" class="btn">Редактировать </a></td>
+                    <td><a th:href="@{order-details/{id}(id=${order.id})}" class="btn">Подробнее </a></td>
                 </tr>
                 </tbody>
             </table>

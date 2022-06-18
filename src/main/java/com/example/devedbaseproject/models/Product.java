@@ -41,10 +41,10 @@ public class Product {
     private ProductSubtype productSubtype;
 
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name="orderdetails_product",
-            joinColumns = @JoinColumn(name="product_id"),
-            inverseJoinColumns = @JoinColumn(name="orderdetails_id"))
-    private List<OrderDetails> orderDetailsList;
+    @JoinTable(name="orders_products",
+            joinColumns = @JoinColumn(name="id"),
+            inverseJoinColumns = @JoinColumn(name="order_id"))
+    private List<Order> orderList;
 
     @OneToMany
     @JoinColumn(name="parameter_values")

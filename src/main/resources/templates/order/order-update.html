@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create order</title>
+    <title>Change order</title>
     <link rel="stylesheet" href="/list.css">
 </head>
 <body>
@@ -11,14 +11,12 @@
     <div>
         <form action="#" th:action="@{/order-create}" th:object="${order}" method="post">
 
-            <label for="customer_list">Выберите клиента</label>
-            <select th:name="customer" id="customer_list">
-                <option th:each="customer:${customers}"
-                        th:value="${customer.id}"
-                        th:text="${customer.name +' '+ customer.surname}">
-                </option>
-            </select>
+            <label for="order_id">ID</label>
+            <input readonly type="number" th:field="*{id}" id="order_id" placeholder="ID">
             <br/>
+            <label for="customerName">Клиент</label>
+            <input readonly type="text" th:field="*{customer.id}" th:placeholder="${customer.name}" id="customerName" placeholder="Name">
+            <br>
             <label for="product_list">Выберите продукт</label>
             <select th:name="product" id="product_list">
                 <option th:each="product:${products}"
@@ -26,21 +24,18 @@
                         th:text="${product.productName}">Товар
                 </option>
             </select>
-            <br/>
+            <br>
+            <label for="salesmanName">Продаван</label>
+            <input readonly type="text"  th:field="*{employee.id}" id="salesmanName">
+            <br>
             <label for="deliveryAddress">Адрес</label>
             <input type="text" th:field="*{deliveryAddress}" id="deliveryAddress" placeholder="Адрес доставки">
             <br/>
-            <label for="employee_list">Выберите работника</label>
-            <select th:name="employee" id="employee_list">
-                <option th:each="employee:${employees}"
-                        th:value="${employee.id}"
-                        th:text="${employee.name}">Товар
-                </option>
-            </select>
-            <br/><br/>
+            <br><br>
 
 
-            <input type="submit" value="Создать заказ" class="btn">
+
+            <input type="submit" value="Изменить заказ" class="btn">
         </form>
     </div>
 </div>
