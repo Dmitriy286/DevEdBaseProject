@@ -17,7 +17,7 @@
             <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
   <br/>
   <label>Manufacturer</label>
-            <select th:name="manufacturerId"> // имя поля класса!
+            <select th:name="manufacturer">
                 <option th:each= "manufacturer: ${manufacturer}"
                         th:value="${manufacturer.id}"
                         th:text="${manufacturer.name}">
@@ -28,7 +28,7 @@
   <input type="text" th:field="*{productQuantity}" id="product_quantity" placeholder="Введите количество">
   <br/>
   <label>Subtype ID</label>
-            <select th:name="productSubtypeId"> // имя поля класса!
+            <select th:name="productSubtype"> // имя поля класса!
                 <option th:each= "subtype: ${subtype}"
                         th:value="${subtype.id}"
                         th:text="${subtype.productSubtypeName}">

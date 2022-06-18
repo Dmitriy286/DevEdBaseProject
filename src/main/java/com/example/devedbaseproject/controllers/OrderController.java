@@ -2,9 +2,10 @@ package com.example.devedbaseproject.controllers;
 
 import com.example.devedbaseproject.models.Customer;
 import com.example.devedbaseproject.models.Order;
-import com.example.devedbaseproject.repository.CustomerRepository;
-import com.example.devedbaseproject.repository.OrderRepository;
-import com.example.devedbaseproject.repository.ProductRepository;
+import com.example.devedbaseproject.repository.ICustomerRepository;
+import com.example.devedbaseproject.repository.IEmployeeRepository;
+import com.example.devedbaseproject.repository.IOrderRepository;
+import com.example.devedbaseproject.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,20 +15,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
 public class OrderController {
 
-    private final OrderRepository orderRepository;
-    private final CustomerRepository customerRepository;
-    private final ProductRepository productRepository;
+    private final IOrderRepository orderRepository;
+    private final ICustomerRepository customerRepository;
+    private final IProductRepository productRepository;
+    private final IEmployeeRepository employeeRepository;
 
     @Autowired
-    public OrderController(OrderRepository orderRepository, CustomerRepository customerRepository, ProductRepository productRepository) {
+    public OrderController(IOrderRepository orderRepository, ICustomerRepository customerRepository, IProductRepository productRepository, IEmployeeRepository employeeRepository) {
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @GetMapping("/orders")
@@ -67,6 +73,7 @@ public class OrderController {
     public String createOrderFrom(Customer customer, Model model) {
         model.addAttribute("customers", customerRepository.findAll());
         model.addAttribute("products", productRepository.findAll());
+        model.addAttribute("employees", employeeRepository.findAll());
         return "order/order-create";
     }
 
@@ -75,6 +82,12 @@ public class OrderController {
         if (result.hasErrors()){
             return "add-order";
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
+        LocalDateTime dateTime = LocalDateTime.now();
+        String formattedDateTime = dateTime.format(formatter);
+        order.setActionDateTime(formattedDateTime);
+        order.setOrderCost(200);
+        order.setOrderStatus("Не оплачен");
         orderRepository.save(order);
         return "redirect:/orders";
     }

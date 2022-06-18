@@ -27,9 +27,9 @@
                 <tbody>
                 <tr th:each="order : ${orders}">
                     <td th:text="${order.id}"></td>
-                    <td th:text="${order.customerId.name}"></td>
+                    <td th:text="${order.customer.name + ' ' + order.customer.surname}"></td>
                     <td th:text="${order.employee.name}"></td>
-                    <td th:text="${order.currentDate}"></td>
+                    <td th:text="${order.actionDateTime}"></td>
                     <td th:text="${order.orderCost}"></td>
                     <td th:text="${order.orderStatus}"></td>
                     <td><a th:href="@{order-update/{id}(id=${order.id})}" class="btn">Редактировать </a></td>

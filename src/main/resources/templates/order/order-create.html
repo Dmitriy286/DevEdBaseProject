@@ -11,39 +11,43 @@
     <div>
         <form action="#" th:action="@{/order-create}" th:object="${order}" method="post">
 
-            <label for="customer_choice">Выберите покупателя</label>
-            <input class="form-control col-md-5" list="customers_list" id="customer_choice" placeholder="Найти клиента ">
-            <datalist id="customers_list" th:name="customers_list">
-                <option
-                    th:each="customer : ${customers}"
-                    th:data-value="${customer}"
-                    th:text="${customer.name +' '+ customer.surname}">
+<!--            <label for="customer_choice">Выберите покупателя</label>-->
+<!--            <input class="form-control col-md-5" list="customers_list" id="customer_choice"-->
+<!--                   placeholder="Найти клиента ">-->
+<!--            <datalist id="customers_list" th:name="customers">-->
+<!--                <option value="">Тут товары</option>-->
+<!--                <option-->
+<!--                        th:each="customer : ${customers}"-->
+<!--                        th:data-value="${customer.customerId}"-->
+<!--                        th:text="${customer.name +' '+ customer.surname}">-->
+<!--                </option>-->
+<!--            </datalist>-->
+            <label for="customer_list">Выберите клиента</label>
+            <select th:name="customer" id="customer_list">
+                <option th:each="customer:${customers}"
+                        th:value="${customer.id}"
+                        th:text="${customer.name +' '+ customer.surname}">
                 </option>
-            </datalist>
-<!--            <input type="hidden" th:field="*{customer.customerid}" class="form-control" id="customerId"-->
-<!--                   placeholder="customerId">-->
-            <br/>
-            <table th:id="productTable">
-                <input type="hidden" th:id="productNumber" th:value="1">
-                <tr>
-                    <td>
-                        <select th:class="form-control" th:id="products" th:name="products"
-                                th:data-name="productSelector">
-                            <option value="">Выберите товар...</option>
-                            <option th:each="product : ${products}"
-                                    th:value="${product}"
-                                    th:text="${product.productName}">
-                            </option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="number" th:class="form-control" th:id="productAmount" th:value="1">
-                    </td>
-                </tr>
+            </select>
+            <br>
+            <label for="product_list">Выберите продукт</label>
+            <select th:name="product" id="product_list">
+                <option th:each="product:${products}"
+                        th:value="${product.id}"
+                        th:text="${product.productName}">Товар
+                </option>
+            </select>
+            <br>
+            <label for="employee_list">Выберите работника</label>
+            <select th:name="employee" id="employee_list">
+                <option th:each="employee:${employees}"
+                        th:value="${employee.id}"
+                        th:text="${employee.name}">Товар
+                </option>
+            </select>
+            <br><br>
 
-            </table>
 
-            
             <input type="submit" value="Создать заказ" class="btn">
         </form>
     </div>

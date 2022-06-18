@@ -59,7 +59,7 @@ public class EmailsController {
         Customer customer = customerRepository.findById(1L).orElseThrow();
         // этот клиент должен приходить из стэка или очереди предложки,
         // может быть отдельной сущности с таблице в БД "Предложения по клиентам"
-        Product product = productRepository.findById(6L).orElseThrow(); //исправить на ввод айдишника
+        Product product = productRepository.findById(1L).orElseThrow(); //исправить на ввод айдишника
         // аналогично по продукту
         Email newemail = new Email(email.getDate(), email.getMessage());
 
@@ -101,7 +101,7 @@ public class EmailsController {
     public String sendEmail(@PathVariable("id") Long id, Model model) {
         Optional<Email> email = repository.findById(id);
         String servicemessage = "Email with id " + email.get().getId() +
-        "for customer with id " + email.get().getCustomer().getCustomerId() +
+        "for customer with id " + email.get().getCustomer().getId() +
         "is sending to the e-mail adress: " + email.get().getCustomer().getEmail();
         System.out.println(servicemessage);
         email.get().setSend(true);

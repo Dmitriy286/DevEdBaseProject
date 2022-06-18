@@ -22,23 +22,23 @@ public class Employee implements UserDetails {
 
         this.name = "";
         this.email = "";
-        this.phonenumber = "";
+        this.phoneNumber = "";
         this.photo = "";
     }
 
-    public Employee(String name, String username, String password, String email, String phonenumber, String photo) {
+    public Employee(String name, String username, String password, String email, String phoneNumber, String photo) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.phonenumber = phonenumber;
+        this.phoneNumber = phoneNumber;
         this.photo = photo;
         this.roles = new ArrayList<>();
         this.active = false;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     @Column(name = "active")
@@ -58,7 +58,7 @@ public class Employee implements UserDetails {
     private String email;
 
     @Column(name = "phone_number")
-    private String phonenumber;
+    private String phoneNumber;
 
     @Column(name = "photo")
     private String photo;
@@ -75,10 +75,10 @@ public class Employee implements UserDetails {
             )
     )
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 
-    @OneToMany(mappedBy="id")
+    @OneToMany(mappedBy="employee")
     private List<Order> orderList;
 
     @Override
@@ -89,7 +89,7 @@ public class Employee implements UserDetails {
                 ", login='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", phonenumber='" + phonenumber + '\'' +
+                ", phonenumber='" + phoneNumber + '\'' +
                 ", photo='" + photo + '\'' +
                 '}';
     }
@@ -135,12 +135,12 @@ public class Employee implements UserDetails {
         this.email = email;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPhoto() {
