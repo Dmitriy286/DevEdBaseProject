@@ -1,6 +1,7 @@
 package com.example.devedbaseproject.controllers;
 
 import com.example.devedbaseproject.models.Customer;
+import com.example.devedbaseproject.models.Employee;
 import com.example.devedbaseproject.models.Order;
 import com.example.devedbaseproject.repository.ICustomerRepository;
 import com.example.devedbaseproject.repository.IEmployeeRepository;
@@ -37,7 +38,7 @@ public class OrderController {
     }
 
     @GetMapping("/orders")
-    public String findAll(Model model){
+    public String findAll(Model model) {
         List<Order> orders = orderRepository.findAll();
         model.addAttribute("orders", orders);
         return "order/orders-list";
@@ -57,20 +58,31 @@ public class OrderController {
 
 
     @GetMapping("/order-update/{id}")
-    public String updateOrderForm(@PathVariable("id") Long id, Model model){
+    public String updateOrderForm(@PathVariable("id") Long id, Model model) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID" + id));
         model.addAttribute("order", order);
+        Customer customer = order.getCustomer();
+        Employee employee = order.getEmployee();
+        model.addAttribute("customer", customer);
+        model.addAttribute("employee", employee);
+        model.addAttribute("products", productRepository.findAll());
         return "order/order-update";
     }
 
     @PostMapping("/order-update")
-    public String updateOrder(Order order){
+    public String updateOrder(@Valid Order order, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "order-update";
+        }
+        order.setActionDateTime(getLocalDateTime());
+        order.setOrderCost(200);
+        order.setOrderStatus("Не оплачен");
         orderRepository.save(order);
         return "redirect:/orders";
     }
 
     @GetMapping("/order-create")
-    public String createOrderFrom(Customer customer, Model model) {
+    public String createOrderFrom(Order order, Model model) {
         model.addAttribute("customers", customerRepository.findAll());
         model.addAttribute("products", productRepository.findAll());
         model.addAttribute("employees", employeeRepository.findAll());
@@ -78,17 +90,30 @@ public class OrderController {
     }
 
     @PostMapping("/order-create")
-    public String createOrder (@Valid Order order, BindingResult result, Model model){
-        if (result.hasErrors()){
-            return "add-order";
+    public String createOrder(@Valid Order order, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "order-create";
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
-        LocalDateTime dateTime = LocalDateTime.now();
-        String formattedDateTime = dateTime.format(formatter);
-        order.setActionDateTime(formattedDateTime);
+        order.setActionDateTime(getLocalDateTime());
         order.setOrderCost(200);
         order.setOrderStatus("Не оплачен");
         orderRepository.save(order);
         return "redirect:/orders";
+    }
+    @GetMapping("/order-details/{id}")
+    public String detailsWiew(@PathVariable("id") Long id, Model model) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID" + id));
+        model.addAttribute("order", order);
+        Customer customer = order.getCustomer();
+        Employee employee = order.getEmployee();
+        model.addAttribute("customer", customer);
+        model.addAttribute("employee", employee);
+        return "order/order-details";
+    }
+
+    private String getLocalDateTime(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
+        LocalDateTime dateTime = LocalDateTime.now();
+        return dateTime.format(formatter);
     }
 }
