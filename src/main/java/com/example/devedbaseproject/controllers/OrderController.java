@@ -3,6 +3,7 @@ package com.example.devedbaseproject.controllers;
 import com.example.devedbaseproject.models.Customer;
 import com.example.devedbaseproject.models.Employee;
 import com.example.devedbaseproject.models.Order;
+import com.example.devedbaseproject.models.Product;
 import com.example.devedbaseproject.repository.ICustomerRepository;
 import com.example.devedbaseproject.repository.IEmployeeRepository;
 import com.example.devedbaseproject.repository.IOrderRepository;
@@ -43,19 +44,6 @@ public class OrderController {
         model.addAttribute("orders", orders);
         return "order/orders-list";
     }
-
-//    @GetMapping("/order-create")
-//    public String createOrderForm(Order order){
-//        return "order/order-create";
-//    }
-//
-////
-//    @PostMapping("/order-create")
-//    public String createOrder(Order order){
-//        orderRepository.save(order);
-//        return "redirect:/orders";
-//    }
-
 
     @GetMapping("/order-update/{id}")
     public String updateOrderForm(@PathVariable("id") Long id, Model model) {
@@ -106,8 +94,10 @@ public class OrderController {
         model.addAttribute("order", order);
         Customer customer = order.getCustomer();
         Employee employee = order.getEmployee();
+        List<Product> lp = order.getProductList();
         model.addAttribute("customer", customer);
         model.addAttribute("employee", employee);
+        model.addAttribute("prodList", lp);
         return "order/order-details";
     }
 

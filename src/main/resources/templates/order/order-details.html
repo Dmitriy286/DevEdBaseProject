@@ -12,11 +12,16 @@
         <label>ID</label>
         <table>
             <tbody>
-                <tr>
-                    <td th:text="${order.id}"></td>
-                    <td th:text="${order.customer.name}"></td>
-                    <td th:text="${order.employee.name}"></td>
-                </tr>
+            <tr>
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.customer.name}"></td>
+                <td th:text="${order.employee.name}"></td>
+                <td th:text="${order.productList.size()}"></td>
+            </tr>
+<!--            <tr th:each="product:${prodList}">-->
+<!--                <td th:text="${product.id}"></td>-->
+<!--                <td th:text="${product.productName}"></td>-->
+<!--            </tr>-->
             </tbody>
         </table>
 
