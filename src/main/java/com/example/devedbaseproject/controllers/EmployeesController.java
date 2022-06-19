@@ -96,8 +96,6 @@ public class EmployeesController {
 
         employee.getRoles().clear();
 
-//        if (form.containsKey())
-
         for (String key : form.keySet()) {
             if (stringroles.contains(key)) {
                 employee.getRoles().add(roleRepository.findByName(key).get());

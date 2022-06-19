@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,14 +19,14 @@ import java.util.List;
 public class Product {
 
 
-    public Product(Long productId, String productName, String description,
+    public Product(Long id, String productName, String description,
                    Long productQuantity) {
-        this.productId = productId;
+        this.id = id;
         this.productName = productName;
         this.description = description;
         this.productQuantity = productQuantity;
-        this.manufacturerId = new Manufacturer();
-        this.productSubtypeId = new ProductSubtype();
+        this.manufacturer = new Manufacturer();
+        this.productSubtype = new ProductSubtype();
         this.parameterValues = new ArrayList<>();
     }
 

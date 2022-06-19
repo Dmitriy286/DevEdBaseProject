@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -52,7 +52,7 @@
 
             <td th:text = "${employee.email}"></td>
             <td th:text = "${employee.phoneNumber}"></td>
-            <td><img th:src = "@{/static/employee_id_{id}.png(id = ${employee.Id})}" alt="Employee photo"></td>
+            <td><img height=150 width=100 th:src = "@{/image/employee_id_{id}.png(id = ${employee.getId()})}" alt="Employee photo"></td>
             <td><a th:href = "@{/employees/{id}/edit(id = ${employee.Id})}">Update</a></td>
             <td><a th:href = "@{/employees/{id}/delete(id = ${employee.Id})}">Delete</a></td>
         </tr>

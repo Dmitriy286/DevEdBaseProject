@@ -33,7 +33,7 @@
 
     <button>Добавить</button><br>
     <div th:id="formContainer">
-    <form th:action="@{/products/{productId}(productId=${product.getProductId})}"
+    <form th:action="@{/products/{productId}(productId=${product.getId})}"
           th:method="POST" th:object="${prodparamvalue}" id="form1">
 
         <div th:id="parametrSelectContainer">
