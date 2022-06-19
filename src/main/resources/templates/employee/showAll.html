@@ -25,6 +25,7 @@
             <th>Name</th>
             <th>Username</th>
             <th>Password</th>
+            <th>Roles</th>
             <th>Email</th>
             <th>Phonenumber</th>
             <th>Photo</th>
@@ -37,6 +38,18 @@
             <td th:text = "${employee.name}"></td>
             <td th:text = "${employee.username}"></td>
             <td th:text = "${employee.password}"></td>
+            <td>
+<!--                <ul>-->
+<!--                    <th:block th:each="product : ${email.products}">-->
+<!--                        <li th:utext="${product.getProductId()}"></li>-->
+<!--                    </th:block>-->
+<!--                </ul>-->
+
+                <th:block th:each="role : ${employee.roles}">
+                    <p th:text="${role.getId()}"></p>
+                </th:block>
+            </td>
+
             <td th:text = "${employee.email}"></td>
             <td th:text = "${employee.phonenumber}"></td>
             <td><img th:src = "@{/static/employee_id_{id}.png(id = ${employee.Id})}" alt="Employee photo"></td>

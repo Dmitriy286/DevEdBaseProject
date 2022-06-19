@@ -29,12 +29,17 @@ public class Role implements GrantedAuthority {
 //            inverseJoinColumns=@JoinColumn(name="employeeId"))
 //    private List<Employee> employees;
 
+//    @Override
+//    public String toString() {
+//        return "{" +
+//                "Id: " + Id +
+//                ", name: '" + name +
+//               "'}";
+//    }
+
     @Override
     public String toString() {
-        return "Employee{" +
-                "Id=" + Id +
-                ", name='" + name + '\'' +
-               '}';
+        return "" + name + "";
     }
 
     public Long getId() {

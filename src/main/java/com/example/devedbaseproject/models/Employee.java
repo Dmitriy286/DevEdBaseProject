@@ -84,6 +84,7 @@ public class Employee implements UserDetails {
                 "Id=" + Id +
                 ", name='" + name + '\'' +
                 ", login='" + username + '\'' +
+                ", roles='" + roles + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
