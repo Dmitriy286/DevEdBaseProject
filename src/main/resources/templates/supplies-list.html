@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Supplies</title>
@@ -21,12 +21,12 @@
             <tbody>
             <tr th:each="supplies : ${supplies}">
 <!--                            ПОЛЯ КЛАССА!!!!-->
-                <td th:text="${supplies.suppliesId}"></td>
-                <td th:text="${supplies.manufacturerId.name}"></td>
+                <td th:text="${supplies.id}"></td>
+                <td th:text="${supplies.manufacturer.name}"></td>
                 <td th:text="${supplies.suppliesDate}"></td>
 
-                <td><a th:href="@{supplies-update/{id}(id=${supplies.suppliesId})}" class="btn">Edit</a></td>
-                <td><a th:href="@{supplies-delete/{id}(id=${supplies.suppliesId})}" class="btn">Delete</a></td>
+                <td><a th:href="@{supplies-update/{id}(id=${supplies.id})}" class="btn">Edit</a></td>
+                <td><a th:href="@{supplies-delete/{id}(id=${supplies.id})}" class="btn">Delete</a></td>
             </tr>
             </tbody>
         </table>

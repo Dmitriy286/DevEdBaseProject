@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Change order</title>
+    <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div>
+        <form action="#" th:action="@{/order-create}" th:object="${order}" method="post">
+
+            <label for="order_id">ID</label>
+            <input readonly type="number" th:field="*{id}" id="order_id" placeholder="ID">
+            <br/>
+<!--            <label for="customerName" th:text="${customer.name+' '+ customer.surname}"></label>-->
+            <label for="customerName">Клиент</label>
+            <input type="hidden" th:field="*{customer.id}" id="customerName">
+            <output type="text" th:text="${customer.name +' '+ customer.surname}"></output>
+            <br>
+            <label for="product_list">Выберите продукт</label>
+            <select th:name="product" id="product_list">
+                <option th:each="product:${products}"
+                        th:value="${product.id}"
+                        th:text="${product.productName}">Товар
+                </option>
+            </select>
+            <br>
+            <label for="salesmanName">Продаван</label>
+            <input type="hidden"  th:field="*{employee.id}" id="salesmanName">
+            <output type="text" th:text="${employee.name}"></output>
+            <br>
+            <label for="deliveryAddress">Адрес</label>
+            <input type="text" th:field="*{deliveryAddress}" id="deliveryAddress" placeholder="Адрес доставки">
+            <br/>
+            <br><br>
+
+
+
+            <input type="submit" value="Изменить заказ" class="btn">
+        </form>
+    </div>
+</div>
+</body>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+<!--<script type="text/javascript">-->
+<!--    $(document).ready(function () {-->
+<!--        console.log("ready!");-->
+<!--    });-->
+<!--    $(document).ready(function () {-->
+<!--        $("#selectCategory").change(function () {-->
+<!--            $("#categoryId").val($("#selectCategory option:selected").attr("category-id"));-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+</html>

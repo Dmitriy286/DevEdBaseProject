@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,12 +23,12 @@
     <table>
         <thead>
         <tr>
-            <th>EmailId</th>
+            <th>Email Id</th>
             <th>Date</th>
             <th>Message</th>
-            <th>CustomerId</th>
+            <th>Customer Id</th>
             <th>Products</th>
-            <th>EmployeeId</th>
+            <th>Employee Id</th>
             <th>Sending status</th>
         </tr>
         </thead>
@@ -44,7 +44,7 @@
             <td>
             <ul>
                 <th:block th:each="product : ${email.products}">
-                    <li th:utext="${product.getProductId()}"></li>
+                    <li th:utext="${product.getId()}"></li>
                 </th:block>
             </ul>
             </td>

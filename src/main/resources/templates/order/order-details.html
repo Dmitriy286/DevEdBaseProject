@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Детали заказа</title>
+    <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div>
+        <label>ID</label>
+        <table>
+            <tbody>
+                <tr>
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.customer.name}"></td>
+                    <td th:text="${order.employee.name}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+</body>
+</html>

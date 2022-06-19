@@ -1,60 +1,32 @@
-package com.example.devedbaseproject.models;
-
-import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
-
-@Entity
-@Table(name = "orderdetails")
-public class OrderDetails {
-
-    public OrderDetails(){}
-
-    public OrderDetails(Long Id, int quantity, Product product) {
-        this.Id = Id;
-        this.quantity = quantity;
-        this.product = product;
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
-
-//    @ManyToOne (optional=false, cascade=CascadeType.ALL)
-//    @JoinColumn (name="Id")
-//    @Column(name = "order")
-//    private Order order;
-
-    @Column(name = "quantity")
-    private int quantity;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="productId")
-    private Product product;
-
-    public Long getId() {
-        return this.Id;
-    }
-
-    public void setId(Long Id) {
-        this.Id = Id;
-    }
-
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-}
+//package com.example.devedbaseproject.models;
+//
+//import lombok.AllArgsConstructor;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+//import lombok.Setter;
+//
+//import javax.persistence.*;
+//import java.util.List;
+//
+//
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Entity
+//@Table(name = "orderdetails")
+//public class OrderDetails {
+//
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    private Long Id;
+//
+//    @Column(name = "quantity")
+//    private int quantity;
+//
+//    @ManyToMany(cascade = {CascadeType.ALL})
+//    @JoinTable(name="orderdetails_product",
+//            joinColumns = @JoinColumn(name="orderdetails_id"),
+//            inverseJoinColumns = @JoinColumn(name="product_id"))
+//    private List<Product> productList;
+//}

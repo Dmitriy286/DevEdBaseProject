@@ -1,10 +1,10 @@
 package com.example.devedbaseproject.controllers;
 
 import com.example.devedbaseproject.models.*;
-import com.example.devedbaseproject.repository.CustomerRepository;
+import com.example.devedbaseproject.repository.ICustomerRepository;
 import com.example.devedbaseproject.repository.IEmailRepository;
 import com.example.devedbaseproject.repository.IEmployeeRepository;
-import com.example.devedbaseproject.repository.ProductRepository;
+import com.example.devedbaseproject.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,12 +19,12 @@ import java.util.Optional;
 @RequestMapping("/emails")
 public class EmailsController {
     private final IEmailRepository repository;
-    private final CustomerRepository customerRepository;
-    private final ProductRepository productRepository;
+    private final ICustomerRepository customerRepository;
+    private final IProductRepository productRepository;
     private final IEmployeeRepository employeeRepository;
 
     @Autowired
-    public EmailsController(IEmailRepository repository, CustomerRepository customerRepository, ProductRepository productRepository, IEmployeeRepository employeeRepository) {
+    public EmailsController(IEmailRepository repository, ICustomerRepository customerRepository, IProductRepository productRepository, IEmployeeRepository employeeRepository) {
         this.repository = repository;
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
@@ -75,6 +75,7 @@ public class EmailsController {
 
     @PostMapping("/newemails")
     public String sendEmailFilter(@RequestParam("sent") boolean sent, Model model) {
+
         List<Email> emailList = repository.findAll();
         List<Email> emailListToSend = new ArrayList<>();
         List<Email> sentEmails = new ArrayList<>();

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create product</title>
-  <link rel="stylesheet" href="/list.css">
+    <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 <div class="container">
@@ -12,65 +12,32 @@
         <form action="#" th:action="@{/product-create}" th:object="${product}" method="post">
             <label for="product_name">Name</label>
             <input type="text" th:field="*{productName}" id="product_name" placeholder="Введите наименование">
-  <br/>
+            <br/>
             <label for="description">Description</label>
             <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
-  <br/>
-  <label>Manufacturer</label>
-            <select th:name="manufacturerId"> // имя поля класса!
-                <option th:each= "manufacturer: ${manufacturer}"
-                        th:value="${manufacturer.manufacturerId}"
+            <br/>
+            <label>Manufacturer</label>
+            <select th:name="manufacturer">
+                <option th:each="manufacturer: ${manufacturer}"
+                        th:value="${manufacturer.id}"
                         th:text="${manufacturer.name}">
                 </option>
             </select>
-<!--            <select class = "form-control" th:id="selectManufacturer" th:name="selectManufacturer">-->
-<!--                <option disabled selected>Производитель</option>-->
-<!--                <option id="manufacturer_id"-->
-<!--                        th:each= "manufacturer: ${manufacturer}" th:value="${manufacturer}"-->
-<!--                        th:text="${manufacturer.name}"-->
-<!--                        th:manufacturer-id="${manufacturer.manufacturerId}">-->
-<!--                </option>-->
-<!--            </select>-->
-<!--            <input type="hidden" th:field="*{manufacturerId.manufacturerId}" class="form-control" id="manufacturerId" placeholder="manufacturerId">-->
-  <br/>
-  <label for="product_quantity">Quantity</label>
-  <input type="text" th:field="*{productQuantity}" id="product_quantity" placeholder="Введите количество">
-  <br/>
-  <label>Subtype ID</label>
-            <select th:name="productSubtypeId"> // имя поля класса!
-                <option th:each= "subtype: ${subtype}"
+            <br/>
+            <label for="product_quantity">Quantity</label>
+            <input type="text" th:field="*{productQuantity}" id="product_quantity" placeholder="Введите количество">
+            <br/>
+            <label>Subtype ID</label>
+            <select th:name="productSubtype"> // имя поля класса!
+                <option th:each="subtype: ${subtype}"
                         th:value="${subtype.id}"
                         th:text="${subtype.productSubtypeName}">
                 </option>
             </select>
-            <!--            <select class = "form-control" th:id="selectSubtype" th:name="selectSubtype">-->
-<!--                <option disabled selected>Подтип</option>-->
-<!--                <option id="product_subtype_id"-->
-<!--                        th:each= "subtype: ${subtype}" th:value="${subtype}"-->
-<!--                        th:text="${subtype.productSubtypeName}"-->
-<!--                        th:subtype-id="${subtype.id}">-->
-<!--                </option>-->
-<!--            </select>-->
-<!--            <input type="hidden" th:field="*{productSubtypeId.id}" class="form-control" id="subtypeId" placeholder="subtypeId">-->
             <br/>
             <input type="submit" value="Create Product" class="btn">
         </form>
     </div>
 </div>
 </body>
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
-<!--<script type="text/javascript">-->
-<!--    $(document).ready(function () {-->
-<!--        console.log("ready!");-->
-<!--    });-->
-<!--    $(document).ready(function () {-->
-<!--        $("#selectManufacturer").change(function() {-->
-<!--            $("#manufacturerId").val($("#selectManufacturer option:selected").attr("manufacturer-id"));-->
-<!--        });-->
-<!--        $("#selectSubtype").change(function() {-->
-<!--            $("#subtypeId").val($("#selectSubtype option:selected").attr("subtype-id"));-->
-<!--        });-->
-
-<!--    });-->
-<!--</script>-->
 </html>

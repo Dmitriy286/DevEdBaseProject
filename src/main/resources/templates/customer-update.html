@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Редактировать клиента</title>
@@ -10,8 +10,8 @@
     <th:block th:insert="fragments/navigation :: main-menu"></th:block>
     <div>
         <form action="#" th:action="@{/customer-update}" th:object="${customer}" method="post">
-            <label for="id">ID</label>
-            <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
+            <label for="customerId">ID</label>
+            <input readonly type="number" th:field="*{id}" id="customerId" placeholder="ID">
             <br/>
             <label for="name">Имя</label>
             <input type="text" th:field="*{name}" id="name" placeholder="Name">

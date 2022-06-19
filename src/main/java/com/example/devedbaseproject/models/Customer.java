@@ -1,14 +1,17 @@
 package com.example.devedbaseproject.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @Table(name = "customers")
@@ -16,7 +19,7 @@ public class Customer {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "customer_id")
     private Long id;
 
     @Column(name="customer_name")
@@ -30,4 +33,6 @@ public class Customer {
     @Column(name="customer_phone_number")
     private String phoneNumber;
 
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orderList;
 }

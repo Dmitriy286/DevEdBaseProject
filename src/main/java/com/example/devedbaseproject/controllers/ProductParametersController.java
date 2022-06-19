@@ -5,7 +5,7 @@ import com.example.devedbaseproject.models.ProductParameter;
 import com.example.devedbaseproject.models.ProductParameterValue;
 import com.example.devedbaseproject.repository.IProductParameterRepository;
 import com.example.devedbaseproject.repository.IProductParameterValueRepository;
-import com.example.devedbaseproject.repository.ProductRepository;
+import com.example.devedbaseproject.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +22,7 @@ public class ProductParametersController {
     @Autowired
     public ProductParametersController(IProductParameterRepository repository,
                                        IProductParameterValueRepository ppvalueRepository,
-                                       ProductRepository productRepository) {
+                                       IProductRepository productRepository) {
         this.repository = repository;
     }
 

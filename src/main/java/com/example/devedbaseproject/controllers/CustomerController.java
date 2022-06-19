@@ -1,7 +1,7 @@
 package com.example.devedbaseproject.controllers;
 
 import com.example.devedbaseproject.models.Customer;
-import com.example.devedbaseproject.repository.CustomerRepository;
+import com.example.devedbaseproject.repository.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +14,10 @@ import java.util.List;
 @Controller
 public class CustomerController {
 
-    private final CustomerRepository customerRepository;
+    private final ICustomerRepository customerRepository;
 
     @Autowired
-    public CustomerController(CustomerRepository customerRepository) {
+    public CustomerController(ICustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
@@ -47,7 +47,8 @@ public class CustomerController {
 
     @GetMapping("/customer-update/{id}")
     public String updateCustomerForm(@PathVariable("id") Long id, Model model){
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID" + id));
+        Customer customer = customerRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("Invalid customer ID" + id));
         model.addAttribute("customer", customer);
         return "customer-update";
     }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Manufacturer</title>
@@ -23,13 +23,13 @@
             <tbody>
             <tr th:each="manufacturer : ${manufacturer}">
 <!--                            ПОЛЯ КЛАССА!!!!-->
-                <td th:text="${manufacturer.manufacturerId}"></td>
+                <td th:text="${manufacturer.id}"></td>
                 <td th:text="${manufacturer.name}"></td>
                 <td th:text="${manufacturer.email}"></td>
                 <td th:text="${manufacturer.phoneNumber}"></td>
 
-                <td><a th:href="@{manufacturer-update/{id}(id=${manufacturer.manufacturerId})}" class="btn">Edit</a></td>
-                <td><a th:href="@{manufacturer-delete/{id}(id=${manufacturer.manufacturerId})}" class="btn">Delete</a></td>
+                <td><a th:href="@{manufacturer-update/{id}(id=${manufacturer.id})}" class="btn">Edit</a></td>
+                <td><a th:href="@{manufacturer-delete/{id}(id=${manufacturer.id})}" class="btn">Delete</a></td>
             </tr>
             </tbody>
         </table>
