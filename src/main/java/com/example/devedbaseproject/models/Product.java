@@ -17,6 +17,18 @@ import java.util.List;
 @Table(name = "product") // имя, связанной таблицы
 public class Product {
 
+
+    public Product(Long productId, String productName, String description,
+                   Long productQuantity) {
+        this.productId = productId;
+        this.productName = productName;
+        this.description = description;
+        this.productQuantity = productQuantity;
+        this.manufacturerId = new Manufacturer();
+        this.productSubtypeId = new ProductSubtype();
+        this.parameterValues = new ArrayList<>();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

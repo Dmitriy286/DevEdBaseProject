@@ -38,6 +38,40 @@
 
     <br>
 
+    <label for="Roles">Roles:</label>
+    <input id="Roles" type="text" th:field="*{roles}">
+
+    <br>
+
+    <label for="Active">Active:</label>
+    <input id="Active" type="text" th:field="*{active}">
+
+    <br>
+
+<!--    <ul>-->
+<!--        <th:block th:each="product : ${email.products}">-->
+<!--            <li th:utext="${product.getProductId()}"></li>-->
+<!--        </th:block>-->
+<!--    </ul>-->
+
+    <div th:each="nextRole : ${roles}">
+        <label>
+            <input th:type="checkbox"
+                   th:name="${nextRole}"
+                   th:value="${nextRole}"
+                   th:text="${nextRole}"
+                   th:checked="${#lists.contains(employee.roles, nextRole)}" >
+<!--                   th:field ="${employee.getRoles()}"-->
+
+<!--            th:checked="${nextRole}"-->
+            <!--                   th:field="*{employee.roles}"-->
+<!--            <label th:for="${#ids.prev(${roles})}"-->
+<!--                   th:text="${nextRole}">Roling</label>-->
+        </label>
+    </div>
+
+    <br>
+
     <input type="submit" value="Change employee details">
 </form>
 
