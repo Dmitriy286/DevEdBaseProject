@@ -12,31 +12,6 @@ import java.util.List;
 @Table(name = "Employees")
 public class Employee implements UserDetails {
 
-    public Employee(){}
-
-    public Employee(String username, String password) {
-        this.username = username;
-        this.password = password;
-        this.roles = new ArrayList<>();
-        this.active = false;
-
-        this.name = "";
-        this.email = "";
-        this.phoneNumber = "";
-        this.photo = "";
-    }
-
-    public Employee(String name, String username, String password, String email, String phoneNumber, String photo) {
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.photo = photo;
-        this.roles = new ArrayList<>();
-        this.active = false;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -80,6 +55,31 @@ public class Employee implements UserDetails {
 
     @OneToMany(mappedBy="employee")
     private List<Order> orderList;
+
+    public Employee(){}
+
+    public Employee(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.roles = new ArrayList<>();
+        this.active = false;
+
+        this.name = "";
+        this.email = "";
+        this.phoneNumber = "";
+        this.photo = "";
+    }
+
+    public Employee(String name, String username, String password, String email, String phoneNumber, String photo) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.photo = photo;
+        this.roles = new ArrayList<>();
+        this.active = false;
+    }
 
     @Override
     public String toString() {
@@ -192,5 +192,6 @@ public class Employee implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
+
     //endregion
 }

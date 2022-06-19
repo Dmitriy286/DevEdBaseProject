@@ -73,7 +73,7 @@
             console.log("Работает селект");
             $("#parameterName").val($("#selectParameter option:selected").attr("data-name"));
             console.log("Работает клонирование формы");
-            $("form:first").clone(true)
+            $("form:first").clone()
                 .appendTo("#formContainer");
         });
     });

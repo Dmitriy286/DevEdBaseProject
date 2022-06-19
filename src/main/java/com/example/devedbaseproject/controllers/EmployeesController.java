@@ -5,15 +5,15 @@ import com.example.devedbaseproject.models.Role;
 import com.example.devedbaseproject.repository.IEmployeeRepository;
 import com.example.devedbaseproject.repository.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -32,6 +32,14 @@ public class EmployeesController {
     @GetMapping()
     public String findAll(Model model) {
         List<Employee> employeeList = repository.findAll();
+
+        Collections.sort(employeeList, new Comparator<Employee>(){
+            public int compare(Employee o1, Employee o2)
+            {
+                return o1.getId().compareTo(o2.getId());
+            }
+        });
+
         model.addAttribute("employees", employeeList);
         return "employee/showAll";
     }
@@ -101,7 +109,6 @@ public class EmployeesController {
                 employee.getRoles().add(roleRepository.findByName(key).get());
             }
         }
-
 
         repository.save(employee);
 
