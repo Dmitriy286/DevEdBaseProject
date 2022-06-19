@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Email {
     private Long id;
 
     @Column(name = "date")
-    private String date;
+    private LocalDate date;
 
     @Column(name = "message")
     private String message;
@@ -31,7 +32,7 @@ public class Email {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH})
     private List<Product> products;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -42,9 +43,9 @@ public class Email {
     @Column(name = "send")
     private boolean send;
 
-    public Email(String date, String message) {
+    public Email(String message) {
 
-        this.date = date;
+        this.date = LocalDate.now();
         this.message = message;
         this.customer = new Customer();
         this.products = new ArrayList<>();

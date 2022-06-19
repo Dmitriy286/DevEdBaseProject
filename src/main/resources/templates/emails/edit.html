@@ -26,9 +26,9 @@
         <td th:text = "${email.getId()}"></td>
         <td>
             <label for="Date">Date:</label>
-            <input id="Date" type="text" th:field="*{date}">
+            <input readonly="readonly" id="Date" type="text" th:field="*{date}">
         </td>
-<!--            todo сделать автогенерацию для даты-->
+
         <td>
             <label for="Message">Message:</label>
             <input id="Message" type="text" th:field="*{message}">
@@ -40,7 +40,7 @@
         <td>
             <ul>
                 <th:block th:each="product : ${email.products}">
-                    <li th:utext="${product.getProductId()}"></li>
+                    <li th:utext="${product.getId()}"></li>
                 </th:block>
             </ul>
         </td>
