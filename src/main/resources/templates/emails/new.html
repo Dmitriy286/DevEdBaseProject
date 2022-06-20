@@ -8,10 +8,6 @@
 <h1>Creating form</h1>
 
 <form th:action="@{/emails}" th:method="POST" th:object="${email}">
-    <label for="Date">Date:</label>
-    <input type="text" th:field="*{date}" id="Date">
-
-    <br>
 
     <label for="Message">Message:</label>
     <input id="Message" type="text" th:field="*{message}">

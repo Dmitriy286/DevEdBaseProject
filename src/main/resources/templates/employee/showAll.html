@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,6 @@
 <div th:switch="${employees.size()}">
     <p th:case="0">List is empty</p>
     <div th:case="*">
-<!--    todo Как убрать блок кода во второй case?-->
     <h2>Employees</h2>
     <form th:action="@{/employees/filter}" th:method="POST">
         <label for="filter">Enter name:</label>
@@ -26,6 +25,7 @@
             <th>Name</th>
             <th>Username</th>
             <th>Password</th>
+            <th>Roles</th>
             <th>Email</th>
             <th>Phone Number</th>
             <th>Photo</th>
@@ -38,9 +38,21 @@
             <td th:text = "${employee.name}"></td>
             <td th:text = "${employee.username}"></td>
             <td th:text = "${employee.password}"></td>
+            <td>
+<!--                <ul>-->
+<!--                    <th:block th:each="product : ${email.products}">-->
+<!--                        <li th:utext="${product.getProductId()}"></li>-->
+<!--                    </th:block>-->
+<!--                </ul>-->
+
+                <th:block th:each="role : ${employee.roles}">
+                    <p th:text="${role.getId()}"></p>
+                </th:block>
+            </td>
+
             <td th:text = "${employee.email}"></td>
             <td th:text = "${employee.phoneNumber}"></td>
-            <td><img th:src = "@{/static/employee_id_{id}.png(id = ${employee.Id})}" alt="Employee photo"></td>
+            <td><img height=150 width=100 th:src = "@{/image/employee_id_{id}.png(id = ${employee.getId()})}" alt="Employee photo"></td>
             <td><a th:href = "@{/employees/{id}/edit(id = ${employee.Id})}">Update</a></td>
             <td><a th:href = "@{/employees/{id}/delete(id = ${employee.Id})}">Delete</a></td>
         </tr>

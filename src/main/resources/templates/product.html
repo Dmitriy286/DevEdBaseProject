@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Product with params</title>
@@ -30,9 +30,13 @@
     </table>
 </div>
 <div>
-    <form th:action="@{/products/{id}(id=${product.getId})}"
-          th:method="POST" th:object="${prodparamvalue}">
 
+    <button>Добавить</button><br>
+    <div th:id="formContainer">
+    <form th:action="@{/products/{productId}(productId=${product.getId})}"
+          th:method="POST" th:object="${prodparamvalue}" id="form1">
+
+        <div th:id="parametrSelectContainer">
         <select th:class="form-control" th:name="selectParameter" th:id="selectParameter">
             <option value="default">Select parameter</option>
             <option th:each="parameter: ${parameters}"
@@ -41,9 +45,10 @@
                     th:data-name="${parameter.name}">
             </option>
         </select>
+        </div>
 
-        <input type="hidden" th:field="*{parameter.name}" class="form-control" id="parameterName"
-               placeholder="parameterName">
+        <input type="hidden" th:field="*{parameter.name}" class="form-control" id="parameterName" placeholder="parameterName">
+
         <br>
         <label for="string">String parameter:</label>
         <input type="text" th:field="*{stringValue}" id="string"/>
@@ -51,9 +56,10 @@
         <label for="int">Integer parameter:</label>
         <input type="text" th:field="*{intValue}" id="int"/>
         <br>
-        <input type="submit" value="Add parameter details">
     </form>
 
+</div>
+    <button type="submit" form="form1">Add parameter details</button>
 </div>
 <div>
 <a href="/index">Back to main</a>
@@ -61,14 +67,58 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        console.log("ready!");
-    });
-    $(document).ready(function () {
-        $("#selectParameter").change(function() {
+
+    $(document).ready(function(){
+        $("button").click(function(){
+            console.log("Работает селект");
             $("#parameterName").val($("#selectParameter option:selected").attr("data-name"));
+            console.log("Работает клонирование формы");
+            $("form:first").clone()
+                .appendTo("#formContainer");
         });
     });
+
+
+
+    // $(document).ready(function () {
+    //     console.log("ready!");
+    // });
+    // $(document).ready(function () {
+    //     console.log("docready!");
+    //     $("#parametrSelectContainer").change(function () {
+    //         console.log("selchanged!");
+    //         // var oldId = $("#parametrSelectContainer.form-control.last-child").id;
+    //         var oldId = this.id;
+    //         var indexstr = "selectParameter";
+    //         var newIdNumber = Number(oldId.substring(indexstr.length)) + 1;
+    //         let newId = indexstr + newIdNumber;
+    //         console.log(newId)
+    //         let br = document.createElement('br');
+    //
+    //
+    //         // let newSelect = $("#parametrSelectContainer").clone().append($("#" + newId));
+    //         // let newSelect = $(".form-control").clone().attr("id", newId);
+    //         // let newSelect = $("#selectParameter1 option:selected").clone().attr("id", newId);
+    //         let newSelect = $('select#selectParameter1').clone().attr("id", newId);
+    //             // .form-control
+    //         $(".form-control").after(newSelect);
+    //         $(".form-control").after(br);
+    //     });
+    // });
+
+
+
+
+    // $('select#options').clone().attr('id', 'newOptions').appendTo('.blah');
+        //
+        // let newSelect = $('select#productSelectList1').clone().attr("id", newId);
+        // $(".productSelect").after(newSelect);
+        // $(".productSelect").after(br);
+
+
+    //         $("#parameterName").val($("#selectParameter1 option:selected").attr("data-name"));
+    //     });
+    // });
 
 </script>
 </html>

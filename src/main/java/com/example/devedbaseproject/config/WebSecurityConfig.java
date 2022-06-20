@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -15,8 +17,9 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    //ниже строки из работающего кода!!!
+    //ниже закомментированы строки из работающего кода!!!
 //    @Autowired
 //    private DataSource dataSource;
     @Autowired
@@ -25,44 +28,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
-    }
-
-
-//    @Bean
-//    public PasswordEncoder encoder() {
 //        return new BCryptPasswordEncoder();
     ////      в configure:          .passwordEncoder(encoder())
-//    }
-//
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService);
-                //ниже строки из работающего кода!!!
+                //ниже закомментированы строки из работающего кода!!!
 //                jdbcAuthentication()
 //                .dataSource(dataSource)
 //                .usersByUsernameQuery("select username, password, active from Employees where username=?")
 //                .authoritiesByUsernameQuery("select e.username, r.name from employees as e inner join employee_role as er on e.id = er.employee_id inner join roles as r on r.id = er.role_id where e.username=?");
     }
 
-//                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-//                .usersByUsernameQuery("select username, password, active from Employees where username=?")
-////                .authoritiesByUsernameQuery("select e.login, r.roles from Employees e " +
-////                "inner join role r on r.id = er.role_id " +
-////                        "inner join employee_role er on e.id = er.employee_id " +
-////                        "where e.username=?");
-//                .authoritiesByUsernameQuery("select e.username, r.name" +
-//                        "from employees as e" +
-//                        "inner join employee_role as er on e.id = er.employee_id" +
-//                        "inner join roles as r on r.id = er.role_id" +
-//                        "where e.username=?");
-//    }
 //
 //    @Override
 //    public void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        //и добавляем его сюда
 //        auth.authenticationProvider(customAuthencationProvider);
 //    }
-
 
 
 //@Override
@@ -89,18 +74,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                    .antMatchers("/", "/registration").permitAll()
-                    .anyRequest().authenticated()
+                .antMatchers("/", "/registration").permitAll()
+                .anyRequest().authenticated()
 //                .antMatchers("/admin/**").hasRole("Admin")
 //                .antMatchers("/user/**").hasAnyRole("Manager", "Admin")
 //                .antMatchers("/hello/**").permitAll()
-                .and()
+            .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .and()
+            .and()
                 .logout()
                 .permitAll();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/style.css", "/coffee.png", "/flowers.png",
+                "https://fonts.googleapis.com", "https://fonts.gstatic.com",
+                "https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");
     }
 
 

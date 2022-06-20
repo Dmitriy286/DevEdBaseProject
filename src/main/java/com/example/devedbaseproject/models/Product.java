@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -17,6 +18,18 @@ import java.util.List;
 @Entity // сущность связана с БД
 @Table(name = "product") // имя, связанной таблицы
 public class Product {
+
+
+    public Product(Long id, String productName, String description,
+                   Long productQuantity) {
+        this.id = id;
+        this.productName = productName;
+        this.description = description;
+        this.productQuantity = productQuantity;
+        this.manufacturer = new Manufacturer();
+        this.productSubtype = new ProductSubtype();
+        this.parameterValues = new ArrayList<>();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
