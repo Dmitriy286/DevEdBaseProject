@@ -53,18 +53,18 @@
 <script type="text/javascript">
     $(document).ready(function(){
         console.log("doc_ready")
-        $('.productSelect').change(function(){
-            console.log("jojo")
-
-            var oldId = this.id;
+        $("#productSelectContainer .productSelect:last").change(function(){
+            console.log("enterSelect")
+            var oldId = $("#productSelectContainer .productSelect:last-child").attr("ID");
+            console.log(oldId)
             var selName = "productSelectList";
             var num = Number(oldId.substring(selName.length))+1;
-            let newId = selName + num;
-            console.log(newId)
-            let br = document.createElement('br');
-            let newSelect = $('select#productSelectList1').clone().attr("id", newId);
-            $(".productSelect").after(newSelect);
-            $(".productSelect").after(br);
+            var newId = selName + num;
+            var br = document.createElement('br');
+            var newSelect = $(".productSelect:last-child").clone(true,true).attr("ID", newId);
+            $("#productSelectContainer").append(br);
+            $("#productSelectContainer").append(newSelect);
+
         })
     })
 

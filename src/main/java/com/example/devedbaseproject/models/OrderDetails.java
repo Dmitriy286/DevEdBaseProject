@@ -24,6 +24,9 @@ public class OrderDetails {
     @Column(name = "quantity")
     private int quantity;
 
+    @OneToOne(mappedBy="orderDetails")
+    private Order order;
+
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name="orderdetails_product",
             joinColumns = @JoinColumn(name="orderdetails_id"),

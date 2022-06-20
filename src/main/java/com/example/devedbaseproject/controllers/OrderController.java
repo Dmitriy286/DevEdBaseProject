@@ -1,9 +1,6 @@
 package com.example.devedbaseproject.controllers;
 
-import com.example.devedbaseproject.models.Customer;
-import com.example.devedbaseproject.models.Employee;
-import com.example.devedbaseproject.models.Order;
-import com.example.devedbaseproject.models.Product;
+import com.example.devedbaseproject.models.*;
 import com.example.devedbaseproject.repository.ICustomerRepository;
 import com.example.devedbaseproject.repository.IEmployeeRepository;
 import com.example.devedbaseproject.repository.IOrderRepository;
@@ -94,10 +91,11 @@ public class OrderController {
         model.addAttribute("order", order);
         Customer customer = order.getCustomer();
         Employee employee = order.getEmployee();
-        List<Product> lp = order.getProductList();
+        OrderDetails orderDetails = order.getOrderDetails();
+        List<Product> products = orderDetails.getProductList();
         model.addAttribute("customer", customer);
         model.addAttribute("employee", employee);
-        model.addAttribute("prodList", lp);
+        model.addAttribute("prodList", products);
         return "order/order-details";
     }
 
