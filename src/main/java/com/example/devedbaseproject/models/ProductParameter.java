@@ -25,4 +25,13 @@ public class ProductParameter {
 
     @Column(name = "value_type")
     private boolean valueType;
+
+    @Override
+    public String toString() {
+        return "ProductParameter{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", valueType=" + valueType +
+                '}';
     }
+}

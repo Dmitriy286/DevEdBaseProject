@@ -35,4 +35,15 @@ public class ProductParameterValue {
 
     @Column(name = "string_value")
     private String stringValue;
+
+    @Override
+    public String toString() {
+        return "ProductParameterValue{" +
+                "id=" + id +
+                ", product=" + product +
+                ", parameter=" + parameter +
+                ", intValue=" + intValue +
+                ", stringValue='" + stringValue + '\'' +
+                '}';
+    }
 }
