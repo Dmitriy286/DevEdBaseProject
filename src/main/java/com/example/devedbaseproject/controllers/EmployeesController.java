@@ -123,7 +123,7 @@ public class EmployeesController {
     }
 
     @PostMapping("/filter")
-    public String filter(@RequestParam("filter") String filter, Model model) {
+    public String filterByName(@RequestParam("filter") String filter, Model model) {
         Iterable<Employee> employees;
         if (filter != null && !filter.isEmpty()) {
             employees = repository.findByName(filter);
