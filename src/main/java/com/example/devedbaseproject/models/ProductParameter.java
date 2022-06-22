@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 
 @Entity
 @Table(name = "product_parameters")
@@ -31,7 +31,7 @@ public class ProductParameter {
         this.valueType = valueType;
     }
 
-    public ProductParameter(name) {
+    public ProductParameter(String name) {
         this.name = name;
         this.valueType = false;
     }
