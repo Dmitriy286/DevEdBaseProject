@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Change order</title>
-    <link rel="stylesheet" href="/list.css">
+<!--    <link rel="stylesheet" href="/list.css">-->
 </head>
 <body>
 <div class="container">
     <th:block th:insert="fragments/navigation :: main-menu"></th:block>
     <div>
-        <form action="#" th:action="@{/order-create}" th:object="${order}" method="post">
+        <form action="#" th:action="@{/order-update}" th:object="${order}" method="post">
 
             <label for="order_id">ID</label>
             <input readonly type="number" th:field="*{id}" id="order_id" placeholder="ID">
@@ -19,13 +19,24 @@
             <input type="hidden" th:field="*{customer.id}" id="customerName">
             <output type="text" th:text="${customer.name +' '+ customer.surname}"></output>
             <br>
-            <label for="product_list">Выберите продукт</label>
-            <select th:name="product" id="product_list">
-                <option th:each="product:${products}"
-                        th:value="${product.id}"
-                        th:text="${product.productName}">Товар
-                </option>
-            </select>
+            <div th:id="productSelectContainer">
+                <label>Выберите продукт</label>
+                <br>
+                <div class="addProductClass" th:id="addProduct0">
+                    <select class="productSelect" th:field="*{orderDetails[0].product.id}"
+                            th:name="productSelectList" th:id="productSelectList0">
+                        <option value="">Выберите товар</option>
+                        <option th:each="product:${products}"
+                                th:value="${product.id}"
+                                th:text="${product.productName}">
+                        </option>
+                    </select>
+                    <label>Количество</label>
+                    <input type="text" class="productAmountClass" th:field="*{orderDetails[0].productAmount}"
+                           id="productAmount0" placeholder="Кол-во">
+                    <input type="hidden" class="productAmountClass" id="orderDetailsId0" th:field="*{orderDetails[0].id}">
+                </div>
+            </div>
             <br>
             <label for="salesmanName">Продаван</label>
             <input type="hidden"  th:field="*{employee.id}" id="salesmanName">

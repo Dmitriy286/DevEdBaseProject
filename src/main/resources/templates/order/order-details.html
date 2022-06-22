@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Детали заказа</title>
-    <link rel="stylesheet" href="/list.css">
+<!--    <link rel="stylesheet" href="/list.css">-->
 </head>
 <body>
 <div class="container">
     <th:block th:insert="fragments/navigation :: main-menu"></th:block>
     <div>
-        <label>ID</label>
+        <label>Зоказ</label>
         <table>
+            <thead>
+            <tr>
+                <td th:text="${order.customer.name}"></td>
+                <td th:text="${order.employee.name}"></td>
+            </tr>
+            </thead>
             <tbody>
-                <tr>
-                    <td th:text="${order.id}"></td>
-                    <td th:text="${order.customer.name}"></td>
-                    <td th:text="${order.employee.name}"></td>
-                </tr>
+            <tr th:each="orderDetail : ${orderDetails}">
+                <td th:text="${orderDetail.product.productName}"></td>
+                <td th:text="${orderDetail.productAmount}"></td>
+            </tr>
             </tbody>
         </table>
-
     </div>
 </div>
 </body>

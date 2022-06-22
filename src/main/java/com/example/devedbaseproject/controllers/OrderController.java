@@ -1,12 +1,7 @@
 package com.example.devedbaseproject.controllers;
 
-import com.example.devedbaseproject.models.Customer;
-import com.example.devedbaseproject.models.Employee;
-import com.example.devedbaseproject.models.Order;
-import com.example.devedbaseproject.repository.ICustomerRepository;
-import com.example.devedbaseproject.repository.IEmployeeRepository;
-import com.example.devedbaseproject.repository.IOrderRepository;
-import com.example.devedbaseproject.repository.IProductRepository;
+import com.example.devedbaseproject.models.*;
+import com.example.devedbaseproject.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -28,13 +22,15 @@ public class OrderController {
     private final ICustomerRepository customerRepository;
     private final IProductRepository productRepository;
     private final IEmployeeRepository employeeRepository;
+    private final IOrderDetailsRepository orderDetailsRepository;
 
     @Autowired
-    public OrderController(IOrderRepository orderRepository, ICustomerRepository customerRepository, IProductRepository productRepository, IEmployeeRepository employeeRepository) {
+    public OrderController(IOrderRepository orderRepository, ICustomerRepository customerRepository, IProductRepository productRepository, IEmployeeRepository employeeRepository, IOrderDetailsRepository orderDetailsRepository) {
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
         this.employeeRepository = employeeRepository;
+        this.orderDetailsRepository = orderDetailsRepository;
     }
 
     @GetMapping("/orders")
@@ -44,27 +40,16 @@ public class OrderController {
         return "order/orders-list";
     }
 
-//    @GetMapping("/order-create")
-//    public String createOrderForm(Order order){
-//        return "order/order-create";
-//    }
-//
-////
-//    @PostMapping("/order-create")
-//    public String createOrder(Order order){
-//        orderRepository.save(order);
-//        return "redirect:/orders";
-//    }
-
-
     @GetMapping("/order-update/{id}")
     public String updateOrderForm(@PathVariable("id") Long id, Model model) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID" + id));
         model.addAttribute("order", order);
         Customer customer = order.getCustomer();
         Employee employee = order.getEmployee();
+        List<OrderDetails> orderDetails = order.getOrderDetails();
         model.addAttribute("customer", customer);
         model.addAttribute("employee", employee);
+        model.addAttribute("orderDetails", orderDetails);
         model.addAttribute("products", productRepository.findAll());
         return "order/order-update";
     }
@@ -86,6 +71,7 @@ public class OrderController {
         model.addAttribute("customers", customerRepository.findAll());
         model.addAttribute("products", productRepository.findAll());
         model.addAttribute("employees", employeeRepository.findAll());
+        model.addAttribute("orderDetails", orderDetailsRepository.findAll());
         return "order/order-create";
     }
 
@@ -106,8 +92,11 @@ public class OrderController {
         model.addAttribute("order", order);
         Customer customer = order.getCustomer();
         Employee employee = order.getEmployee();
+        List<OrderDetails> orderDetails = order.getOrderDetails();
         model.addAttribute("customer", customer);
         model.addAttribute("employee", employee);
+        model.addAttribute("orderDetails", orderDetails);
+
         return "order/order-details";
     }
 
