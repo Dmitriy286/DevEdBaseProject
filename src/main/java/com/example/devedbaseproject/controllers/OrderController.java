@@ -1,6 +1,9 @@
 package com.example.devedbaseproject.controllers;
 
-import com.example.devedbaseproject.models.*;
+import com.example.devedbaseproject.models.Customer;
+import com.example.devedbaseproject.models.Employee;
+import com.example.devedbaseproject.models.Order;
+import com.example.devedbaseproject.models.OrderDetails;
 import com.example.devedbaseproject.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import static com.example.devedbaseproject.tools.Tools.getLocalDateTime;
 
 @Controller
 public class OrderController {
@@ -100,9 +103,4 @@ public class OrderController {
         return "order/order-details";
     }
 
-    private String getLocalDateTime(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
-        LocalDateTime dateTime = LocalDateTime.now();
-        return dateTime.format(formatter);
-    }
 }
