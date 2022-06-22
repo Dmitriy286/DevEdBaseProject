@@ -21,15 +21,10 @@ public class OrderDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
-    @Column(name = "quantity")
-    private int quantity;
+    @Column(name = "product_amount")
+    private Integer productAmount;
 
-    @OneToOne(mappedBy="orderDetails")
-    private Order order;
-
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name="orderdetails_product",
-            joinColumns = @JoinColumn(name="orderdetails_id"),
-            inverseJoinColumns = @JoinColumn(name="product_id"))
-    private List<Product> productList;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="product_id")
+    private Product product;
 }

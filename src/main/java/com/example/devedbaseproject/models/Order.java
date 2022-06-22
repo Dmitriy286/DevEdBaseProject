@@ -38,15 +38,9 @@ public class Order {
     @Column(name = "address")
     private String deliveryAddress;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="order_details_id")
-    private OrderDetails orderDetails;
-//    @JoinTable(name = "orders_products",
-//            joinColumns = {@JoinColumn(name = "order_id",
-//                    referencedColumnName = "id")},
-//            inverseJoinColumns = @JoinColumn(name = "product_id",
-//                    referencedColumnName = "id"))
-//    @ManyToMany()
-//    private List<Product> productList;
+    private List<OrderDetails> orderDetails;
+
 
 }

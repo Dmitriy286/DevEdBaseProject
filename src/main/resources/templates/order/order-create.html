@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create order</title>
-    <link rel="stylesheet" href="/list.css">
+<!--    <link rel="stylesheet" href="/list.css">-->
 </head>
 <body>
 <div class="container">
@@ -19,19 +19,24 @@
                 </option>
             </select>
             <br/>
-            <div th:id="rootDiv">
-                <div th:id="productSelectContainer">
 
-                    <label>Выберите продукт</label>
-                    <select class="productSelect" th:name="productSelectList" th:id="productSelectList1">
+            <div th:id="productSelectContainer">
+                <label>Выберите продукт</label>
+                <br>
+                <div class="addProductClass" th:id="addProduct0">
+                    <select class="productSelectClass" th:field="*{orderDetails[0].product.id}" th:name="productSelectList" th:id="productSelectList0">
                         <option value="">Выберите товар</option>
                         <option th:each="product:${products}"
                                 th:value="${product.id}"
                                 th:text="${product.productName}">
                         </option>
                     </select>
+                    <label>Количество</label>
+                    <input type="text" class="productAmountClass" th:field="*{orderDetails[0].productAmount}"
+                           id="productAmount0" placeholder="Кол-во">
                 </div>
             </div>
+
             <label for="deliveryAddress">Адрес</label>
             <input type="text" th:field="*{deliveryAddress}" id="deliveryAddress" placeholder="Адрес доставки">
             <br/>
@@ -51,17 +56,17 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
         console.log("doc_ready")
-        $("#productSelectContainer .productSelect:last").change(function(){
+        $("#productSelectContainer .productSelect:last").change(function () {
             console.log("enterSelect")
             var oldId = $("#productSelectContainer .productSelect:last-child").attr("ID");
             console.log(oldId)
             var selName = "productSelectList";
-            var num = Number(oldId.substring(selName.length))+1;
+            var num = Number(oldId.substring(selName.length)) + 1;
             var newId = selName + num;
             var br = document.createElement('br');
-            var newSelect = $(".productSelect:last-child").clone(true,true).attr("ID", newId);
+            var newSelect = $(".productSelect:last-child").clone(true, true).attr("ID", newId);
             $("#productSelectContainer").append(br);
             $("#productSelectContainer").append(newSelect);
 

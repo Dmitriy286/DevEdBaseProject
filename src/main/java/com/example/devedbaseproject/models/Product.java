@@ -53,14 +53,6 @@ public class Product {
     @JoinColumn(name = "product_subtype_id")
     private ProductSubtype productSubtype;
 
-    @JoinTable(name = "orderdetails_product",
-            joinColumns = @JoinColumn(name = "product_id",
-                    referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "orderdetails_id",
-                    referencedColumnName = "id"))
-    @ManyToMany()
-    private List<OrderDetails> orderDetailsList;
-
     @OneToMany
     @JoinColumn(name = "parameter_values")
     private List<ProductParameterValue> parameterValues;
