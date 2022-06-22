@@ -87,21 +87,31 @@ public class ProductController {
         List<ProductParameter> parameters = productParameterRepository.findAll();
         model.addAttribute("parameters", parameters);
 
-        Optional<ProductParameter> pp = productParameterRepository.findById(31L);
-        if (pp.isPresent()) {
-            ProductParameter newPP = pp.get();
-            PPValueWrapper wrapper = new PPValueWrapper();
-            ProductParameterValue ppv = new ProductParameterValue();
-            ppv.setParameter(newPP);
-            ppv.setIntValue(0);
-            ppv.setStringValue("test");
-            wrapper.getPpValueList().add(ppv);
-            model.addAttribute("wrapper", wrapper);
-            System.out.println(wrapper);
-            System.out.println(wrapper.getPpValueList());
-        } else {
-            System.out.println("Error Found");
-        }
+//        Optional<ProductParameter> pp = productParameterRepository.findById(31L);
+//        if (pp.isPresent()) {
+//            ProductParameter newPP = pp.get();
+//            PPValueWrapper wrapper = new PPValueWrapper();
+//            ProductParameterValue ppv = new ProductParameterValue();
+//            ppv.setParameter(newPP);
+//            ppv.setIntValue(0);
+//            ppv.setStringValue("test");
+//            wrapper.getPpValueList().add(ppv);
+//            model.addAttribute("wrapper", wrapper);
+//            System.out.println(wrapper);
+//            System.out.println(wrapper.getPpValueList());
+//        } else {
+//            System.out.println("Error Found");
+//        }
+
+        ProductParameter newPP = new ProductParameter("");
+
+        PPValueWrapper wrapper = new PPValueWrapper();
+        ProductParameterValue ppv = new ProductParameterValue();
+        ppv.setParameter(newPP);
+        ppv.setIntValue(0);
+        ppv.setStringValue("test");
+        wrapper.getPpValueList().add(ppv);
+        model.addAttribute("wrapper", wrapper);
 
 //        List<ProductParameterValue> prodparamvalues = new ArrayList<ProductParameterValue>();
 //        model.addAttribute("prodparamvalues", prodparamvalues);
@@ -145,13 +155,22 @@ public class ProductController {
         for (ProductParameterValue ppvalue: wrapper.getPpValueList()) {
             ppvalue.setProduct(product);
 
+            Optional<ProductParameter> tempproductparameter = productParameterRepository.findByName(ppvalue.getParameter().getName());
+
+            ProductParameter productparameter = new ProductParameter();
+            if (tempproductparameter.isPresent()) {
+                productparameter = tempproductparameter.get();
+            } else {
+                System.out.println("Error Found, likely no product");
+            }
+
 //            Optional<ProductParameter> parameter = productParameterRepository.findByName(ppvalue.getParameter().getName());
 //            if (parameter.isPresent()) {
 //                ppvalue.setParameter(parameter.get());
 //            } else {
 //                System.out.println("Error Found, likely no parameter");
 //            }
-
+            ppvalue.setParameter(productparameter);
             ppvalueRepository.save(ppvalue);
             product.getParameterValues().add(ppvalue);
             productRepository.save(product);

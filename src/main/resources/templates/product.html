@@ -45,12 +45,12 @@
                     <option th:each="parameter: ${parameters}"
                             th:value="${parameter.name}"
                             th:text="${parameter.name}"
-                            th:data-name="${parameter.name}">
+                            th:data-name="${parameter.getName()}">
                     </option>
                 </select>
             </td>
             <td>
-            <input type="hidden" th:field="*{ppValueList[0].parameter.name}"
+            <input th:field="*{ppValueList[0].parameter.name}"
             placeholder="parameterName" th:id="parameterName1"/>
             </td>
             <td>
@@ -81,18 +81,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        // var childs1 = $("body").children(childselector);
-        // var finds1 = $("body").find(findselector);
-        // console.log(childs1)
-        // console.log(finds1)
-
-        var childs2 = $("body").children();
-        var finds2 = $("body").find();
-        console.log(childs2)
-        console.log(finds2)
-
         var count1 = 0;
-        $("selectParameter").change(function () {
+        $("select[name^='selectParameter']").change(function () {
             console.log("Работает селект")
             var hiddenIndexStr = "parameterName";
             var newHiddenIdNumber = 1 + count1;
@@ -102,7 +92,7 @@
             let newSelectId = selectIndexStr + newSelectIdNumber;
             console.log(newHiddenId)
             console.log(newSelectId)
-            $("#newHiddenId").val($("#newSelectId option:selected").attr("data-name"));
+            $("#" + newHiddenId).val($("#" + newSelectId + " option:selected").attr("data-name"));
             count1 += 1;
             });
         var count2 = 0;
@@ -126,15 +116,16 @@
             console.log(newHiddenId)
 
             var index = 1 + count2;
-            // let newFieldText = "ppValueList[" + index + "].parameter.name"
-            let newFieldText = "*{ppValueList[" + index + "].parameter.name}"
+            let newFieldText = "ppValueList[" + index + "].parameter.name"
+         //   let newFieldText = "*{ppValueList[" + index + "].parameter.name}"
                 // *{ppValueList[0].parameter.name}
             console.log(newFieldText)
 
-            $("#" + oldContainerId).clone().attr("id", newContainerId).appendTo(".inner-container");
+            $("#" + oldContainerId).clone(true, true).attr("id", newContainerId).appendTo(".inner-container");
 
             $("#" + newContainerId).find("#" + oldHiddenId).attr("id", newHiddenId);
-            $("#" + newContainerId).find("#" + newHiddenId).attr("field", newFieldText);
+            $("#" + newContainerId).find("#" + newHiddenId).attr("name", newFieldText);
+            $("#" + newHiddenId).val("")
 
             var stringIndexStr = "string";
             var newStringIdNumber = 2 + count2;
@@ -145,6 +136,7 @@
 
             $("#" + newContainerId).find("#" + oldStringId).attr("id", newStringId);
             $("#" + newContainerId).find("#" + newStringId).attr("name", newStringFieldText);
+            $("#" + newStringId).val("");
 
             var itnIndexStr = "int";
             var newIntIdNumber = 2 + count2;
@@ -155,6 +147,19 @@
 
             $("#" + newContainerId).find("#" + oldIntId).attr("id", newIntId);
             $("#" + newContainerId).find("#" + newIntId).attr("name", newIntFieldText);
+            $("#" + newIntId).val(0);
+
+            var selectIndexStr = "selectParameter";
+            var newSelectIdNumber = 2 + count2;
+            var oldSelectIdNumber = 1 + count2;
+            let newSelectId = selectIndexStr + newSelectIdNumber;
+            let oldSelectId = selectIndexStr + oldSelectIdNumber;
+
+            $("#" + newContainerId).find("#" + oldSelectId).attr("id", newSelectId);
+            console.log("Работает изменение айдишника селекта после клонирования. Новый айди: ")
+            console.log(newSelectId)
+            console.log("Старый айди: ")
+            console.log(oldSelectId)
 
             count2 += 1;
 

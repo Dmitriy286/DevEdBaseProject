@@ -30,7 +30,7 @@ public class ProductParameterValue {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name = "parameter_id")
     private ProductParameter parameter;
 
