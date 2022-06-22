@@ -1,6 +1,7 @@
 package com.example.devedbaseproject.controllers;
 
 
+import com.example.devedbaseproject.models.PPValueWrapper;
 import com.example.devedbaseproject.models.Product;
 import com.example.devedbaseproject.models.ProductParameter;
 import com.example.devedbaseproject.models.ProductParameterValue;
@@ -8,14 +9,10 @@ import com.example.devedbaseproject.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class ProductController {
@@ -83,12 +80,41 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/products/{id}")
-    public String findProductById(@PathVariable("id") Long productId,
-                                  @ModelAttribute("prodparamvalue") ProductParameterValue prodparamvalue,
+    @GetMapping("/products/{productId}")
+    public String findProductById(@PathVariable("productId") Long productId,
+//                                  @ModelAttribute("prodparamvalue") ProductParameterValue prodparamvalue,
                                   Model model) {
         List<ProductParameter> parameters = productParameterRepository.findAll();
         model.addAttribute("parameters", parameters);
+
+//        Optional<ProductParameter> pp = productParameterRepository.findById(31L);
+//        if (pp.isPresent()) {
+//            ProductParameter newPP = pp.get();
+//            PPValueWrapper wrapper = new PPValueWrapper();
+//            ProductParameterValue ppv = new ProductParameterValue();
+//            ppv.setParameter(newPP);
+//            ppv.setIntValue(0);
+//            ppv.setStringValue("test");
+//            wrapper.getPpValueList().add(ppv);
+//            model.addAttribute("wrapper", wrapper);
+//            System.out.println(wrapper);
+//            System.out.println(wrapper.getPpValueList());
+//        } else {
+//            System.out.println("Error Found");
+//        }
+
+        ProductParameter newPP = new ProductParameter("");
+
+        PPValueWrapper wrapper = new PPValueWrapper();
+        ProductParameterValue ppv = new ProductParameterValue();
+        ppv.setParameter(newPP);
+        ppv.setIntValue(0);
+        ppv.setStringValue("test");
+        wrapper.getPpValueList().add(ppv);
+        model.addAttribute("wrapper", wrapper);
+
+//        List<ProductParameterValue> prodparamvalues = new ArrayList<ProductParameterValue>();
+//        model.addAttribute("prodparamvalues", prodparamvalues);
 
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {
@@ -99,31 +125,72 @@ public class ProductController {
         return "product";
     }
 
-    @PostMapping("/products/{id}")
-    public String setParameters(ProductParameterValue prodparamvalue,
-                                @PathVariable("id") Long id) {
+    @PostMapping("/products/{productId}")
+    public String setParameters(@RequestParam Map<String, String> form,
+                                @ModelAttribute PPValueWrapper wrapper, Model model,
+                                @PathVariable("productId") Long productId) {
+        System.out.println(wrapper.getPpValueList() != null ? wrapper.getPpValueList().size() : "null list");
+        System.out.println("--");
 
-        Optional<Product> tempproduct = productRepository.findById(id);
+        model.addAttribute("wrapper", wrapper);
 
-        Optional<ProductParameter> newparameter = productParameterRepository.findByName(prodparamvalue.getParameter().getName());
+        System.out.println(form);
+        System.out.println(wrapper);
+        System.out.println(wrapper.getPpValueList());
+        System.out.println(wrapper.getPpValueList().toString());
+        System.out.println(wrapper.getPpValueList().get(0).toString());
+        System.out.println(wrapper.getPpValueList().size());
+        System.out.println(form.keySet());
 
-        if (newparameter.isPresent()) {
-            prodparamvalue.setParameter(newparameter.get());
-        } else {
-            System.out.println("Error Found, likely no parameter");
-        }
+        Optional<Product> tempproduct = productRepository.findById(productId);
 
+        Product product = new Product();
         if (tempproduct.isPresent()) {
-            Product product = tempproduct.get();
-            prodparamvalue.setProduct(product);
-            ppvalueRepository.save(prodparamvalue);
-            product.getParameterValues().add(prodparamvalue);
-            productRepository.save(product);
+            product = tempproduct.get();
         } else {
             System.out.println("Error Found, likely no product");
         }
 
-        return "redirect:/products/" + id;
+
+        for (ProductParameterValue ppvalue: wrapper.getPpValueList()) {
+            ppvalue.setProduct(product);
+
+            Optional<ProductParameter> tempproductparameter = productParameterRepository.findByName(ppvalue.getParameter().getName());
+
+            ProductParameter productparameter = new ProductParameter();
+            if (tempproductparameter.isPresent()) {
+                productparameter = tempproductparameter.get();
+            } else {
+                System.out.println("Error Found, likely no product");
+            }
+
+//            Optional<ProductParameter> parameter = productParameterRepository.findByName(ppvalue.getParameter().getName());
+//            if (parameter.isPresent()) {
+//                ppvalue.setParameter(parameter.get());
+//            } else {
+//                System.out.println("Error Found, likely no parameter");
+//            }
+            ppvalue.setParameter(productparameter);
+            ppvalueRepository.save(ppvalue);
+            product.getParameterValues().add(ppvalue);
+            productRepository.save(product);
+            System.out.println(ppvalue);
+            System.out.println(ppvalue.getParameter());
+            System.out.println(ppvalue.getParameter().getName());
+        }
+//
+//
+//        if (tempproduct.isPresent()) {
+//            Product product = tempproduct.get();
+//            prodparamvalue.setProduct(product);
+//            ppvalueRepository.save(prodparamvalue);
+//            product.getParameterValues().add(prodparamvalue);
+//            productRepository.save(product);
+//        } else {
+//            System.out.println("Error Found, likely no product");
+//        }
+
+        return "redirect:/products/" + productId;
     }
 
 }

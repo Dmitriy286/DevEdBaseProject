@@ -32,7 +32,7 @@ public class Employee implements UserDetails {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phone_number")
+    @Column(name = "phonenumber")
     private String phoneNumber;
 
     @Column(name = "photo")
@@ -41,16 +41,15 @@ public class Employee implements UserDetails {
     @JoinTable(
             name = "employee_role",
             joinColumns = {@JoinColumn(
-                    name = "employee_id",
-                    referencedColumnName = "id"
+                    name = "employee_id"
+//                    referencedColumnName = "id"
             )},
             inverseJoinColumns = @JoinColumn(
-                    name = "role_id",
-                    referencedColumnName = "id"
+                    name = "role_id"
+//                    referencedColumnName = "id"
             )
     )
-
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private List<Role> roles;
 
     @OneToMany(mappedBy="employee")

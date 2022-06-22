@@ -31,94 +31,141 @@
 </div>
 <div>
 
-    <button>Добавить</button><br>
-    <div th:id="formContainer">
+    <button id="button1">Добавить</button><br>
+
     <form th:action="@{/products/{productId}(productId=${product.getId})}"
-          th:method="POST" th:object="${prodparamvalue}" id="form1">
+          th:method="POST" th:object="${wrapper}" id="form" name="formName">
 
-        <div th:id="parametrSelectContainer">
-        <select th:class="form-control" th:name="selectParameter" th:id="selectParameter">
-            <option value="default">Select parameter</option>
-            <option th:each="parameter: ${parameters}"
-                    th:value="${parameter}"
-                    th:text="${parameter.name}"
-                    th:data-name="${parameter.name}">
-            </option>
-        </select>
-        </div>
+        <table class="inner-container" th:name="parameterSelectContainer" th:id="innerContainer">
+<!--            <p th:each="ppvalue, stat: ${wrapper.ppValueList}">-->
+            <tr id="container1">
+            <td>
+                <select th:name="selectParameter" th:id="selectParameter1">
+                    <option value="default">Select parameter</option>
+                    <option th:each="parameter: ${parameters}"
+                            th:value="${parameter.name}"
+                            th:text="${parameter.name}"
+                            th:data-name="${parameter.getName()}">
+                    </option>
+                </select>
+            </td>
+            <td>
+            <input th:field="*{ppValueList[0].parameter.name}"
+            placeholder="parameterName" th:id="parameterName1"/>
+            </td>
+            <td>
+                <label>String parameter:</label>
+                <input type="text" name="ppValueList[0].stringValue" id="string1"/>
+            </td>
+            <td>
+                <label>Integer parameter:</label>
+                <input type="text" name="ppValueList[0].intValue" id="int1"/>
+            </td>
+                <br>
+        </tr>
+<!--               </p>-->
 
-        <input type="hidden" th:field="*{parameter.name}" class="form-control" id="parameterName" placeholder="parameterName">
-
-        <br>
-        <label for="string">String parameter:</label>
-        <input type="text" th:field="*{stringValue}" id="string"/>
-        <br>
-        <label for="int">Integer parameter:</label>
-        <input type="text" th:field="*{intValue}" id="int"/>
-        <br>
+        </table>
+        <input type="submit" form="form" value="Add parameter details">
     </form>
 
+
+
 </div>
-    <button type="submit" form="form1">Add parameter details</button>
-</div>
+
 <div>
 <a href="/index">Back to main</a>
 </div>
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-
     $(document).ready(function(){
-        $("button").click(function(){
-            console.log("Работает селект");
-            $("#parameterName").val($("#selectParameter option:selected").attr("data-name"));
-            console.log("Работает клонирование формы");
-            $("form:first").clone()
-                .appendTo("#formContainer");
+        var count1 = 0;
+        $("select[name^='selectParameter']").change(function () {
+            console.log("Работает селект")
+            var hiddenIndexStr = "parameterName";
+            var newHiddenIdNumber = 1 + count1;
+            let newHiddenId = hiddenIndexStr + newHiddenIdNumber;
+            var selectIndexStr = "selectParameter";
+            var newSelectIdNumber = 1 + count1;
+            let newSelectId = selectIndexStr + newSelectIdNumber;
+            console.log(newHiddenId)
+            console.log(newSelectId)
+            $("#" + newHiddenId).val($("#" + newSelectId + " option:selected").attr("data-name"));
+            count1 += 1;
+            });
+        var count2 = 0;
+        $("#button1").click(function(){
+            console.log("Проверка состояния count: ")
+            console.log(count2)
+            console.log("Работает button 2 (клонирование)");
+            var containerIndexStr = "container";
+            var newContainerIdNumber = 2 + count2;
+            var oldContainerIdNumber = 1 + count2;
+            let newContainerId = containerIndexStr + newContainerIdNumber;
+            let oldContainerId = containerIndexStr + oldContainerIdNumber;
+            var hiddenIndexStr = "parameterName";
+            var newHiddenIdNumber = 2 + count2;
+            var oldHiddenIdNumber = 1 + count2;
+            let newHiddenId = hiddenIndexStr + newHiddenIdNumber;
+            let oldHiddenId = hiddenIndexStr + oldHiddenIdNumber;
+            console.log(oldContainerId)
+            console.log(newContainerId)
+            console.log(oldHiddenId)
+            console.log(newHiddenId)
+
+            var index = 1 + count2;
+            let newFieldText = "ppValueList[" + index + "].parameter.name"
+         //   let newFieldText = "*{ppValueList[" + index + "].parameter.name}"
+                // *{ppValueList[0].parameter.name}
+            console.log(newFieldText)
+
+            $("#" + oldContainerId).clone(true, true).attr("id", newContainerId).appendTo(".inner-container");
+
+            $("#" + newContainerId).find("#" + oldHiddenId).attr("id", newHiddenId);
+            $("#" + newContainerId).find("#" + newHiddenId).attr("name", newFieldText);
+            $("#" + newHiddenId).val("")
+
+            var stringIndexStr = "string";
+            var newStringIdNumber = 2 + count2;
+            var oldStringIdNumber = 1 + count2;
+            let newStringId = stringIndexStr + newStringIdNumber;
+            let oldStringId = stringIndexStr + oldStringIdNumber;
+            let newStringFieldText = "ppValueList[" + index + "].stringValue"
+
+            $("#" + newContainerId).find("#" + oldStringId).attr("id", newStringId);
+            $("#" + newContainerId).find("#" + newStringId).attr("name", newStringFieldText);
+            $("#" + newStringId).val("");
+
+            var itnIndexStr = "int";
+            var newIntIdNumber = 2 + count2;
+            var oldIntIdNumber = 1 + count2;
+            let newIntId = itnIndexStr + newIntIdNumber;
+            let oldIntId = itnIndexStr + oldIntIdNumber;
+            let newIntFieldText = "ppValueList[" + index + "].intValue"
+
+            $("#" + newContainerId).find("#" + oldIntId).attr("id", newIntId);
+            $("#" + newContainerId).find("#" + newIntId).attr("name", newIntFieldText);
+            $("#" + newIntId).val(0);
+
+            var selectIndexStr = "selectParameter";
+            var newSelectIdNumber = 2 + count2;
+            var oldSelectIdNumber = 1 + count2;
+            let newSelectId = selectIndexStr + newSelectIdNumber;
+            let oldSelectId = selectIndexStr + oldSelectIdNumber;
+
+            $("#" + newContainerId).find("#" + oldSelectId).attr("id", newSelectId);
+            console.log("Работает изменение айдишника селекта после клонирования. Новый айди: ")
+            console.log(newSelectId)
+            console.log("Старый айди: ")
+            console.log(oldSelectId)
+
+            count2 += 1;
+
         });
-    });
 
-
-
-    // $(document).ready(function () {
-    //     console.log("ready!");
-    // });
-    // $(document).ready(function () {
-    //     console.log("docready!");
-    //     $("#parametrSelectContainer").change(function () {
-    //         console.log("selchanged!");
-    //         // var oldId = $("#parametrSelectContainer.form-control.last-child").id;
-    //         var oldId = this.id;
-    //         var indexstr = "selectParameter";
-    //         var newIdNumber = Number(oldId.substring(indexstr.length)) + 1;
-    //         let newId = indexstr + newIdNumber;
-    //         console.log(newId)
-    //         let br = document.createElement('br');
-    //
-    //
-    //         // let newSelect = $("#parametrSelectContainer").clone().append($("#" + newId));
-    //         // let newSelect = $(".form-control").clone().attr("id", newId);
-    //         // let newSelect = $("#selectParameter1 option:selected").clone().attr("id", newId);
-    //         let newSelect = $('select#selectParameter1').clone().attr("id", newId);
-    //             // .form-control
-    //         $(".form-control").after(newSelect);
-    //         $(".form-control").after(br);
-    //     });
-    // });
-
-
-
-
-    // $('select#options').clone().attr('id', 'newOptions').appendTo('.blah');
-        //
-        // let newSelect = $('select#productSelectList1').clone().attr("id", newId);
-        // $(".productSelect").after(newSelect);
-        // $(".productSelect").after(br);
-
-
-    //         $("#parameterName").val($("#selectParameter1 option:selected").attr("data-name"));
-    //     });
-    // });
+        });
 
 </script>
 </html>
