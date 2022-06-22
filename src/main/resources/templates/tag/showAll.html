@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tag List</title>
+    <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+
+<div th:switch="${tags.size()}">
+    <div th:case="0">List is empty</div>
+    <div th:case="*">
+        <h2>Tag filter by name</h2>
+        <form th:action="@{/tags/filter}" th:method="POST">
+            <label for="filter">Enter name:</label>
+            <input type="text" name="filter" id="filter">
+            <button type="submit">Find</button>
+        </form>
+
+        <br>
+    <h2>Tags</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Tag ID</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "tag: ${tags}">
+            <td th:text = "${tag.id}">userid</td>
+            <td><a th:href = "@{/tags/{name}(name=${tag.getName()})}" th:text = "${tag.name}">Tag name</a></td>
+            <td><a th:href = "@{/tags/{id}/edit(id = ${tag.id})}">Update</a></td>
+            <td><a th:href = "@{/tags/{id}/delete(id = ${tag.id})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <hr>
+    <p><a href="/tags/new">Create tag</a></p>
+    <p><a href="/tags">Show all tags</a></p>
+    <p><a href="/index">Back to main</a></p>
+</div>
+</div>
+</body>
+</html>
