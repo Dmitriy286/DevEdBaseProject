@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create product</title>
-    <link rel="stylesheet" href="/list.css">
+  <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 <div class="container">
@@ -12,24 +12,24 @@
         <form action="#" th:action="@{/product-create}" th:object="${product}" method="post">
             <label for="product_name">Name</label>
             <input type="text" th:field="*{productName}" id="product_name" placeholder="Введите наименование">
-            <br/>
+  <br/>
             <label for="description">Description</label>
             <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
-            <br/>
-            <label>Manufacturer</label>
+  <br/>
+  <label>Manufacturer</label>
             <select th:name="manufacturer">
-                <option th:each="manufacturer: ${manufacturer}"
+                <option th:each= "manufacturer: ${manufacturer}"
                         th:value="${manufacturer.id}"
                         th:text="${manufacturer.name}">
                 </option>
             </select>
-            <br/>
-            <label for="product_quantity">Quantity</label>
-            <input type="text" th:field="*{productQuantity}" id="product_quantity" placeholder="Введите количество">
-            <br/>
-            <label>Subtype ID</label>
+  <br/>
+  <label for="product_quantity">Quantity</label>
+  <input type="text" th:field="*{productQuantity}" id="product_quantity" placeholder="Введите количество">
+  <br/>
+  <label>Subtype ID</label>
             <select th:name="productSubtype"> // имя поля класса!
-                <option th:each="subtype: ${subtype}"
+                <option th:each= "subtype: ${subtype}"
                         th:value="${subtype.id}"
                         th:text="${subtype.productSubtypeName}">
                 </option>

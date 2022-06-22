@@ -38,6 +38,8 @@ public class Employee implements UserDetails {
     @Column(name = "photo")
     private String photo;
 
+    private String filename;
+
     @JoinTable(
             name = "employee_role",
             joinColumns = {@JoinColumn(
@@ -165,6 +167,14 @@ public class Employee implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     @Override

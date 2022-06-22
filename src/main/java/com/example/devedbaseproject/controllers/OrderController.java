@@ -45,7 +45,8 @@ public class OrderController {
 
     @GetMapping("/order-update/{id}")
     public String updateOrderForm(@PathVariable("id") Long id, Model model) {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID" + id));
+        Order order = orderRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("Invalid customer ID" + id));
         model.addAttribute("order", order);
         Customer customer = order.getCustomer();
         Employee employee = order.getEmployee();
@@ -91,7 +92,8 @@ public class OrderController {
     }
     @GetMapping("/order-details/{id}")
     public String detailsWiew(@PathVariable("id") Long id, Model model) {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID" + id));
+        Order order = orderRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("Invalid customer ID" + id));
         model.addAttribute("order", order);
         Customer customer = order.getCustomer();
         Employee employee = order.getEmployee();

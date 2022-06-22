@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Employees List</title>
+    <link rel="stylesheet" href="/list.css">
 </head>
 <body>
 
@@ -16,7 +17,6 @@
         <input type="text" name="filter" id="filter">
         <button type="submit">Find</button>
     </form>
-
         <br>
     <table>
         <thead>
@@ -39,12 +39,6 @@
             <td th:text = "${employee.username}"></td>
             <td th:text = "${employee.password}"></td>
             <td>
-<!--                <ul>-->
-<!--                    <th:block th:each="product : ${email.products}">-->
-<!--                        <li th:utext="${product.getProductId()}"></li>-->
-<!--                    </th:block>-->
-<!--                </ul>-->
-
                 <th:block th:each="role : ${employee.roles}">
                     <p th:text="${role.getId()}"></p>
                 </th:block>
@@ -52,7 +46,7 @@
 
             <td th:text = "${employee.email}"></td>
             <td th:text = "${employee.phoneNumber}"></td>
-            <td><img height=150 width=100 th:src = "@{/image/employee_id_{id}.png(id = ${employee.getId()})}" alt="Employee photo"></td>
+            <td><img height=100 width=100 th:src = "@{/image/employee_id_{id}.png(id = ${employee.getId()})}" alt="Employee photo"></td>
             <td><a th:href = "@{/employees/{id}/edit(id = ${employee.Id})}">Update</a></td>
             <td><a th:href = "@{/employees/{id}/delete(id = ${employee.Id})}">Delete</a></td>
         </tr>
