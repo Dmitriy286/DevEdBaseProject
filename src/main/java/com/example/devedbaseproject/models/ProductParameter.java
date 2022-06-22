@@ -26,18 +26,14 @@ public class ProductParameter {
     @Column(name = "value_type")
     private boolean valueType;
 
-    @Transient
-    private String pseudoname;
-
-    public ProductParameter(String name, boolean valueType, String pseudoname) {
+    public ProductParameter(String name, boolean valueType) {
         this.name = name;
         this.valueType = valueType;
     }
 
-    public ProductParameter(String pseudoname) {
-        this.name = "";
+    public ProductParameter(name) {
+        this.name = name;
         this.valueType = false;
-        this.pseudoname = pseudoname;
     }
 
     @Override
