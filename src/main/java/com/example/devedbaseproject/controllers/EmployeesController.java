@@ -1,18 +1,25 @@
 package com.example.devedbaseproject.controllers;
 
+import com.example.devedbaseproject.models.Customer;
 import com.example.devedbaseproject.models.Employee;
 import com.example.devedbaseproject.models.Role;
+import com.example.devedbaseproject.repository.ICustomerRepository;
 import com.example.devedbaseproject.repository.IEmployeeRepository;
 import com.example.devedbaseproject.repository.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Order;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,14 +29,19 @@ import java.util.stream.Collectors;
 public class EmployeesController {
     private final IEmployeeRepository repository;
     private final IRoleRepository roleRepository;
+    private final ICustomerRepository customerRepository;
 
     @Autowired
-    public EmployeesController(IEmployeeRepository repository, IRoleRepository roleRepository) {
+    public EmployeesController(IEmployeeRepository repository, IRoleRepository roleRepository, ICustomerRepository customerRepository) {
         this.repository = repository;
         this.roleRepository = roleRepository;
+        this.customerRepository = customerRepository;
     }
 
-    @GetMapping()
+//    @Value("${upload.path}")
+//    private String uploadPath;
+
+    @GetMapping
     public String findAll(Model model) {
         List<Employee> employeeList = repository.findAll();
 
@@ -47,15 +59,13 @@ public class EmployeesController {
     @GetMapping("{employee}")
     public String findEmployeeById(@PathVariable Employee employee, Model model) {
         model.addAttribute("employee", employee);
-//        Optional<Employee> employee = repository.findById(id);
-//        if (employee.isPresent()) {
-//            model.addAttribute("employee", employee.get());
-//            System.out.println(employee);
-//        }
-//        else {
-//            System.out.println("Error Found");
-//        }
         return "employee/employee";
+    }
+    @GetMapping("/account")
+    public String showEmployeeAccount(@AuthenticationPrincipal Employee employeeAccount, Model model){
+        model.addAttribute("employeeAccount", employeeAccount);
+
+        return "FRONT/employees-account";
     }
 
     @GetMapping("/new")
@@ -63,10 +73,30 @@ public class EmployeesController {
         return "employee/new";
     }
 
-    @PostMapping()
-    public String createEmployee(@ModelAttribute("employee") Employee employee) {
+//    @PostMapping("/new")
+//    public String createEmployee(@ModelAttribute("employee") Employee employee, @RequestParam ("file") MultipartFile file)
+//            throws IOException {
+//       if (file != null && !file.getOriginalFilename().isEmpty()){
+//           File uploadDir = new File(uploadPath);
+//           if (uploadDir.exists()){
+//               uploadDir.mkdir();
+//           }
+//           String uuidFile = UUID.randomUUID().toString();
+//           String resultFilename = uuidFile + "." + file.getOriginalFilename();
+//
+//           file.transferTo(new File (uploadPath + "/" + resultFilename));
+//           employee.setFilename(resultFilename);
+//       }
+//        repository.save(employee);
+//        return "redirect:/employees";
+//    }
+
+        @PostMapping("/new")
+    public String createEmployee(Employee employee) {
+
         repository.save(employee);
         return "redirect:/employees";
+
     }
 
     @GetMapping("/{id}/edit")
@@ -86,7 +116,7 @@ public class EmployeesController {
         return "employee/edit";
     }
 
-//    @PatchMapping("/{id}")
+
     @PostMapping("/{id}")
     public String update(@RequestParam Map<String, String> form,
             @ModelAttribute("employee") Employee employee, @PathVariable("id") Long id) {
@@ -134,6 +164,8 @@ public class EmployeesController {
         model.addAttribute("employees", employees);
         return "employee/showAll";
     }
+
+
 
 
 }

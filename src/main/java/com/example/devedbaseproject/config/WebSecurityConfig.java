@@ -19,17 +19,13 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    //ниже закомментированы строки из работающего кода!!!
-//    @Autowired
-//    private DataSource dataSource;
+
     @Autowired
     private UserService userService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
-//        return new BCryptPasswordEncoder();
-    ////      в configure:          .passwordEncoder(encoder())
     }
 
     @Override
@@ -76,9 +72,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/registration").permitAll()
                 .anyRequest().authenticated()
-//                .antMatchers("/admin/**").hasRole("Admin")
-//                .antMatchers("/user/**").hasAnyRole("Manager", "Admin")
-//                .antMatchers("/hello/**").permitAll()
             .and()
                 .formLogin()
                 .loginPage("/login")
@@ -92,7 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/style.css", "/coffee.png", "/flowers.png",
+        web.ignoring().antMatchers("/style.css", "/image/coffee.png", "/image/flowers.png",
                 "https://fonts.googleapis.com", "https://fonts.gstatic.com",
                 "https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");
     }

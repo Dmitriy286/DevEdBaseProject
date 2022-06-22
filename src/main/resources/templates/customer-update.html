@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Редактировать клиента</title>
@@ -9,7 +9,7 @@
 <div class="container">
     <th:block th:insert="fragments/navigation :: main-menu"></th:block>
     <div>
-        <form action="#" th:action="@{/customer-update}" th:object="${customer}" method="post">
+        <form action="#" th:action="@{/customers/update}" th:object="${customer}" method="post">
             <label for="customerId">ID</label>
             <input readonly type="number" th:field="*{id}" id="customerId" placeholder="ID">
             <br/>
@@ -22,7 +22,7 @@
             <label for="age">Возраст</label>
             <input type="number" th:field="*{age}" id="age" placeholder="Age">
             <br/>
-            <label for="email">Email</label>
+            <label for="email">ЭЭлектронная почта</label>
             <input type="text" th:field="*{email}" id="email" placeholder="Email">
             <br/>
             <label for="phoneNumber">Фамилия</label>

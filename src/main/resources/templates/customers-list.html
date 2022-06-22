@@ -1,22 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Customers</title>
-    <link rel="stylesheet" href="/list.css">
+    <link rel="stylesheet" href="/style9.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <div class="container">
-    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <th:block th:insert="fragments/menu :: menu"></th:block>
 
     <div th:switch="${customers}">
         <h2 th:case="null">Неть клиентов</h2>
         <div th:case="*">
             <h2>Список клиентов</h2>
+            <form th:action="@{/customers}" th:method="POST">
+                <label for="search">Enter name:</label>
+                <input type="text" name="search" id="search">
+                <button type="submit">Find</button>
+            </form>
             <table>
                 <thead>
                 <tr>
-                    <th>ID клиента</th>
                     <th>Имя</th>
                     <th>Фамилия</th>
                     <th>Возраст</th>
@@ -26,20 +31,17 @@
                 </thead>
                 <tbody>
                 <tr th:each="customer : ${customers}">
-                    <td th:text="${customer.id}"></td>
-                    <td th:text="${customer.name}"></td>
+                    <td><a th:href = "@{/customers/{id}(id=${customer.id})}" th:text="${customer.name}"></a></td>
                     <td th:text="${customer.surname}"></td>
                     <td th:text="${customer.age}"></td>
                     <td th:text="${customer.email}"></td>
                     <td th:text="${customer.phoneNumber}"></td>
-                    <td><a th:href="@{customer-update/{id}(id=${customer.id})}" class="btn">Редактировать </a></td>
-                    <td><a th:href="@{customer-delete/{id}(id=${customer.id})}" class="btn">Удалить</a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <p><a href="/customer-create">Создать клиентов</a></p>
-        <p><a href="/" class="btn">Назад</a></p>
+<!--        <p><a href="/customer-create">Создать клиентов</a></p>-->
+<!--        <p><a href="/" class="btn">Назад</a></p>-->
     </div>
 </div>
 </body>

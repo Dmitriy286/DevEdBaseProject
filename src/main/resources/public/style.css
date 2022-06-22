@@ -85,8 +85,6 @@
 		background: #FFFFFF;
 
    }
-
-   }
    .allGoCenter {
 		display: flex;
 		align-items: center;
@@ -128,6 +126,17 @@
 		align-items: center;
 		justify-content: center;
 		border: 0px;
+   }
+
+   a {
+	   text-decoration: none;
+	   display: block;
+	   text-align: center;
+
+   }
+
+   a:hover{
+	   color: black;
    }
 
       
