@@ -59,7 +59,7 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name="order_id"))
     private List<Order> orderList;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="parameter_values")
     private List<ProductParameterValue> parameterValues;
 
