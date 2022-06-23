@@ -42,5 +42,4 @@ public class Order {
     @JoinColumn(name="order_details_id")
     private List<OrderDetails> orderDetails;
 
-
 }
