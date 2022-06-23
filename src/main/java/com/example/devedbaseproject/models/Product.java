@@ -57,4 +57,6 @@ public class Product {
     @JoinColumn(name = "parameter_values")
     private List<ProductParameterValue> parameterValues;
 
+    private List<Tag> tagsList;
+
 }

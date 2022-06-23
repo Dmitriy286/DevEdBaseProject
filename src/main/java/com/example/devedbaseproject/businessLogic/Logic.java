@@ -1,54 +1,23 @@
 package com.example.devedbaseproject.businessLogic;
 
-import com.example.devedbaseproject.models.*;
+import com.example.devedbaseproject.models.Customer;
+import com.example.devedbaseproject.models.Tag;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static com.example.devedbaseproject.businessLogic.LogicTools.getCustomerTags;
 
 public class Logic {
 
-    public HashMap<Category, Integer> getCustomerCategories(Customer customer){
-        List<Order> allCustomerOrders = customer.getOrderList();
-        return getSortedMapByValues(getCategoryHashMap(allCustomerOrders));
-    }
-    
-    public HashMap<Category, Integer> getCategoriesFromAllOrders(List<Order> allOrders){
-        return getSortedMapByValues(getCategoryHashMap(allOrders));
-    }
-
-    private HashMap<Category, Integer> getCategoryHashMap(List<Order> orderList) {
-        HashMap<Category, Integer> categoryMap = new HashMap<>();
-        for (Order order : orderList){
-            List<OrderDetails> orderDetailsList = order.getOrderDetails();
-            for(OrderDetails orderDetails : orderDetailsList){
-                Product product = orderDetails.getProduct();
-                Category category = product.getProductSubtype()
-                        .getProductType()
-                        .getCategory();
-                int counter = 1;
-                if(categoryMap.containsKey(category)){
-                    counter += categoryMap.get(category);
-                    categoryMap.put(category, counter);
-                }
-                else{
-                    categoryMap.put(category,counter);
-                }
-            }
+    public List<String> getSuggestion(Customer customer){
+        Set<Tag> tags = new HashSet<>();
+        HashMap<Tag, Integer> tagHash = getCustomerTags(customer);
+        for(int i = 0; i < 3; i++){
+            //TODO переделать категории и теги на сет наверное, а то элементы доставать неудобно
         }
-        return categoryMap;
+        return null;
     }
-
-    private  HashMap<Category, Integer> getSortedMapByValues(HashMap<Category,Integer> unsortedHashMap){
-        HashMap<Category, Integer> sortedHashMap = unsortedHashMap.entrySet()
-                .stream()
-                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
-                .collect(Collectors
-                        .toMap(Map.Entry::getKey,
-                                Map.Entry::getValue,
-                                (e1, e2)->e1,
-                                LinkedHashMap::new));
-
-        return sortedHashMap;
-    }
-
 }
