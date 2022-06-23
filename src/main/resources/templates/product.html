@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Product with params</title>
@@ -37,7 +37,6 @@
           th:method="POST" th:object="${wrapper}" id="form" name="formName">
 
         <table class="inner-container" th:name="parameterSelectContainer" th:id="innerContainer">
-<!--            <p th:each="ppvalue, stat: ${wrapper.ppValueList}">-->
             <tr id="container1">
             <td>
                 <select th:name="selectParameter" th:id="selectParameter1">
@@ -63,7 +62,6 @@
             </td>
                 <br>
         </tr>
-<!--               </p>-->
 
         </table>
         <input type="submit" form="form" value="Add parameter details">
@@ -74,7 +72,8 @@
 </div>
 
 <div>
-<a href="/index">Back to main</a>
+<a th:href="@{/products/{productId}/settags(productId=${product.getId})}">Добавить тэги</a>
+<a href="/index">Назад на главную</a>
 </div>
 
 </body>

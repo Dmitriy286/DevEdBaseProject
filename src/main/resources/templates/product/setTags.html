@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update product</title>
+    <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+
+    <div>
+        <p th:text="${product.getProductName()}">value</p>
+        <p th:text="${product.getId()}">value</p>
+        <p th:text="${product.getDescription()}">value</p>
+    </div>
+
+    <div>
+        <button id="button1">Добавить</button><br>
+
+        <form th:action="@{/products/{productId}/settags(productId=${product.getId})}"
+              th:object="${tagList}" method="post">
+            <label>Выбрать тэг</label>
+            <select th:name="tags" th:id="tagSelect"> // имя поля класса!
+                <option value="default">Выбери тэг</option>
+                <option th:each= "tag: ${tags}"
+                        th:value="${tag}"
+                        th:text="${tag.name}"
+                        th:field="*{taglist[0]}"
+                        th:data-name="${tag.name}">
+                </option>
+            </select>
+            <br/>
+<!--            <input type="hidden" th:field="*{taglist[0]}" th:id="tagName1"/>-->
+            <input placeholder="parameterName" th:id="tagName1"/>
+            <br/>
+            <input type="submit" value="Добавить список тэгов" class="btn">
+        </form>
+    </div>
+</div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var count1 = 0;
+        $("select[name^='tags']").change(function () {
+            console.log("Работает селект")
+            var tagSelectIdStr = "tagSelect";
+            var newTagSelectIdNumber = 1 + count1;
+            let newTagSelectId = tagSelectIdStr + newTagSelectIdNumber;
+            var tagNameIdStr = "tagName";
+            var newTagNameIdNumber = 1 + count1;
+            let newTagNameId = tagNameIdStr + newTagNameIdNumber;
+            console.log(newTagSelectId)
+            console.log(newTagNameId)
+            $("#" + newTagNameId).val($("#" + newTagSelectId + " option:selected").attr("data-name"));
+            count1 += 1;
+        });
+        var count2 = 0;
+        $("#button1").click(function(){
+            console.log("Проверка состояния count: ")
+            console.log(count2)
+            console.log("Работает button 1 (клонирование)");
+            var containerIndexStr = "container";
+            var newContainerIdNumber = 2 + count2;
+            var oldContainerIdNumber = 1 + count2;
+            let newContainerId = containerIndexStr + newContainerIdNumber;
+            let oldContainerId = containerIndexStr + oldContainerIdNumber;
+            var hiddenIndexStr = "parameterName";
+            var newHiddenIdNumber = 2 + count2;
+            var oldHiddenIdNumber = 1 + count2;
+            let newHiddenId = hiddenIndexStr + newHiddenIdNumber;
+            let oldHiddenId = hiddenIndexStr + oldHiddenIdNumber;
+            console.log(oldContainerId)
+            console.log(newContainerId)
+            console.log(oldHiddenId)
+            console.log(newHiddenId)
+
+            var index = 1 + count2;
+            let newFieldText = "ppValueList[" + index + "].parameter.name"
+            console.log(newFieldText)
+
+            $("#" + oldContainerId).clone(true, true).attr("id", newContainerId).appendTo(".inner-container");
+
+            $("#" + newContainerId).find("#" + oldHiddenId).attr("id", newHiddenId);
+            $("#" + newContainerId).find("#" + newHiddenId).attr("name", newFieldText);
+            $("#" + newHiddenId).val("")
+
+            var selectIndexStr = "selectParameter";
+            var newSelectIdNumber = 2 + count2;
+            var oldSelectIdNumber = 1 + count2;
+            let newSelectId = selectIndexStr + newSelectIdNumber;
+            let oldSelectId = selectIndexStr + oldSelectIdNumber;
+
+            $("#" + newContainerId).find("#" + oldSelectId).attr("id", newSelectId);
+            console.log("Работает изменение айдишника селекта после клонирования. Новый айди: ")
+            console.log(newSelectId)
+            console.log("Старый айди: ")
+            console.log(oldSelectId)
+
+            count2 += 1;
+
+        });
+
+    });
+
+</script>
+</html>

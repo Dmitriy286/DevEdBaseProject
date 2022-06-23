@@ -19,6 +19,18 @@ public class Tag {
     @Column(name = "name")
     private String name;
 
+    public Tag() {
+        this.name = "";
+    }
+    public Tag(String name) {
+        this.name = name;
+    }
+
+    //    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "product_id")
+//    private Product product;
+
+    //region getters, setters
 
     public Long getId() {
         return id;
@@ -34,5 +46,12 @@ public class Tag {
 
     public void setName(String name) {
         this.name = name;
+    }
+    //endregion
+
+
+    @Override
+    public String toString() {
+        return "" + name;
     }
 }
