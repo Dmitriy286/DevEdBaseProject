@@ -13,31 +13,42 @@
         <p th:text="${product.getProductName()}">value</p>
         <p th:text="${product.getId()}">value</p>
         <p th:text="${product.getDescription()}">value</p>
+        <p th:text="${product.getTags()}">value</p>
     </div>
 
     <div>
         <button id="button1">Добавить</button><br>
 
         <form th:action="@{/products/{productId}/settags(productId=${product.getId})}"
-              th:object="${tagList}" method="post">
+              th:object="${wrapper}" method="post">
+            <div class="outer-container">
+            <div th:id="container1">
+<!--                // при клонировании меняем id этого контейнера на +1-->
             <label>Выбрать тэг</label>
-            <select th:name="tags" th:id="tagSelect"> // имя поля класса!
+            <select th:name="tags" th:id="tagSelect1">
+<!--                // при клонировании меняем id этого селекта на +1-->
                 <option value="default">Выбери тэг</option>
-                <option th:each= "tag: ${tags}"
+                <option th:each="tag: ${tags}"
                         th:value="${tag}"
                         th:text="${tag.name}"
-                        th:field="*{taglist[0]}"
-                        th:data-name="${tag.name}">
+                        th:data-name="${tag.id}">
+
                 </option>
             </select>
             <br/>
-<!--            <input type="hidden" th:field="*{taglist[0]}" th:id="tagName1"/>-->
-            <input placeholder="parameterName" th:id="tagName1"/>
+            <input type="hidden" th:field="*{tagList[0].id}" th:id="tagName1"/>
+                <!-- при клонировании меняем значение field на +1 // id этого поля на +1-->
+<!--            <input placeholder="parameterName" th:id="tagName1"/> -->
+            </div>
+            </div>
             <br/>
             <input type="submit" value="Добавить список тэгов" class="btn">
         </form>
     </div>
 </div>
+<a href="/index">Назад на главную</a>
+<br>
+<a th:href="@{/products/{productId}(productId=${product.getId})}">Назад к продукту</a>
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -62,42 +73,46 @@
             console.log("Проверка состояния count: ")
             console.log(count2)
             console.log("Работает button 1 (клонирование)");
-            var containerIndexStr = "container";
+            var containerIdStr = "container";
             var newContainerIdNumber = 2 + count2;
             var oldContainerIdNumber = 1 + count2;
-            let newContainerId = containerIndexStr + newContainerIdNumber;
-            let oldContainerId = containerIndexStr + oldContainerIdNumber;
-            var hiddenIndexStr = "parameterName";
-            var newHiddenIdNumber = 2 + count2;
-            var oldHiddenIdNumber = 1 + count2;
-            let newHiddenId = hiddenIndexStr + newHiddenIdNumber;
-            let oldHiddenId = hiddenIndexStr + oldHiddenIdNumber;
+            let newContainerId = containerIdStr + newContainerIdNumber;
+            let oldContainerId = containerIdStr + oldContainerIdNumber;
+
+            var tagNameIdStr = "tagName";
+            var newTagNameIdNumber = 2 + count2;
+            var oldTagNameIdNumber = 1 + count2;
+            let newTagNameId = tagNameIdStr + newTagNameIdNumber;
+            let oldTagNameId = tagNameIdStr + oldTagNameIdNumber;
+
             console.log(oldContainerId)
             console.log(newContainerId)
-            console.log(oldHiddenId)
-            console.log(newHiddenId)
+            console.log(newTagNameId)
+            console.log(oldTagNameId)
+
+            var tagSelectIdStr = "tagSelect";
+            var oldTagSelectIdNumber = 1 + count2;
+            var newTagSelectIdNumber = 2 + count2;
+            let newTagSelectId = tagSelectIdStr + newTagSelectIdNumber;
+            let oldTagSelectId = tagSelectIdStr + oldTagSelectIdNumber;
+
+            // var optionIdStr = "optionTag";
+            // var oldOptionIdNumber = 1 + count2;
+            // var newOptionIdNumber = 2 + count2;
+            // let newOptionId = optionIdStr + newOptionIdNumber;
+            // let oldOptionId = optionIdStr + oldOptionIdNumber;
 
             var index = 1 + count2;
-            let newFieldText = "ppValueList[" + index + "].parameter.name"
+            let newFieldText = "tagList[" + index + "]"
             console.log(newFieldText)
 
-            $("#" + oldContainerId).clone(true, true).attr("id", newContainerId).appendTo(".inner-container");
-
-            $("#" + newContainerId).find("#" + oldHiddenId).attr("id", newHiddenId);
-            $("#" + newContainerId).find("#" + newHiddenId).attr("name", newFieldText);
-            $("#" + newHiddenId).val("")
-
-            var selectIndexStr = "selectParameter";
-            var newSelectIdNumber = 2 + count2;
-            var oldSelectIdNumber = 1 + count2;
-            let newSelectId = selectIndexStr + newSelectIdNumber;
-            let oldSelectId = selectIndexStr + oldSelectIdNumber;
-
-            $("#" + newContainerId).find("#" + oldSelectId).attr("id", newSelectId);
-            console.log("Работает изменение айдишника селекта после клонирования. Новый айди: ")
-            console.log(newSelectId)
-            console.log("Старый айди: ")
-            console.log(oldSelectId)
+            $("#" + oldContainerId).clone(true, true).attr("id", newContainerId).appendTo(".outer-container");
+            $("#" + newContainerId).find("#" + oldTagSelectId).attr("id", newTagSelectId);
+            // $("#" + newTagSelectId).find("#" + oldOptionId).attr("id", newOptionId);
+            // $("#" + newTagSelectId).find("#" + newOptionId).attr("name", newFieldText);
+            $("#" + newContainerId).find("#" + oldTagNameId).attr("id", newTagNameId);
+            $("#" + newContainerId).find("#" + newTagNameId).attr("name", newFieldText);
+            $("#" + newTagNameId).val("")
 
             count2 += 1;
 

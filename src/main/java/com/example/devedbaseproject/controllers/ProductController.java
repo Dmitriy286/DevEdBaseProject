@@ -171,9 +171,14 @@ public class ProductController {
 
         model.addAttribute("tags", tags);
 
-        List<Tag> tagList = new ArrayList<>();
-        tagList.add(new Tag());
-        model.addAttribute("tagList", tagList);
+//        List<Tag> tagList = new ArrayList<>();
+//        tagList.add(new Tag());
+//        model.addAttribute("tagList", tagList);
+
+        TagWrapper wrapper = new TagWrapper();
+        Tag t = new Tag();
+        wrapper.getTagList().add(t);
+        model.addAttribute("wrapper", wrapper);
 
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {
@@ -181,16 +186,16 @@ public class ProductController {
         } else {
             System.out.println("Error Found");
         }
-        return "setTags";
+        return "product/setTags";
     }
 
     @PostMapping("/products/{productId}/settags")
     public String saveTagList(@PathVariable("productId") Long productId,
-                              Model model,
-                              @ModelAttribute List<Tag> tagList,
+                              @ModelAttribute TagWrapper wrapper, Model model,
+//                              @ModelAttribute List<Tag> tagList,
                               @RequestParam Map<String, String> form) {
 
-        System.out.println(tagList);
+        System.out.println(wrapper.getTagList());
         System.out.println(form);
         Optional<Product> tempproduct = productRepository.findById(productId);
 
@@ -201,17 +206,24 @@ public class ProductController {
             System.out.println("Error Found, likely no product");
         }
 
-        if (tagList == null) {
+        if (wrapper.getTagList() == null) {
             System.out.println("Nullerror");
         }
         else {
-            for (Tag tag: tagList) {
-                product.getTags().add(tag);
+            for (Tag tempTag: wrapper.getTagList()) {
+
+                Optional<Tag> tag = tagRepository.findById(tempTag.getId());
+
+                if (tag.isPresent()) {
+                    product.getTags().add(tag.get());
+                } else {
+                    System.out.println("Error Found, likely no tag");
+                }
+//                    productRepository.save(product);
             }
-        }
-
-        return "redirect:/products/" + productId;
+            productRepository.save(product);
+            }
+        return "redirect:/products/" + productId + "/settags";
     }
-
 
 }
