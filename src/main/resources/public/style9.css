@@ -657,4 +657,164 @@
 		height: 100px;
 		background-color: #F1A9A9;
 	}
+   .productlist_11 {
+
+	   width: 400px;
+	   height: 560px;
+	   margin: 15px;
+	   margin-left: 25px;
+	   background-color: #FFFFFF;
+	   margin-bottom: 0px;
+   }
+
+   .add_products_11 {
+	   width: 500px;
+	   height: 497px;
+	   margin: 15px;
+	   margin-left: 25px;
+	   background-color: #FFFFFF;
+	   margin-bottom: 0px;
+   }
+
+   .button_add_product_11{
+
+	   font-weight:bold;
+	   min-height: 67px;
+	   min-width: 500px;
+	   background-color: #F1A9A9;
+	   border: 1px solid #75aeca;
+
+	   color: black;
+	   cursor: pointer;
+	   display: inline-block;
+	   font-size:1.8vw;
+	   height: 36px;
+	   line-height: 2.25rem;
+	   margin-top: 13px;
+	   padding: 0 13px;
+	   text-decoration: none;
+	   border-radius: 34px;
+	   margin: 17px auto;
+	   display: flex;
+	   align-items: center;
+	   justify-content: center;
+	   border: 0px;
+   }
+
+   .choose_products {
+	   width: 480px;
+	   height: 490px;
+	   margin: 0 0 0 0;
+   }
+
+   select {
+	   width: 400px;
+	   height: 35px;
+	   margin: 25px;
+   }
+
+   input.input_11 {
+	   height: 44px;
+	   width: 177px;
+	   margin: 5px 0 20px 35px;
+   }
+
+   .radio_left {
+	   margin: 0px 0px 0px 80px;
+	   padding: 25px 0px 0px 0px;
+	   height: 30px;
+	   width: 150px;
+	   float: left;
+   }
+
+   .radio_right {
+	   margin: 0px 0px 0px 0px;
+	   padding: 25px 7px 0px 0px;
+	   height: 30px;
+	   width: 167px;
+	   float: right;
+   }
+
+   .descr {
+	   margin: 0px 0px 0px 0px;
+	   padding: 0px 0px 0px 35px;
+	   height: 20px;
+	   width: 185px;
+	   float: left;
+	   text-align: center;
+   }
+
+   .descr_r {
+	   margin: 0px 35px 0px 0px;
+	   padding: 0px 0px 0px 0px;
+	   height: 20px;
+	   width: 185px;
+	   float: right;
+	   text-align: center;
+   }
+
+   .layer_right_11   {
+
+	   margin-top: 5px;
+	   margin-bottom: 15px;
+	   float: right;
+	   width: 550px;
+	   height: 570px;
+	   background-color: #F1A9A9;
+   }
+
+   .layer_left_11   {
+
+	   margin-top: 5px;
+	   margin-bottom: 5px;
+	   float: left;
+	   width: 450px;
+	   height: 640px;
+	   background-color: #B58888;
+   }
+
+   .top_11 {
+	   padding: 1px;
+	   margin: 0 auto;
+	   margin-top: 20px;
+	   width: 1022px;
+	   height: 80px;
+	   background: #E1B6B6;
+	   border-radius: 34px;
+   }
+
+   .h1_11{
+	   margin: 0 auto;
+	   border: 1px;
+	   padding: 1px;
+	   text-align: center;
+	   line-height: 78px;
+   }
+   .radio_top {
+	   height: 70px;
+	   width: 470px;
+	   margin: 10px auto ;
+	   padding: 20px 0 20px 0;
+   }
+
+   .empty_11{
+	   height: 15px;
+	   width: 500px;
+	   margin: 0 0 20px 0;
+	   background: #F1A9A9;
+   }
+
+   .size_smaller{
+	   margin: 0 auto;
+	   padding: 10px 0 0 60px;
+	   font-size: 5px;
+   }
+
+   input[type="file" i]{
+	   font-size: 14px;
+   }
+
+   input[type="submit" i]{
+	   font-size: 14px;
+   }
 	

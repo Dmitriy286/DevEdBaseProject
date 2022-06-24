@@ -55,11 +55,14 @@
 			</div>
 
 			<div class="layer2_3_down_2"><!-- справа третий -->
-				<p class="small_but"><a href="#">История заказов клиентов менеджера</a></p>
+				<p class="small_but"><a href="/history-order">История заказов клиентов менеджера</a></p>
 			</div>
 		</div>
 		</div>
 	</div>
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out"/>
+	</form>
 </div>
 </body>
 </html>

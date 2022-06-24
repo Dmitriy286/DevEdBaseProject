@@ -36,11 +36,11 @@ public class OrderController {
         this.orderDetailsRepository = orderDetailsRepository;
     }
 
-    @GetMapping("/orders")
+    @GetMapping("/history-order")
     public String findAll(Model model) {
         List<Order> orders = orderRepository.findAll();
         model.addAttribute("orders", orders);
-        return "order/orders-list";
+        return "FRONT/history-order";
     }
 
     @GetMapping("/order-update/{id}")

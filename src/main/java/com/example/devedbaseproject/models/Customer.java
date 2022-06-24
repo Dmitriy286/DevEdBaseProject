@@ -1,16 +1,9 @@
 package com.example.devedbaseproject.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.List;
 
-//@Getter@Setter
-//@AllArgsConstructor
-//@NoArgsConstructor
+
 @Entity
 @Table(name = "customers")
 public class Customer {
@@ -34,6 +27,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Order> orderList;
 
+    //region Constructors
     public Customer() {
     }
 
@@ -45,7 +39,8 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.orderList = orderList;
     }
-
+    //endregion
+    //region Getters, setters
     public Long getId() {
         return id;
     }
@@ -101,4 +96,5 @@ public class Customer {
     public void setOrderList(List<Order> orderList) {
         this.orderList = orderList;
     }
+    //endregion
 }
