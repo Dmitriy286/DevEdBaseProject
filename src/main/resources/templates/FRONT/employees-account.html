@@ -5,64 +5,66 @@
 	<meta charset="utf-8">
 	<title>Personality</title>
 	<link rel="stylesheet" href="/style9.css">
-	<link rel="stylesheet" href="/style.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+
+
+
 </head>
 
 <body>
-<div class ="container">
-	<th:block th:insert="fragments/menu :: menu"></th:block>
+<th:block th:insert="fragments/menu :: menu"></th:block>
+<div class ="container2">
+
 	<div class="top">
-		<h1>Личный кабинет</h1>
+		<div class="topH"><h1>Личный кабинет</h1></div>
 	</div>
 	<div class="main2">
 		<div class="layer1top_2">
 			<h4> Карточка сотрудника : </h4><!--  !сделать лейблы! -->
-			<p class="p2" th:text="${employeeAccount.name}">Имя</p>
-			<p class="p2" th:text="${employeeAccount.email}">Электронная почта</p>
-			<p class="p2" th:text="${employeeAccount.phoneNumber}">Номер телефона</p>
-			<th:block th:each="role : ${employeeAccount.roles}">
-				<p class="p2" th:text="${role.name}">Должность</p>
-			</th:block>
+			<div class="white_back">
+				<p class="p2" th:text="${employeeAccount.name}">Имя</p>
+				<p class="p2" th:text="${employeeAccount.email}">Электронная почта</p> <!-- справа -->
+				<p class="p2" th:text="${employeeAccount.phoneNumber}">Номер телефона</p> <!-- справа -->
+				<th:block th:each="role : ${employeeAccount.roles}">
+					<p class="p2" th:text="${role.name}">Должность</p>
+				</th:block>
+			</div>
 		</div>
 		<div class="layer2top_2">
 			<div class ="fotoclient2"><img height=100 width=100 th:src = "@{/image/employee_id_{id}.png(id = ${employeeAccount.getId()})}" alt="Employee photo">
 			</div>
-		</div>
-		<div class="center_2">
-			<div class="layer1down_2"><!-- слева первый -->
-				<h2>Клиенты</h2>
-				<p><a href="/customers">Список клиентов</a></p>
-
-			<div class="layer2down_2"><!-- справа первый -->
-				<h2>Товары</h2>
-				<p><a href="/products">Список продуктов</a></p>
-
-			</div>
-
-			<div class="layer1_2_down_2"><!-- слева второй -->
-				<p><a href="/customer-create">Создать аккаунт клиента</a></p>
-			</div>
-
-			<div class="layer2_2_down_2"><!-- справа второй -->
-				<p class="small_but"><a href="#">История рассылок</a></p>
-			</div>
-
-			<div class="layer1_3_down_2"><!-- слева третий -->
-
-			</div>
-
-			<div class="layer2_3_down_2"><!-- справа третий -->
-				<p class="small_but"><a href="/history-order">История заказов клиентов менеджера</a></p>
+			<div class="out2"><form th:action="@{/logout}" method="post">
+				<input type="submit" value="Выйти"/>
+			</form>
 			</div>
 		</div>
-		</div>
+
 	</div>
-	<form th:action="@{/logout}" method="post">
-		<input type="submit" value="Sign Out"/>
-	</form>
+	<div class="center_2">
+		<div class="layer1down_2"><!-- слева первый -->
+			<h2>Клиенты</h2>
+			<p><a href="/customers">Список клиентов</a></p>
+		</div>
+		<div class="layer2down_2"><!-- справа первый -->
+			<h2>Товары</h2>
+			<p><a href="/products">Список продуктов</a></p>
+
+		</div>
+
+		<div class="layer1_2_down_2"><!-- слева второй -->
+			<p class="small_but"><a href="/customer-create">Создать аккаунт клиента</a></p>
+		</div>
+
+		<div class="layer2_2_down_2"><!-- справа второй -->
+			<p class="small_but"><a href="#">История рассылок</a></p>
+		</div>
+
+		<div class="layer2_3_down_2"><!-- справа третий -->
+			<p class="small_but"><a href="/history-order">История заказов клиентов менеджера</a></p>
+		</div>
+
+
+	</div>
+
 </div>
 </body>
 </html>
