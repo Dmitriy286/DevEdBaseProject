@@ -4,21 +4,26 @@
     <meta charset="UTF-8">
     <title>Customers</title>
     <link rel="stylesheet" href="/style9.css">
-    <link rel="stylesheet" href="/style.css">
+
 </head>
 <body>
-<div class="container">
-    <th:block th:insert="fragments/menu :: menu"></th:block>
+<th:block th:insert="fragments/menu :: menu"></th:block>
+<div class="container2">
+
 
     <div th:switch="${customers}">
         <h2 th:case="null">Неть клиентов</h2>
         <div th:case="*">
-            <h2>Список клиентов</h2>
-            <form th:action="@{/customers}" th:method="POST">
-                <label for="search">Enter name:</label>
-                <input type="text" name="search" id="search">
-                <button type="submit">Find</button>
-            </form>
+            <div class="top">
+                <div class="topH"><h1>Список клиентов</h1></div>
+            </div>
+            <div class="formFindCustomers">
+                <form th:action="@{/customers}" th:method="POST">
+                    <label  class="formFindCustomersLeft1" for="search">Введите имя:</label>
+                    <input  class="formFindCustomersLeft2" type="text" name="search" id="search">
+                    <div class="findCustomersButton"><button  class="formFindCustomersRight" type="submit">Найти</button></div>
+                </form>
+            </div>
             <table>
                 <thead>
                 <tr>
@@ -40,8 +45,8 @@
                 </tbody>
             </table>
         </div>
-<!--        <p><a href="/customer-create">Создать клиентов</a></p>-->
-<!--        <p><a href="/" class="btn">Назад</a></p>-->
+        <!--        <p><a href="/customer-create">Создать клиентов</a></p>-->
+        <!--        <p><a href="/" class="btn">Назад</a></p>-->
     </div>
 </div>
 </body>
