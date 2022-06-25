@@ -27,7 +27,8 @@ public class ProductController {
     @Autowired
     public ProductController(IProductRepository productRepository, IProductParameterRepository productParameterRepository,
                              IProductParameterValueRepository ppvalueRepository, IManufacturerRepository manufacturerRepository,
-                             IProductSubtypeRepository subtypeRepository) {
+                             ICategoryRepository categoryRepository, IProductTypeRepository typeRepository,
+                             IProductSubtypeRepository subtypeRepository, ITagRepository tagRepository) {
         this.productRepository = productRepository;
         this.productParameterRepository = productParameterRepository;
         this.ppvalueRepository = ppvalueRepository;
@@ -127,7 +128,7 @@ public class ProductController {
 //        List<ProductParameterValue> prodparamvalues = new ArrayList<ProductParameterValue>();
 //        model.addAttribute("prodparamvalues", prodparamvalues);
 
-        Optional<Product> product = productRepository.findById(productId);
+        Optional<Product> product = productRepository.findById(id);
         if (product.isPresent()) {
             model.addAttribute("product", product.get());
         } else {
@@ -139,7 +140,7 @@ public class ProductController {
     @PostMapping("/product/parameters/{id}")
     public String setParameters(@RequestParam Map<String, String> form,
                                 @ModelAttribute PPValueWrapper wrapper, Model model,
-                                @PathVariable("productId") Long productId) {
+                                @PathVariable("id") Long id) {
         System.out.println(wrapper.getPpValueList() != null ? wrapper.getPpValueList().size() : "null list");
         System.out.println("--");
 
@@ -153,7 +154,7 @@ public class ProductController {
         System.out.println(wrapper.getPpValueList().size());
         System.out.println(form.keySet());
 
-        Optional<Product> tempproduct = productRepository.findById(productId);
+        Optional<Product> tempproduct = productRepository.findById(id);
 
         Product product = new Product();
         if (tempproduct.isPresent()) {
@@ -161,7 +162,6 @@ public class ProductController {
         } else {
             System.out.println("Error Found, likely no product");
         }
-
 
         for (ProductParameterValue ppvalue: wrapper.getPpValueList()) {
             ppvalue.setProduct(product);

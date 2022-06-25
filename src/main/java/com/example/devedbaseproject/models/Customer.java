@@ -35,6 +35,8 @@ public class Customer {
 
     //region Constructors
     public Customer() {
+        this.orderList = new ArrayList<>();
+        this.tagCountMap = new HashMap<>();
     }
 
     public Customer(String name, String surname, Integer age, String email, String phoneNumber) {
