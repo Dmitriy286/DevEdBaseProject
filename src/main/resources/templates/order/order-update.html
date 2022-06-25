@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Change order</title>
+<!--    <link rel="stylesheet" href="/list.css">-->
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div>
+        <form action="#" th:action="@{/order-update}" th:object="${order}" method="post">
+
+            <label for="order_id">ID</label>
+            <input readonly type="number" th:field="*{id}" id="order_id" placeholder="ID">
+            <br/>
+<!--            <label for="customerName" th:text="${customer.name+' '+ customer.surname}"></label>-->
+            <label for="customerName">Клиент</label>
+            <input type="hidden" th:field="*{customer.id}" id="customerName">
+            <output type="text" th:text="${customer.name +' '+ customer.surname}"></output>
+            <br>
+            <div th:id="productSelectContainer">
+                <label>Выберите продукт</label>
+                <br>
+                <div class="addProductClass" th:id="addProduct0">
+                    <select class="productSelect" th:field="*{orderDetails[0].product.id}"
+                            th:name="productSelectList" th:id="productSelectList0">
+                        <option value="">Выберите товар</option>
+                        <option th:each="product:${products}"
+                                th:value="${product.id}"
+                                th:text="${product.productName}">
+                        </option>
+                    </select>
+                    <label>Количество</label>
+                    <input type="text" class="productAmountClass" th:field="*{orderDetails[0].productAmount}"
+                           id="productAmount0" placeholder="Кол-во">
+                    <input type="hidden" class="productAmountClass" id="orderDetailsId0" th:field="*{orderDetails[0].id}">
+                </div>
+            </div>
+            <br>
+            <label for="salesmanName">Продаван</label>
+            <input type="hidden"  th:field="*{employee.id}" id="salesmanName">
+            <output type="text" th:text="${employee.name}"></output>
+            <br>
+            <label for="deliveryAddress">Адрес</label>
+            <input type="text" th:field="*{deliveryAddress}" id="deliveryAddress" placeholder="Адрес доставки">
+            <br/>
+            <br><br>
+
+
+
+            <input type="submit" value="Изменить заказ" class="btn">
+        </form>
+    </div>
+</div>
+</body>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+<!--<script type="text/javascript">-->
+<!--    $(document).ready(function () {-->
+<!--        console.log("ready!");-->
+<!--    });-->
+<!--    $(document).ready(function () {-->
+<!--        $("#selectCategory").change(function () {-->
+<!--            $("#categoryId").val($("#selectCategory option:selected").attr("category-id"));-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+</html>

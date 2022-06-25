@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Change tag details</title>
+    <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+
+<form th:action="@{/tags/{id}(id=${tag.getId})}" th:method="PATCH" th:object="${tag}">
+
+    <label for="Name">Name:</label>
+    <input type="text" th:field="*{name}" id="Name">
+    <br>
+    <input type="submit" value="Change tag details">
+</form>
+</body>
+</html>

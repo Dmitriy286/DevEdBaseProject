@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Creating Form</title>
+    <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+<h1>Creating form</h1>
+
+<form th:action="@{/tags}" th:method="POST" th:object="${tag}">
+    <label for="Name">Name:</label>
+    <input type="text" th:field="*{name}" id="Name">
+
+    <br>
+
+    <input type="submit" value="Add tag">
+</form>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Update product</title>
+    <link rel="stylesheet" href="/style9.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/menu :: menu"></th:block>
+<div>
+<h1 th:text="${product.getProductName()}">value</h1>
+</div>
+<div>
+    <h2>Характеристики: </h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Строковое значение</th>
+            <th>Числовое значение</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "paramVal: ${product.getParameterValues()}">
+            <td th:text = "${paramVal.getParameter().getName()}"></td>
+            <td th:text = "${paramVal.getStringValue}"></td>
+            <td th:text = "${paramVal.getIntValue}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+
+    <button id="button1">Добавить</button><br>
+
+    <form th:action="@{/product/parameters/{productId}(productId=${product.getId})}"
+          th:method="POST" th:object="${wrapper}" id="form" name="formName">
+
+        <table class="inner-container" th:name="parameterSelectContainer" th:id="innerContainer">
+<!--            <p th:each="ppvalue, stat: ${wrapper.ppValueList}">-->
+            <tr id="container1">
+            <td>
+                <select th:name="selectParameter" th:id="selectParameter1">
+                    <option value="default">Select parameter</option>
+                    <option th:each="parameter: ${parameters}"
+                            th:value="${parameter.name}"
+                            th:text="${parameter.name}"
+                            th:data-name="${parameter.getName()}">
+                    </option>
+                </select>
+            </td>
+            <td>
+            <input th:field="*{ppValueList[0].parameter.name}"
+            placeholder="parameterName" th:id="parameterName1"/>
+            </td>
+            <td>
+                <label>String parameter:</label>
+                <input type="text" name="ppValueList[0].stringValue" id="string1"/>
+            </td>
+            <td>
+                <label>Integer parameter:</label>
+                <input type="text" name="ppValueList[0].intValue" id="int1"/>
+            </td>
+                <br>
+        </tr>
+        </table>
+        <input type="submit" form="form" value="Add parameter details">
+    </form>
+</div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var count1 = 0;
+        $("select[name^='selectParameter']").change(function () {
+            console.log("Работает селект")
+            var hiddenIndexStr = "parameterName";
+            var newHiddenIdNumber = 1 + count1;
+            let newHiddenId = hiddenIndexStr + newHiddenIdNumber;
+            var selectIndexStr = "selectParameter";
+            var newSelectIdNumber = 1 + count1;
+            let newSelectId = selectIndexStr + newSelectIdNumber;
+            console.log(newHiddenId)
+            console.log(newSelectId)
+            $("#" + newHiddenId).val($("#" + newSelectId + " option:selected").attr("data-name"));
+            count1 += 1;
+            });
+        var count2 = 0;
+        $("#button1").click(function(){
+            console.log("Проверка состояния count: ")
+            console.log(count2)
+            console.log("Работает button 2 (клонирование)");
+            var containerIndexStr = "container";
+            var newContainerIdNumber = 2 + count2;
+            var oldContainerIdNumber = 1 + count2;
+            let newContainerId = containerIndexStr + newContainerIdNumber;
+            let oldContainerId = containerIndexStr + oldContainerIdNumber;
+            var hiddenIndexStr = "parameterName";
+            var newHiddenIdNumber = 2 + count2;
+            var oldHiddenIdNumber = 1 + count2;
+            let newHiddenId = hiddenIndexStr + newHiddenIdNumber;
+            let oldHiddenId = hiddenIndexStr + oldHiddenIdNumber;
+            console.log(oldContainerId)
+            console.log(newContainerId)
+            console.log(oldHiddenId)
+            console.log(newHiddenId)
+
+            var index = 1 + count2;
+            let newFieldText = "ppValueList[" + index + "].parameter.name"
+            console.log(newFieldText)
+
+            $("#" + oldContainerId).clone(true, true).attr("id", newContainerId).appendTo(".inner-container");
+
+            $("#" + newContainerId).find("#" + oldHiddenId).attr("id", newHiddenId);
+            $("#" + newContainerId).find("#" + newHiddenId).attr("name", newFieldText);
+            $("#" + newHiddenId).val("")
+
+            var stringIndexStr = "string";
+            var newStringIdNumber = 2 + count2;
+            var oldStringIdNumber = 1 + count2;
+            let newStringId = stringIndexStr + newStringIdNumber;
+            let oldStringId = stringIndexStr + oldStringIdNumber;
+            let newStringFieldText = "ppValueList[" + index + "].stringValue"
+
+            $("#" + newContainerId).find("#" + oldStringId).attr("id", newStringId);
+            $("#" + newContainerId).find("#" + newStringId).attr("name", newStringFieldText);
+            $("#" + newStringId).val("");
+
+            var itnIndexStr = "int";
+            var newIntIdNumber = 2 + count2;
+            var oldIntIdNumber = 1 + count2;
+            let newIntId = itnIndexStr + newIntIdNumber;
+            let oldIntId = itnIndexStr + oldIntIdNumber;
+            let newIntFieldText = "ppValueList[" + index + "].intValue"
+
+            $("#" + newContainerId).find("#" + oldIntId).attr("id", newIntId);
+            $("#" + newContainerId).find("#" + newIntId).attr("name", newIntFieldText);
+            $("#" + newIntId).val(0);
+
+            var selectIndexStr = "selectParameter";
+            var newSelectIdNumber = 2 + count2;
+            var oldSelectIdNumber = 1 + count2;
+            let newSelectId = selectIndexStr + newSelectIdNumber;
+            let oldSelectId = selectIndexStr + oldSelectIdNumber;
+
+            $("#" + newContainerId).find("#" + oldSelectId).attr("id", newSelectId);
+            console.log("Работает изменение айдишника селекта после клонирования. Новый айди: ")
+            console.log(newSelectId)
+            console.log("Старый айди: ")
+            console.log(oldSelectId)
+            count2 += 1;
+        });
+        });
+</script>
+</html>

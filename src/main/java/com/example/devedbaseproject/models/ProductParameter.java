@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 
 @Entity
 @Table(name = "product_parameters")
@@ -25,4 +25,23 @@ public class ProductParameter {
 
     @Column(name = "value_type")
     private boolean valueType;
+
+    public ProductParameter(String name, boolean valueType) {
+        this.name = name;
+        this.valueType = valueType;
     }
+
+    public ProductParameter(String name) {
+        this.name = name;
+        this.valueType = false;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductParameter{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", valueType=" + valueType +
+                '}';
+    }
+}

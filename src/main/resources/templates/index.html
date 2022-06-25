@@ -1,26 +1,20 @@
 <!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <html>
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <link rel="stylesheet" href="/list.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="/list.css">
+    <meta charset="utf-8">
+    <title>Personality</title>
+    <link rel="stylesheet" href="/style9.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
 </head>
-<body>
-<div>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out" class="btn"/>
-    </form>
-</div>
-<p>Products <a href="/products">here</a></p>
-<p>Manufacturer: <a href="/manufacturer">here</a></p>
-<p>Customers <a href="/customers">here</a></p>
-<p>Employees: <a href="/employees/">here</a></p>
-<p>Employee roles: <a href="/roles/">here</a></p>
-<p>Category: <a href="/category">here</a></p>
-<p>Emails: <a href="/emails/">here</a></p>
-<p>Product parameters: <a href="/parameters/">here</a></p>
-<p>Supplies: <a href="/supplies">here</a></p>
 
+<body>
+<div class ="container">
+    <th:block th:insert="fragments/menu :: menu"></th:block>
+    <h1> Hello, bitch!</h1>
+</div>
 </body>
 </html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Детали заказа</title>
+<!--    <link rel="stylesheet" href="/list.css">-->
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <div>
+        <label>Зоказ</label>
+        <table>
+            <thead>
+            <tr>
+                <td th:text="${order.customer.name}"></td>
+                <td th:text="${order.employee.name}"></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="orderDetail : ${orderDetails}">
+                <td th:text="${orderDetail.product.productName}"></td>
+                <td th:text="${orderDetail.productAmount}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

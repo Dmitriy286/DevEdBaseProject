@@ -12,31 +12,6 @@ import java.util.List;
 @Table(name = "Employees")
 public class Employee implements UserDetails {
 
-    public Employee(){}
-
-    public Employee(String username, String password) {
-        this.username = username;
-        this.password = password;
-        this.roles = new ArrayList<>();
-        this.active = false;
-
-        this.name = "";
-        this.email = "";
-        this.phoneNumber = "";
-        this.photo = "";
-    }
-
-    public Employee(String name, String username, String password, String email, String phoneNumber, String photo) {
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.photo = photo;
-        this.roles = new ArrayList<>();
-        this.active = false;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -53,29 +28,27 @@ public class Employee implements UserDetails {
     @Column(name = "password")
     private String password;
 
-//    @Email
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phone_number")
+    @Column(name = "phonenumber")
     private String phoneNumber;
 
     @Column(name = "photo")
     private String photo;
 
+    private String filename;
+
     @JoinTable(
             name = "employee_role",
             joinColumns = {@JoinColumn(
-                    name = "employee_id",
-                    referencedColumnName = "id"
+                    name = "employee_id"
             )},
             inverseJoinColumns = @JoinColumn(
-                    name = "role_id",
-                    referencedColumnName = "id"
+                    name = "role_id"
             )
     )
-
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private List<Role> roles;
 
     @OneToMany(mappedBy="employee")
@@ -87,6 +60,7 @@ public class Employee implements UserDetails {
                 "Id=" + Id +
                 ", name='" + name + '\'' +
                 ", login='" + username + '\'' +
+                ", roles='" + roles + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phonenumber='" + phoneNumber + '\'' +
@@ -94,6 +68,31 @@ public class Employee implements UserDetails {
                 '}';
     }
 
+    //region Constructors
+    public Employee(){}
+
+    public Employee(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.roles = new ArrayList<>();
+        this.active = false;
+        this.name = "";
+        this.email = "";
+        this.phoneNumber = "";
+        this.photo = "";
+    }
+
+    public Employee(String name, String username, String password, String email, String phoneNumber, String photo) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.photo = photo;
+        this.roles = new ArrayList<>();
+        this.active = false;
+    }
+    //endregion
     //region Setters, Getters
     public Long getId() {
         return Id;
@@ -167,6 +166,14 @@ public class Employee implements UserDetails {
         this.roles = roles;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -191,5 +198,6 @@ public class Employee implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
+
     //endregion
 }

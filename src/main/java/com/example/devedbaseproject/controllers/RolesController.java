@@ -1,5 +1,6 @@
 package com.example.devedbaseproject.controllers;
 
+import com.example.devedbaseproject.models.Email;
 import com.example.devedbaseproject.models.Employee;
 import com.example.devedbaseproject.models.Role;
 import com.example.devedbaseproject.repository.IEmployeeRepository;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +28,14 @@ public class RolesController {
     @GetMapping()
     public String findAll(Model model) {
         List<Role> roleList = repository.findAll();
+
+        Collections.sort(roleList, new Comparator<Role>(){
+            public int compare(Role o1, Role o2)
+            {
+                return o1.getId().compareTo(o2.getId());
+            }
+        });
+
         model.addAttribute("roles", roleList);
         return "role/showAll";
     }

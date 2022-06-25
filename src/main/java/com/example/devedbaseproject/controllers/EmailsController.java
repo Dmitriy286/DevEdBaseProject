@@ -11,9 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
 @Controller
 @RequestMapping("/emails")
@@ -34,6 +33,14 @@ public class EmailsController {
     @GetMapping()
     public String findAll(Model model) {
         List<Email> emailList = repository.findAll();
+
+        Collections.sort(emailList, new Comparator<Email>(){
+            public int compare(Email o1, Email o2)
+            {
+                return o1.getId().compareTo(o2.getId());
+            }
+        });
+
         model.addAttribute("emails", emailList);
         return "emails/showAll";
     }
@@ -61,8 +68,8 @@ public class EmailsController {
         // может быть отдельной сущности с таблице в БД "Предложения по клиентам"
         Product product = productRepository.findById(1L).orElseThrow(); //исправить на ввод айдишника
         // аналогично по продукту
-        Email newemail = new Email(email.getDate(), email.getMessage());
-
+        Email newemail = new Email(email.getMessage());
+//        supplies.setSuppliesDate(LocalDate.now());
         newemail.getProducts().add(product);
         newemail.setCustomer(customer);
         newemail.setEmployee(employee);
@@ -101,8 +108,8 @@ public class EmailsController {
     public String sendEmail(@PathVariable("id") Long id, Model model) {
         Optional<Email> email = repository.findById(id);
         String servicemessage = "Email with id " + email.get().getId() +
-        "for customer with id " + email.get().getCustomer().getId() +
-        "is sending to the e-mail adress: " + email.get().getCustomer().getEmail();
+        " for customer with id " + email.get().getCustomer().getId() +
+        " is sending to the e-mail adress: " + email.get().getCustomer().getEmail();
         System.out.println(servicemessage);
         email.get().setSend(true);
         repository.save(email.get());

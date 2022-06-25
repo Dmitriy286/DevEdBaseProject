@@ -7,7 +7,7 @@
 <body>
 <h1>Creating form</h1>
 
-<form th:action="@{/employees}" th:method="POST" th:object="${employee}">
+<form th:action="@{/employees}" th:method="POST" enctype="multipart/form-data" th:object="${employee}">
     <label for="Name">Name:</label>
     <input type="text" th:field="*{name}" id="Name">
 
@@ -33,8 +33,13 @@
 
     <br>
 
-    <label for="Photo">Photo:</label>
-    <input id="Photo" type="image" th:field="*{photo}">
+    <label>Photo:</label>
+    <input name="file" type="file" th:field="*{photo}">
+    <div>
+        <#if employee.filename??>
+            <img src="/img/${employee.filename}">
+        </#if>
+    </div>
 
     <br>
 
