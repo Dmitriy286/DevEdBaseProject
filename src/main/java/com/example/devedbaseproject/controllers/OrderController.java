@@ -86,7 +86,7 @@ public class OrderController {
         order.setOrderCost(200);
         order.setOrderStatus("Не оплачен");
 
-        orderRepository.save(order);
+//        orderRepository.save(order);
 
         //region Добавление тэгов продуктов из заказа в список тэгов клиента
         for (OrderDetails od: order.getOrderDetails()) {
@@ -124,7 +124,9 @@ public class OrderController {
             customerRepository.save(order.getCustomer());
         }
         //endregion
-
+        orderRepository.save(order);
+        Optional<Order> newOrder = orderRepository.findById(order.getId());
+        System.out.println(newOrder.get().getOrderDetails().get(0).getProduct());
         return "redirect:/history-order";
     }
     @GetMapping("/order-details/{id}")

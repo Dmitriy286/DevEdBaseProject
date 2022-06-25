@@ -62,4 +62,17 @@ public class Product {
     @JoinColumn(name = "tags")
     private List<Tag> tags;
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", description='" + description + '\'' +
+                ", manufacturer=" + manufacturer +
+                ", productQuantity=" + productQuantity +
+                ", productSubtype=" + productSubtype +
+                ", parameterValues=" + parameterValues +
+                ", tags=" + tags +
+                '}';
+    }
 }

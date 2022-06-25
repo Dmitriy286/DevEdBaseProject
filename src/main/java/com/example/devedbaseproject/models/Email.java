@@ -2,8 +2,6 @@ package com.example.devedbaseproject.models;
 
 import javax.persistence.*;
 
-import lombok.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +23,13 @@ public class Email {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH})
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH})
+    private List<Customer> customers;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH})
+    private Product product;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH})
     private List<Product> products;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -57,6 +61,8 @@ public class Email {
         this.date = LocalDate.now();
         this.message = message;
         this.customer = new Customer();
+        this.customers = new ArrayList<>();
+        this.product = new Product();
         this.products = new ArrayList<>();
         this.employee = new Employee();
         this.send = false;
@@ -118,6 +124,23 @@ public class Email {
     public void setSend(boolean send) {
         this.send = send;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
+
     //endregion
 }
 

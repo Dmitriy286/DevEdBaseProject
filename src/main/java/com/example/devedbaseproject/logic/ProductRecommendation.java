@@ -7,6 +7,9 @@ import com.example.devedbaseproject.models.Tag;
 import com.example.devedbaseproject.repository.ICustomerRepository;
 import com.example.devedbaseproject.repository.IEmailRepository;
 import com.example.devedbaseproject.repository.IProductRepository;
+import com.example.devedbaseproject.service.EmailSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,27 +37,35 @@ public class ProductRecommendation {
     private List<Tag> productTagList;
     private List<Customer> customerSendingList;
 
+    @Autowired
+    private EmailSender sender;
+
     public ProductRecommendation(IProductRepository productRepository, ICustomerRepository customerRepository, IEmailRepository emailRepository) {
         this.productRepository = productRepository;
         this.customerRepository = customerRepository;
         this.emailRepository = emailRepository;
-        this.customerSendingList = new ArrayList<>();
 
     }
 
     //todo необходима доработка метода (зависит от реализации рассылки)
-    public void sendEmail(Product currentProduct) {
+    public List<Customer> createDataForEmail(Product currentProduct) {
         this.setProductTagList(currentProduct);
-        this.tagCompare();
-//        product
-//        this.customerSendingList
+        return this.tagCompare();
+        }
 
-        //что-то делаем с this.customerSendingList
-//        send(this.customerSendingList);
+    public void sendEmail(Product currentProduct) {
+        for (Customer c : this.createDataForEmail(currentProduct)) {
+            if (!StringUtils.isEmpty(c.getEmail())) {
+                String message = String.format("Добрый день, %s! \n" +
+                                "Рекомендуем приобрести следующий продукт: \n" +
+                                "%s",
+                        c.getName(), currentProduct);
+                sender.send(c.getEmail(), "Рекомендуемый продукт", message);
+            }
+        }
     }
 
-
-    public void tagCompare() {
+    public List<Customer> tagCompare() {
         boolean flag = true;
         List<Tag> tagList = getProductTagList();
         List<Customer> customerList = getCustomerList();
@@ -71,6 +82,7 @@ public class ProductRecommendation {
             }
         }
 
+        return this.customerSendingList;
 
     }
 
