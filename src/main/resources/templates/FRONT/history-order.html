@@ -1,69 +1,56 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8">
-    <title>Orders History</title>
-    <link rel="stylesheet" href="style9.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
-</head>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Orders History</title>
+		<link rel="stylesheet" href="style9.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+	</head>
+	
+	<body>
+		<div class ="container">
+			<div class="top">
+				<h1>История заказов</h1>
+			</div>		
+				<div class="main">
+					<form action="search_mailing.php">
+						<p><input type=search placeholder="Поиск заказов">
+						<input type="submit" value="Искать"></p>
+					</form>
+			<table>
+				<thead>
+				<tr>
+					<th rowspan="2">Дата</th>
+					<th rowspan="2">Клиент</th>
+					<th colspan="2">Детали заказа</th>
+					<th rowspan="2">Адрес доставки</th>
+					<th rowspan="2">Стоимость</th>
+					<th rowspan="2">Статус</th>
+					<th rowspan="2">Менеджер</th>
+				</tr>
+				<tr>
+					<th>Продукт</th>
+					<th>Количество</th>
+				</tr>
+				</thead>
+<!--				<tbody>-->
+<!--				<tr th:each="product : ${products}">-->
 
-<body>
-<!--<th:block th:insert="fragments/menu :: menu"></th:block>-->
-<div class="container">
-    <div class="top">
-        <h1>История заказов</h1>
-    </div>
-    <div class="main">
-        <form action="search_mailing.php">
-            <p><input type=search placeholder="Поиск заказов">
-                <input type="submit" value="Искать"></p>
-        </form>
-        <table>
-            <thead>
-            <tr>
-                <th rowspan="2">Дата</th>
-                <th rowspan="2">Клиент</th>
-                <th colspan="2">Детали заказа</th>
-                <th rowspan="2">Адрес доставки</th>
-                <th rowspan="2">Стоимость</th>
-                <th rowspan="2">Статус</th>
-                <th rowspan="2">Менеджер</th>
-            </tr>
-            <tr>
-                <th>Продукт</th>
-                <th>Количество</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="order : ${orders}">
+<!--					<td><a th:href = "@{/product/{id}(id=${product.getId()})}" th:text = "${product.Id}">userid</a></td>-->
+<!--					<td th:text="${product.productName}"></td>-->
+<!--					<td th:text="${product.description}"></td>-->
+<!--					<td th:text="${product.manufacturerId.getName()}"></td>-->
+<!--					<td th:text="${product.productQuantity}"></td>-->
+<!--					<td th:text="${product.productSubtype.productSubtypeName}"></td>-->
 
-                <td th:text="${order.actionDateTime}"></td>
-                <td th:text="${order.customer.name}"></td>
-                <td>Продукты</td>
-                <td>Количество продуктов</td>
-                <td th:text="${order.deliveryAddress}"></td>
-
-                <td th:text="${order.orderCost}"></td>
-                <td th:text="${order.orderStatus}"></td>
-                <td th:text="${order.employee.name}"></td>
-
-                <!--					<td th:text="${order.orderDetails.product}"></td>-->
-                <!--					<td th:text="${order.orderDetails.productAmount}"></td>-->
-
-
-            </tr>
-            <!--				<tr th:each="orderDetails : ${orders.orderDetails}">-->
-
-            <!--					<td th:text="${orderDetails.product}"></td>-->
-            <!--					<td th:text="${orderDetails.productAmount}"></td>-->
-            <!--				</tr>-->
-            </tbody>
-        </table>
-        <!--					<a th:href="@{product-update/{id}(id=${order.id})}" class="btn">Edit</a>-->
-        <!--					<a th:href="@{product-delete/{id}(id=${order.id})}" class="btn">Delete</a>-->
-    </div>
-</div>
-</body>
-</html>
+<!--					<td><a th:href="@{product-update/{id}(id=${product.id})}" class="btn">Edit</a></td>-->
+<!--					<td><a th:href="@{product-delete/{id}(id=${product.id})}" class="btn">Delete</a></td>-->
+<!--				</tr>-->
+<!--				</tbody>-->
+			</table>
+			</div>
+		</div>
+	</body>
+	</html>
