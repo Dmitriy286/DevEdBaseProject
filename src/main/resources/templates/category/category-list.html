@@ -5,11 +5,9 @@
     <title>Category</title>
     <link rel="stylesheet" href="/list.css">
 </head>
-<th:block th:insert="fragments/navigation :: main-menu"></th:block>
 <body>
-
-<div class="container2">
-
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
     <div th:switch="${category}">
         <h2 th:case="null">No categories found!</h2>
         <div th:case="*">

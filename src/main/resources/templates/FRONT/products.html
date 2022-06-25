@@ -5,13 +5,15 @@
     <meta charset="utf-8">
     <title>Products</title>
     <link rel="stylesheet" href="/style9.css">
-
-
+    <link rel="stylesheet" href="/product-tabs.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
 </head>
-<body>
-<th:block th:insert="fragments/menu :: menu"></th:block>
-<div class="container2">
 
+<body>
+<div class="container">
+    <th:block th:insert="fragments/menu :: menu"></th:block>
     <div class="top_11">
         <h1 class="h1_11">Продукты</h1>
     </div>
@@ -21,11 +23,11 @@
             <div class="productlist_11">
                 <div class="list_11">
                     <table>
-                        <tr th:each="product : ${products}">
-                            <td><a th:href="@{/product/{id}(id=${product.id})}"
-                                   th:text="${product.productName}"></a></td>
-                            <!--                        <td><a th:href="@{products-parameters/{id}(id=${product.id})}" class="btn">Добавить характеристики</a></td>-->
-                        </tr>
+                    <tr th:each="product : ${products}">
+                        <td><a th:href="@{/product/{id}(id=${product.id})}"
+                               th:text="${product.productName}"></a></td>
+<!--                        <td><a th:href="@{products-parameters/{id}(id=${product.id})}" class="btn">Добавить характеристики</a></td>-->
+                    </tr>
                     </table>
 
                 </div>
@@ -35,45 +37,42 @@
         <div class="layer_right_11">
             <h2>Информация о продукте :</h2>
             <div class="add_products_11">
-                <form class="form_add_products_11" action="#" th:action="@{/products}" th:object="${product}" method="post">
-                    <div class="into_form_11">
-                        <label for="product_name"><h5>Name</h5></label>
-                        <input type="text" th:field="*{productName}" id="product_name"
-                               placeholder="Введите наименование">
-                        <br/>
-                        <label for="description"><h5>Description</h5></label>
-                        <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
-                        <br/>
-                        <label><h5>Manufacturer</h5></label>
-                        <select th:name="manufacturer">
-                            <option th:each="manufacturer: ${manufacturer}"
-                                    th:value="${manufacturer.id}"
-                                    th:text="${manufacturer.name}">
-                            </option>
-                        </select>
-                        <br/>
-                        <label for="product_quantity"><h5>Quantity</h5></label>
-                        <input type="text" th:field="*{productQuantity}" id="product_quantity"
-                               placeholder="Введите количество">
-                        <br/>
-                        <label><h5>Subtype ID</h5></label>
-                        <select th:name="productSubtype"> // имя поля класса!
-                            <option th:each="subtype: ${subtype}"
-                                    th:value="${subtype.id}"
-                                    th:text="${subtype.productSubtypeName}">
-                            </option>
-                        </select>
-                        <br/>
-                    </div>
-                    <form enctype="multipart/form-data" method="post">
-                        <p class="size_smaller"><input type="file" name="f">
-                            <input type="submit" value="Отправить"/></p>
-                    </form>
+                <form action="#" th:action="@{/products}" th:object="${product}" method="post">
+                    <label for="product_name">Name</label>
+                    <input type="text" th:field="*{productName}" id="product_name"
+                           placeholder="Введите наименование">
+                    <br/>
+                    <label for="description">Description</label>
+                    <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
+                    <br/>
+                    <label>Manufacturer</label>
+                    <select th:name="manufacturer">
+                        <option th:each="manufacturer: ${manufacturer}"
+                                th:value="${manufacturer.id}"
+                                th:text="${manufacturer.name}">
+                        </option>
+                    </select>
+                    <br/>
+                    <label for="product_quantity">Quantity</label>
+                    <input type="text" th:field="*{productQuantity}" id="product_quantity"
+                           placeholder="Введите количество">
+                    <br/>
+                    <label>Subtype ID</label>
+                    <select th:name="productSubtype"> // имя поля класса!
+                        <option th:each="subtype: ${subtype}"
+                                th:value="${subtype.id}"
+                                th:text="${subtype.productSubtypeName}">
+                        </option>
+                    </select>
+                    <br/>
                     <button type="submit" class="button_add_product_11">Добавить продукт</button>
-                    <!--                    <input type="submit" value="Create Product" class="btn">-->
+<!--                    <input type="submit" value="Create Product" class="btn">-->
                 </form>
             </div>
-
+            <form enctype="multipart/form-data" method="post">
+                <p class="size_smaller"><input type="file" name="f">
+                    <input type="submit" value="Отправить"/></p>
+            </form>
         </div>
     </div>
 </div>

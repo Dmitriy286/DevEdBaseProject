@@ -1,56 +1,56 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Card</title>
-    <link rel="stylesheet" href="/style9.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
-</head>
+	<head>
+		<meta charset="utf-8">
+		<title>Card</title>
+		<link rel="stylesheet" href="/style9.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+	</head>
+	
+	<body>
+		<div class ="container">
+			<th:block th:insert="fragments/menu :: menu"></th:block>
+			<div class="top">
+				<h1>Карточка клиента</h1>
+			</div>		
+				<div class="main3">
+				<div class="layerfoto">
+					   
+					</div>
+					<div class="layerinfo">
+						<table>
+							<thead>
+							<tr>
+								<th>Имя</th>
+								<th>Фамилия</th>
+								<th>Возраст</th>
+								<th>Почта</th>
+								<th>Номер телефона</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td th:text="${customer.name}"></td>
+								<td th:text="${customer.surname}"></td>
+								<td th:text="${customer.age}"></td>
+								<td th:text="${customer.email}"></td>
+								<td th:text="${customer.phoneNumber}"></td>
 
-<body>
-<th:block th:insert="fragments/menu :: menu"></th:block>
-<div class="container">
-    <div class="top">
-        <h1>Карточка клиента</h1>
-    </div>
-    <div class="main3">
-        <div class="layerfoto">
-
-        </div>
-        <div class="layerinfo">
-            <table>
-                <thead>
-                <tr>
-                    <th>Имя</th>
-                    <th>Фамилия</th>
-                    <th>Возраст</th>
-                    <th>Почта</th>
-                    <th>Номер телефона</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td th:text="${customer.name}"></td>
-                    <td th:text="${customer.surname}"></td>
-                    <td th:text="${customer.age}"></td>
-                    <td th:text="${customer.email}"></td>
-                    <td th:text="${customer.phoneNumber}"></td>
-
-                    <td><a th:href="@{update/{id}(id=${customer.id})}" class="btn">Редактировать </a></td>
-                    <td><a th:href="@{delete/{id}(id=${customer.id})}" class="btn">Удалить</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="down">
-        <h4>История заказов клиента :</h4>
-        <div class="orders"></div>
-    </div>
-    <button type="submit" class="fivedown">Сделать заказ</button>
-</div>
-</body>
-</html>
+								<td><a th:href="@{update/{id}(id=${customer.id})}" class="btn">Редактировать </a></td>
+								<td><a th:href="@{delete/{id}(id=${customer.id})}" class="btn">Удалить</a></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			<div class="down">
+			<h4>История заказов клиента :</h4>
+			<div class="orders"></div>
+			</div>
+			<button type="submit" class ="fivedown">Сделать заказ</button>
+		</div>
+	</body>
+	</html>
