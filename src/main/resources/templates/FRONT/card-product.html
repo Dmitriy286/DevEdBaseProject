@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+		<meta charset="utf-8">
+		<title>Card Product</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/style9.css">
+	<link rel="stylesheet" href="/style.css">
+</head>
+	<body>
+		<div class ="container">
+			<th:block th:insert="fragments/menu :: menu"></th:block>
+			<div class="top">
+				<h1>Карточка товара</h1>
+			</div>		
+				<div class="center_4">
+					<div class="layer_left_7">
+						<div class="foto_7">
+							<img height=250 width=300 src = "https://3259404.ru/upload/ammina.optimizer/jpg-webp/q80/upload/iblock/9b8/9b8144010ad985020ff681b160a33e3a.webp" alt="Product photo">
+						</div>
+						
+						<div class="characteristics"><h2 class="characteristics_text">Характеристики товара</h2>
+							<dl th:each="parameterValues: ${product.parameterValues}">
+								<dt>Параметр</dt>
+								<dd th:text="${parameterValues.parameter.name}"></dd>
+								<dt>Числовое значение</dt>
+								<dd th:text="${parameterValues.intValue}"></dd>
+								<dt>Строковое значение</dt>
+								<dd th:text="${parameterValues.stringValue}"></dd>
+							</dl>
+							<button><a th:href="@{parameters/{id}(id=${product.id})}" class="btn">Добавить характеристики</a></button>
+						</div>
+					</div>
+					<div class="layer_right_7">
+						<h2>Информация о товаре :</h2>
+						<div class="products_cart">
+							<dl>
+								<dt>Наименование</dt>
+									<dd th:text="${product.productName}"></dd>
+								<dt>Описание</dt>
+									<dd th:text="${product.description}"></dd>
+								<dt>Производитель</dt>
+									<dd th:text="${product.manufacturer.name}"></dd>
+								<dt>Количество</dt>
+									<dd th:text="${product.productQuantity}"></dd>
+								<dt>Подтип товара</dt>
+									<dd th:text="${product.productSubtype.productSubtypeName}"></dd>
+							</dl>
+
+							 <a th:href="@{update/{id}(id=${product.id})}" class="btn">Редактировать товар</a>
+							 <a th:href="@{delete/{id}(id=${product.id})}" class="btn">Delete</a>
+						</div>
+
+						<div class="customer_references"><h2>Рекомендации клиентов :</h2><div class="customer_references_text"></div></div>
+					<div class="knopka"><button type="submit" class ="create_mailing">Сформировать рассылку</button></div>	
+					</div>
+					</div>
+				</div>
+		</div>
+	</body>
+</html>

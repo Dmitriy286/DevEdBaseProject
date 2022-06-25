@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Product with params</title>
-    <link rel="stylesheet" href="/list.css">
+    <title>Update product</title>
+    <link rel="stylesheet" href="/style9.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<div class="container">
+    <th:block th:insert="fragments/menu :: menu"></th:block>
 <div>
-<p th:text="${product.getProductName()}">value</p>
-<p th:text="${product.getId()}">value</p>
+<h1 th:text="${product.getProductName()}">value</h1>
 </div>
 <div>
-    <h2>Parameters with values</h2>
+    <h2>Характеристики: </h2>
     <table>
         <thead>
         <tr>
-            <th>Parameter name</th>
-            <th>String value</th>
-            <th>Int value</th>
+            <th>Название</th>
+            <th>Строковое значение</th>
+            <th>Числовое значение</th>
         </tr>
         </thead>
         <tbody>
@@ -33,10 +35,11 @@
 
     <button id="button1">Добавить</button><br>
 
-    <form th:action="@{/products/{productId}(productId=${product.getId})}"
+    <form th:action="@{/product/parameters/{productId}(productId=${product.getId})}"
           th:method="POST" th:object="${wrapper}" id="form" name="formName">
 
         <table class="inner-container" th:name="parameterSelectContainer" th:id="innerContainer">
+<!--            <p th:each="ppvalue, stat: ${wrapper.ppValueList}">-->
             <tr id="container1">
             <td>
                 <select th:name="selectParameter" th:id="selectParameter1">
@@ -62,21 +65,11 @@
             </td>
                 <br>
         </tr>
-
         </table>
         <input type="submit" form="form" value="Add parameter details">
     </form>
-
-
-
 </div>
-
-<div>
-<a th:href="@{/products/{productId}/settags(productId=${product.getId})}">Добавить тэги</a>
-    <br>
-<a href="/index">Назад на главную</a>
 </div>
-
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
@@ -117,8 +110,6 @@
 
             var index = 1 + count2;
             let newFieldText = "ppValueList[" + index + "].parameter.name"
-         //   let newFieldText = "*{ppValueList[" + index + "].parameter.name}"
-                // *{ppValueList[0].parameter.name}
             console.log(newFieldText)
 
             $("#" + oldContainerId).clone(true, true).attr("id", newContainerId).appendTo(".inner-container");
@@ -160,12 +151,8 @@
             console.log(newSelectId)
             console.log("Старый айди: ")
             console.log(oldSelectId)
-
             count2 += 1;
-
         });
-
         });
-
 </script>
 </html>

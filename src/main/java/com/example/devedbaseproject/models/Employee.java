@@ -28,7 +28,6 @@ public class Employee implements UserDetails {
     @Column(name = "password")
     private String password;
 
-//    @Email
     @Column(name = "email")
     private String email;
 
@@ -44,11 +43,9 @@ public class Employee implements UserDetails {
             name = "employee_role",
             joinColumns = {@JoinColumn(
                     name = "employee_id"
-//                    referencedColumnName = "id"
             )},
             inverseJoinColumns = @JoinColumn(
                     name = "role_id"
-//                    referencedColumnName = "id"
             )
     )
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
@@ -57,6 +54,21 @@ public class Employee implements UserDetails {
     @OneToMany(mappedBy="employee")
     private List<Order> orderList;
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "Id=" + Id +
+                ", name='" + name + '\'' +
+                ", login='" + username + '\'' +
+                ", roles='" + roles + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phonenumber='" + phoneNumber + '\'' +
+                ", photo='" + photo + '\'' +
+                '}';
+    }
+
+    //region Constructors
     public Employee(){}
 
     public Employee(String username, String password) {
@@ -64,7 +76,6 @@ public class Employee implements UserDetails {
         this.password = password;
         this.roles = new ArrayList<>();
         this.active = false;
-
         this.name = "";
         this.email = "";
         this.phoneNumber = "";
@@ -81,21 +92,7 @@ public class Employee implements UserDetails {
         this.roles = new ArrayList<>();
         this.active = false;
     }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "Id=" + Id +
-                ", name='" + name + '\'' +
-                ", login='" + username + '\'' +
-                ", roles='" + roles + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", phonenumber='" + phoneNumber + '\'' +
-                ", photo='" + photo + '\'' +
-                '}';
-    }
-
+    //endregion
     //region Setters, Getters
     public Long getId() {
         return Id;

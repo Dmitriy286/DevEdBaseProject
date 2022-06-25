@@ -18,6 +18,8 @@ public class ProductController {
     private final IProductParameterRepository productParameterRepository;
     private final IProductParameterValueRepository ppvalueRepository;
     private final IManufacturerRepository manufacturerRepository;
+    private final ICategoryRepository categoryRepository;
+    private final IProductTypeRepository typeRepository;
     private final IProductSubtypeRepository subtypeRepository;
     private final ITagRepository tagRepository;
 
@@ -25,65 +27,92 @@ public class ProductController {
     @Autowired
     public ProductController(IProductRepository productRepository, IProductParameterRepository productParameterRepository,
                              IProductParameterValueRepository ppvalueRepository, IManufacturerRepository manufacturerRepository,
-                             IProductSubtypeRepository subtypeRepository, ITagRepository tagRepository) {
+                             IProductSubtypeRepository subtypeRepository) {
         this.productRepository = productRepository;
         this.productParameterRepository = productParameterRepository;
         this.ppvalueRepository = ppvalueRepository;
         this.manufacturerRepository = manufacturerRepository;
+        this.categoryRepository = categoryRepository;
+        this.typeRepository = typeRepository;
         this.subtypeRepository = subtypeRepository;
         this.tagRepository = tagRepository;
     }
 
 
     @GetMapping("/products")
-    public String findAll(Model model) {
-        List<Product> product = productRepository.findAll();
-        model.addAttribute("products", product); // attribute - "${products}"
-//        return "product-list";
-        return "FRONT/7";
-    }
+    public String findAll(Model model, Product product) {
+        List<Product> products = productRepository.findAll();
+        model.addAttribute("products", products); // attribute - "${products}"
 
-    @GetMapping("/product-create")
-    public String createProductForm(Product product, Model model) {
+        List<ProductType> types = typeRepository.findAll();
+        model.addAttribute("type", types);
+
         model.addAttribute("manufacturer", manufacturerRepository.findAll());
         model.addAttribute("subtype", subtypeRepository.findAll());
-        return "product-create";
+
+        return "FRONT/products";
     }
 
-
-    @PostMapping("/product-create")
+    @PostMapping("/products")
     public String createProduct(@Valid Product product) {
         productRepository.save(product);
         return "redirect:/products";
     }
 
-    @GetMapping("/product-delete/{id}")
+    @GetMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
         productRepository.deleteById(id);
         return "redirect:/products";
     }
 
-    @GetMapping("/product-update/{id}")
-    public String updateProductForm(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/product/{id}")
+    public String cardProduct(@PathVariable("id") Long id, Model model) {
+        Product product = productRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("Invalid product ID" + id));
+        model.addAttribute("product", product);
+//        model.addAttribute("manufacturer", manufacturerRepository.findAll());
+//        model.addAttribute("subtype", subtypeRepository.findAll());
+        model.addAttribute("value", ppvalueRepository.findAll());
+        model.addAttribute("parameters", productParameterRepository.findAll());
+        return "FRONT/card-product";
+    }
+
+    @GetMapping("/product/update/{id}")
+    public String updateFormProduct(@PathVariable("id") Long id, Model model) {
         Product product = productRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Invalid product ID" + id));
         model.addAttribute("product", product);
         model.addAttribute("manufacturer", manufacturerRepository.findAll());
         model.addAttribute("subtype", subtypeRepository.findAll());
-        return "product-update";
+        return "FRONT/product-update";
     }
 
-    @PostMapping("/product-update")
-    public String updateProduct(Product product) {
+    @PostMapping("/product/update/{id}")
+    public String updateProduct(@PathVariable("id") Long id, Product product) {
         productRepository.save(product);
-        return "redirect:/products";
+        return "redirect:/product/" + id;
     }
 
-    @GetMapping("/products/{productId}")
-    public String findProductById(@PathVariable("productId") Long productId,
-                                  Model model) {
+    @GetMapping("/product/parameters/{id}")
+    public String findProductById(@PathVariable("id") Long id, Model model) {
         List<ProductParameter> parameters = productParameterRepository.findAll();
         model.addAttribute("parameters", parameters);
+
+//        Optional<ProductParameter> pp = productParameterRepository.findById(31L);
+//        if (pp.isPresent()) {
+//            ProductParameter newPP = pp.get();
+//            PPValueWrapper wrapper = new PPValueWrapper();
+//            ProductParameterValue ppv = new ProductParameterValue();
+//            ppv.setParameter(newPP);
+//            ppv.setIntValue(0);
+//            ppv.setStringValue("test");
+//            wrapper.getPpValueList().add(ppv);
+//            model.addAttribute("wrapper", wrapper);
+//            System.out.println(wrapper);
+//            System.out.println(wrapper.getPpValueList());
+//        } else {
+//            System.out.println("Error Found");
+//        }
 
         ProductParameter newPP = new ProductParameter("");
 
@@ -95,16 +124,19 @@ public class ProductController {
         wrapper.getPpValueList().add(ppv);
         model.addAttribute("wrapper", wrapper);
 
+//        List<ProductParameterValue> prodparamvalues = new ArrayList<ProductParameterValue>();
+//        model.addAttribute("prodparamvalues", prodparamvalues);
+
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {
             model.addAttribute("product", product.get());
         } else {
             System.out.println("Error Found");
         }
-        return "product";
+        return "FRONT/product-parameters";
     }
 
-    @PostMapping("/products/{productId}")
+    @PostMapping("/product/parameters/{id}")
     public String setParameters(@RequestParam Map<String, String> form,
                                 @ModelAttribute PPValueWrapper wrapper, Model model,
                                 @PathVariable("productId") Long productId) {
@@ -157,8 +189,19 @@ public class ProductController {
             System.out.println(ppvalue.getParameter());
             System.out.println(ppvalue.getParameter().getName());
         }
+//
+//
+//        if (tempproduct.isPresent()) {
+//            Product product = tempproduct.get();
+//            prodparamvalue.setProduct(product);
+//            ppvalueRepository.save(prodparamvalue);
+//            product.getParameterValues().add(prodparamvalue);
+//            productRepository.save(product);
+//        } else {
+//            System.out.println("Error Found, likely no product");
+//        }
 
-        return "redirect:/products/" + productId;
+        return "redirect:/product/parameters/" + id;
     }
 
 

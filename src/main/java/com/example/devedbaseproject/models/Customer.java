@@ -1,19 +1,12 @@
 package com.example.devedbaseproject.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@Getter@Setter
-//@AllArgsConstructor
-//@NoArgsConstructor
+
 @Entity
 @Table(name = "customers")
 public class Customer {
@@ -40,6 +33,7 @@ public class Customer {
     @Transient
     private HashMap<Tag, Integer> tagCountMap;
 
+    //region Constructors
     public Customer() {
     }
 
@@ -52,7 +46,8 @@ public class Customer {
         this.orderList = new ArrayList<>();
         this.tagCountMap = new HashMap<>();
     }
-
+    //endregion
+    //region Getters, setters
     public Long getId() {
         return id;
     }
@@ -116,4 +111,5 @@ public class Customer {
     public void setTagCountMap(HashMap<Tag, Integer> tagCountMap) {
         this.tagCountMap = tagCountMap;
     }
+    //endregion
 }
