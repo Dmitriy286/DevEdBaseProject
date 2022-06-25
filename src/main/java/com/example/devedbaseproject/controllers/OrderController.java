@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.example.devedbaseproject.tools.Tools.getLocalDateTime;
@@ -93,11 +90,20 @@ public class OrderController {
 
         //region Добавление тэгов продуктов из заказа в список тэгов клиента
         for (OrderDetails od: order.getOrderDetails()) {
-            if (od.getProduct().getTags() == null) {
+            Optional<Product> tempproduct = productRepository.findById(od.getProduct().getId());
+            Product product = new Product();
+
+            if (tempproduct.isPresent()) {product = tempproduct.get();}
+            else {System.out.println("Error Found, likely no product");}
+
+            od.setProduct(product);
+            orderDetailsRepository.save(od);
+
+            if (product.getTags() == null) {
                 System.out.println("У продукта нет тэгов");
             }
             else {
-                for (Tag tag : od.getProduct().getTags()) {
+                for (Tag tag : product.getTags()) {
                     if (order.getCustomer().getTagCountMap().containsKey(tag)) {
                         order.getCustomer().getTagCountMap().put(tag, order.getCustomer().getTagCountMap().get(tag) + 1);
                     } else {
@@ -119,7 +125,7 @@ public class OrderController {
         }
         //endregion
 
-        return "redirect:/orders";
+        return "redirect:/history-order";
     }
     @GetMapping("/order-details/{id}")
     public String detailsView(@PathVariable("id") Long id, Model model) {
