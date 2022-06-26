@@ -10,6 +10,14 @@ body {
     font-family: 'Press Start 2P', cursive !important;
 }
 
+.container2_short{
+    padding: 1px;
+    max-width: 1145px;
+    height: 730px;
+    margin: 0 auto;
+    background: #FFD8B4;
+}
+
 .container2 {
     padding: 1px;
     max-width: 1145px;
@@ -110,10 +118,16 @@ p {
 }
 
 .p5 {
-    margin-top: 15px;
-    margin-left: 45px;
-    margin-bottom: 0px;
+    margin: 10px auto;
     padding: 5px;
+}
+
+.p5 label{
+    width: 120px;
+}
+
+#infoclientreg {
+    margin: auto;
 }
 
 .p3 {
@@ -457,7 +471,7 @@ button {
     padding: 0 13px;
     text-decoration: none;
     border-radius: 34px;
-    margin: 35px auto;
+    margin: 65px auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -469,6 +483,14 @@ button {
     padding-left: 25px;
     float: left;
     width: 453px;
+    height: 350px;
+}
+
+.layer1_reg {
+
+    padding-left: 25px;
+    float: left;
+    width: 1097px;
     height: 350px;
 }
 

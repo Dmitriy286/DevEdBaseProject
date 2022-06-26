@@ -7,33 +7,33 @@
 </head>
 <body>
 <th:block th:insert="fragments/menu :: menu"></th:block>
-<div class="container">
+<div class="container2_short">
     <div class="top">
-        <h1>Регистрация нового клиента</h1>
+        <div class="topH"><h1>Регистрация нового клиента</h1></div>
     </div>
     <div class="main5">
-        <div class="layer1">
+        <div class="layer1_reg">
             <h4>Данные клиента :</h4>
         <form id="infoclientreg" action="#" th:action="@{/customer-create}" th:object="${customer}" method="post">
-            <p class="p5"><label for="name">Имя</label>
+            <p class="p5 allGoCenter"><label for="name">Имя</label>
             <input type="text" th:field="*{name}" id="name" placeholder="Введите имя">
             </p>
-            <p class="p5"><label for="surname">Фамилия</label>
+            <p class="p5 allGoCenter"><label for="surname">Фамилия</label>
             <input type="text" th:field="*{surname}" id="surname" placeholder="Введите фамилию">
             </p>
-            <p class="p5"><label for="age">Возраст</label>
+            <p class="p5 allGoCenter"><label for="age">Возраст</label>
             <input type="text" th:field="*{age}" id="age" placeholder="Введите возраст">
             </p>
-            <p class="p5"><label for="email">Почта</label>
+            <p class="p5 allGoCenter"><label for="email">Почта</label>
             <input type="text" th:field="*{email}" id="email" placeholder="Введите почтовый адрес">
             </p>
-            <p class="p5"><label for="phoneNumber">Телефон</label>
+            <p class="p5 allGoCenter"><label for="phoneNumber">Телефон</label>
             <input type="text" th:field="*{phoneNumber}" id="phoneNumber" placeholder="Введите номер телефона">
             </p>
-            <div class="layer2">
+
 <!--                <div class ="fotoclient"><img height=100 width=100 src ="/clientempty.png" alt ="Фото клиента"></div>-->
                 <button type="submit" class ="addclient">Добавить клиента</button>
-            </div>
+
         </form>
     </div>
 </div>
