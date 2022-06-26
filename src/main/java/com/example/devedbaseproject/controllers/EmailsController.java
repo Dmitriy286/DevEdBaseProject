@@ -42,7 +42,7 @@ public class EmailsController {
         });
 
         model.addAttribute("emails", emailList);
-        return "emails/showAll";
+        return "FRONT/history-email";
     }
 
     @GetMapping("/customer/{customerId}")
@@ -51,7 +51,7 @@ public class EmailsController {
         List<Email> emailList = repository.findByCustomer(customer);
         model.addAttribute("emails", emailList);
 
-        return "emails/showAll";
+        return "FRONT/history-email";
     }
 
     @GetMapping("/new")
@@ -80,9 +80,8 @@ public class EmailsController {
         return "redirect:/emails";
     }
 
-    @PostMapping("/newemails")
+    @PostMapping("/newEmails")
     public String sendEmailFilter(@RequestParam("sent") boolean sent, Model model) {
-
         List<Email> emailList = repository.findAll();
         List<Email> emailListToSend = new ArrayList<>();
         List<Email> sentEmails = new ArrayList<>();
@@ -94,14 +93,13 @@ public class EmailsController {
                 sentEmails.add(e);
             }
         }
-
         if (!sent) {
             model.addAttribute("emails", emailListToSend);
         }
         else {
             model.addAttribute("emails", sentEmails);
         }
-        return "emails/showAll";
+        return "FRONT/history-email";
     }
 
     @GetMapping("/{id}/send")
@@ -122,6 +120,8 @@ public class EmailsController {
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") Long id) {
         Optional<Email> email = repository.findById(id);
+        List<Customer> customers = customerRepository.findAll();
+        model.addAttribute("customers", customers);
         if (email.isPresent() && !email.get().isSend()) {
             String servicemessage = "Change email content:";
             System.out.println(servicemessage);
@@ -171,6 +171,4 @@ public class EmailsController {
 
         return "redirect:/emails";
     }
-
-
 }

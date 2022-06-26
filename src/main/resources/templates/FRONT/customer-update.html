@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Редактировать клиента</title>
-    <link rel="stylesheet" href="/list.css">
+    <link rel="stylesheet" href="/style9.css">
 </head>
 <body>
+<th:block th:insert="fragments/menu :: menu"></th:block>
 <div class="container">
-    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
     <div>
         <form action="#" th:action="@{/employees/customers/update/{id}(id=${customer.id})}" th:object="${customer}" method="post">
             <input type="hidden" th:field="*{id}">

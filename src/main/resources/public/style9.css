@@ -511,7 +511,7 @@ button {
     margin-bottom: 5px;
     float: left;
     width: 450px;
-    height: 200px;
+    height: 300px;
     background-color: #ECD1BD;
 
 }
@@ -530,7 +530,7 @@ button {
     margin-bottom: 5px;
     float: right;
     width: 450px;
-    height: 200px;
+    height: 300px;
     background-color: #ECD1BD;
 }
 
@@ -932,4 +932,19 @@ input[type="submit" i] {
 .btn {
     margin: 30px auto;
     margin-left: 70px;
+}
+.customers_list{
+    overflow-y: scroll; /* прокрутка по вертикали */
+    width: 450px;
+    height: 100px;
+}
+.products_list{
+    overflow-y: scroll; /* прокрутка по вертикали */
+    width: 450px;
+    height: 100px;
+}
+.history_email{
+    overflow-y: scroll; /* прокрутка по вертикали */
+    width: 1102px;
+    height: 300px;
 }
