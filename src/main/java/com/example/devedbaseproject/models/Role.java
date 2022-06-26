@@ -45,6 +45,7 @@ public class Role implements GrantedAuthority {
         return "" + name + "";
     }
 
+    //region getters, setters
     public Long getId() {
         return Id;
     }
@@ -60,6 +61,7 @@ public class Role implements GrantedAuthority {
     public void setName(String name) {
         this.name = name;
     }
+    //endregion
 
     @Override
     public String getAuthority() {

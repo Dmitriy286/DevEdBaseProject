@@ -29,6 +29,7 @@ public class Product {
         this.manufacturer = new Manufacturer();
         this.productSubtype = new ProductSubtype();
         this.parameterValues = new ArrayList<>();
+        this.tags = new ArrayList<>();
     }
 
     @Id
@@ -57,6 +58,8 @@ public class Product {
     @JoinColumn(name = "parameter_values")
     private List<ProductParameterValue> parameterValues;
 
-    private List<Tag> tagsList;
+    @OneToMany
+    @JoinColumn(name = "tags")
+    private List<Tag> tags;
 
 }

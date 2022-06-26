@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Update product</title>
-    <link rel="stylesheet" href="/list.css">
+    <link rel="stylesheet" href="/style9.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <div class="container">
-    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+    <th:block th:insert="fragments/menu :: menu"></th:block>
     <div>
-        <form action="#" th:action="@{/product-update}" th:object="${product}" method="post">
-            <label for="product_id">ID</label>
-            <input readonly type="number" th:field="*{id}" id="product_id" placeholder="ID">
+        <form action="#" th:action="@{/product/update/{id}(id=${product.id})}" th:object="${product}" method="post">
+<!--            <label for="product_id">ID</label>-->
+            <div>
+            <input type="hidden" th:field="*{id}" id="product_id" placeholder="ID">
             <br/>
             <label for="product_name">Name</label>
             <input type="text" th:field="*{productName}" id="product_name" placeholder="Введите наименование">
@@ -39,6 +41,7 @@
                         th:selected="${product.productSubtype.id == subtype.id}">
                 </option>
             </select>
+            </div>
             <br/>
             <input type="submit" value="Update Product" class="btn">
         </form>

@@ -1,16 +1,12 @@
 package com.example.devedbaseproject.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-//@Getter@Setter
-//@AllArgsConstructor
-//@NoArgsConstructor
+
 @Entity
 @Table(name = "customers")
 public class Customer {
@@ -34,18 +30,26 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Order> orderList;
 
+    @Transient
+    private HashMap<Tag, Integer> tagCountMap;
+
+    //region Constructors
     public Customer() {
+        this.orderList = new ArrayList<>();
+        this.tagCountMap = new HashMap<>();
     }
 
-    public Customer(String name, String surname, Integer age, String email, String phoneNumber, List<Order> orderList) {
+    public Customer(String name, String surname, Integer age, String email, String phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.orderList = orderList;
+        this.orderList = new ArrayList<>();
+        this.tagCountMap = new HashMap<>();
     }
-
+    //endregion
+    //region Getters, setters
     public Long getId() {
         return id;
     }
@@ -101,4 +105,13 @@ public class Customer {
     public void setOrderList(List<Order> orderList) {
         this.orderList = orderList;
     }
+
+    public HashMap<Tag, Integer> getTagCountMap() {
+        return tagCountMap;
+    }
+
+    public void setTagCountMap(HashMap<Tag, Integer> tagCountMap) {
+        this.tagCountMap = tagCountMap;
+    }
+    //endregion
 }

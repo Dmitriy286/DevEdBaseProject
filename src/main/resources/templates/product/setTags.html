@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update product</title>
+    <link rel="stylesheet" href="/list.css">
+</head>
+<body>
+<div class="container">
+    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
+
+    <div>
+        <p th:text="${product.getProductName()}">value</p>
+        <p th:text="${product.getId()}">value</p>
+        <p th:text="${product.getDescription()}">value</p>
+        <p th:text="${product.getTags()}">value</p>
+    </div>
+
+    <div>
+        <button id="button1">Добавить</button><br>
+
+        <form th:action="@{/products/{productId}/settags(productId=${product.getId})}"
+              th:object="${wrapper}" method="post">
+            <div class="outer-container">
+            <div th:id="container1">
+<!--                // при клонировании меняем id этого контейнера на +1-->
+            <label>Выбрать тэг</label>
+            <select th:name="tags" th:id="tagSelect1">
+<!--                // при клонировании меняем id этого селекта на +1-->
+                <option value="default">Выбери тэг</option>
+                <option th:each="tag: ${tags}"
+                        th:value="${tag}"
+                        th:text="${tag.name}"
+                        th:data-name="${tag.id}">
+
+                </option>
+            </select>
+            <br/>
+            <input type="hidden" th:field="*{tagList[0].id}" th:id="tagName1"/>
+                <!-- при клонировании меняем значение field на +1 // id этого поля на +1-->
+<!--            <input placeholder="parameterName" th:id="tagName1"/> -->
+            </div>
+            </div>
+            <br/>
+            <input type="submit" value="Добавить список тэгов" class="btn">
+        </form>
+    </div>
+</div>
+<a href="/index">Назад на главную</a>
+<br>
+<a th:href="@{/products/{productId}(productId=${product.getId})}">Назад к продукту</a>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var count1 = 0;
+        $("select[name^='tags']").change(function () {
+            console.log("Работает селект")
+            var tagSelectIdStr = "tagSelect";
+            var newTagSelectIdNumber = 1 + count1;
+            let newTagSelectId = tagSelectIdStr + newTagSelectIdNumber;
+            var tagNameIdStr = "tagName";
+            var newTagNameIdNumber = 1 + count1;
+            let newTagNameId = tagNameIdStr + newTagNameIdNumber;
+            console.log(newTagSelectId)
+            console.log(newTagNameId)
+            $("#" + newTagNameId).val($("#" + newTagSelectId + " option:selected").attr("data-name"));
+            count1 += 1;
+        });
+        var count2 = 0;
+        $("#button1").click(function(){
+            console.log("Проверка состояния count: ")
+            console.log(count2)
+            console.log("Работает button 1 (клонирование)");
+            var containerIdStr = "container";
+            var newContainerIdNumber = 2 + count2;
+            var oldContainerIdNumber = 1 + count2;
+            let newContainerId = containerIdStr + newContainerIdNumber;
+            let oldContainerId = containerIdStr + oldContainerIdNumber;
+
+            var tagNameIdStr = "tagName";
+            var newTagNameIdNumber = 2 + count2;
+            var oldTagNameIdNumber = 1 + count2;
+            let newTagNameId = tagNameIdStr + newTagNameIdNumber;
+            let oldTagNameId = tagNameIdStr + oldTagNameIdNumber;
+
+            console.log(oldContainerId)
+            console.log(newContainerId)
+            console.log(newTagNameId)
+            console.log(oldTagNameId)
+
+            var tagSelectIdStr = "tagSelect";
+            var oldTagSelectIdNumber = 1 + count2;
+            var newTagSelectIdNumber = 2 + count2;
+            let newTagSelectId = tagSelectIdStr + newTagSelectIdNumber;
+            let oldTagSelectId = tagSelectIdStr + oldTagSelectIdNumber;
+
+            // var optionIdStr = "optionTag";
+            // var oldOptionIdNumber = 1 + count2;
+            // var newOptionIdNumber = 2 + count2;
+            // let newOptionId = optionIdStr + newOptionIdNumber;
+            // let oldOptionId = optionIdStr + oldOptionIdNumber;
+
+            var index = 1 + count2;
+            let newFieldText = "tagList[" + index + "]"
+            console.log(newFieldText)
+
+            $("#" + oldContainerId).clone(true, true).attr("id", newContainerId).appendTo(".outer-container");
+            $("#" + newContainerId).find("#" + oldTagSelectId).attr("id", newTagSelectId);
+            // $("#" + newTagSelectId).find("#" + oldOptionId).attr("id", newOptionId);
+            // $("#" + newTagSelectId).find("#" + newOptionId).attr("name", newFieldText);
+            $("#" + newContainerId).find("#" + oldTagNameId).attr("id", newTagNameId);
+            $("#" + newContainerId).find("#" + newTagNameId).attr("name", newFieldText);
+            $("#" + newTagNameId).val("")
+
+            count2 += 1;
+
+        });
+
+    });
+
+</script>
+</html>
