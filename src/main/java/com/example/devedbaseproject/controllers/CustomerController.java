@@ -31,14 +31,14 @@ public class CustomerController {
         this.productRepository = productRepository;
     }
 
-//    @GetMapping("/customers/")
-//    public String findAll(Model model ){
-//        List<Customer> customers = customerRepository.findAll();
-//        model.addAttribute("customers", customers);
-//        return "customer-list";
-//    }
+    @GetMapping("/customers")
+    public String findAll(Model model ){
+        List<Customer> customers = customerRepository.findAll();
+        model.addAttribute("customers", customers);
+        return "customer-list";
+    }
 
-    @PostMapping("/customers/filter")
+    @PostMapping("/customers")
     public String search(@RequestParam("filter") String filter, Model model, @AuthenticationPrincipal Employee employeeAccount) {
         Iterable<Customer> customers;
         if (filter != null && !filter.isEmpty()) {

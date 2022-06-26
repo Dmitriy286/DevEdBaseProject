@@ -1,6 +1,7 @@
 package com.example.devedbaseproject.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -15,6 +16,11 @@ public class Category {
 
     @Column(name = "category_description")
     private String categoryDescription;
+
+    @OneToMany
+    @JoinColumn(name="product_type_id")
+    private List<ProductType> productTypeList;
+
 
     //region Constructors
     public Category() {
@@ -50,6 +56,14 @@ public class Category {
 
     public void setCategoryDescription(String categoryDescription) {
         this.categoryDescription = categoryDescription;
+    }
+
+    public List<ProductType> getProductTypeList() {
+        return productTypeList;
+    }
+
+    public void setProductTypeList(List<ProductType> productTypeList) {
+        this.productTypeList = productTypeList;
     }
 //endregion
 }
