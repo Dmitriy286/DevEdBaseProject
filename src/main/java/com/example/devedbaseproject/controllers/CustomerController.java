@@ -2,8 +2,10 @@ package com.example.devedbaseproject.controllers;
 
 import com.example.devedbaseproject.models.Customer;
 import com.example.devedbaseproject.models.Employee;
+import com.example.devedbaseproject.models.Product;
 import com.example.devedbaseproject.models.Tag;
 import com.example.devedbaseproject.repository.ICustomerRepository;
+import com.example.devedbaseproject.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -20,11 +22,13 @@ import java.util.List;
 public class CustomerController {
 
     private final ICustomerRepository customerRepository;
+    private final IProductRepository productRepository;
 
     @Autowired
-    public CustomerController(ICustomerRepository customerRepository) {
+    public CustomerController(ICustomerRepository customerRepository, IProductRepository productRepository) {
 
         this.customerRepository = customerRepository;
+        this.productRepository = productRepository;
     }
 
 //    @GetMapping("/customers/")
@@ -35,7 +39,7 @@ public class CustomerController {
 //    }
 
     @PostMapping("/customers/filter")
-    public String search(@RequestParam("filter") String filter, Model model) {
+    public String search(@RequestParam("filter") String filter, Model model, @AuthenticationPrincipal Employee employeeAccount) {
         Iterable<Customer> customers;
         if (filter != null && !filter.isEmpty()) {
             customers = customerRepository.findByName(filter);
@@ -43,17 +47,14 @@ public class CustomerController {
         else {
             customers = customerRepository.findAll();
         }
+
+        List<Product> products = productRepository.findAll();
+
+        model.addAttribute("employeeAccount", employeeAccount);
+        model.addAttribute("products", products);
         model.addAttribute("customers", customers);
-        return "customers-filter";
+        return "FRONT/employees-account";
     }
-
-//    @GetMapping("/customers")
-//    public String findAll(Model model ){
-//        List<Customer> customers = customerRepository.findAll();
-//        model.addAttribute("customers", customers);
-//        return "customers-list";
-//    }
-
     @GetMapping("employees/customers/{id}")
     public String findCustomer(@PathVariable Long id, Model model ){
         Customer customer = customerRepository.findById(id).orElseThrow(() ->

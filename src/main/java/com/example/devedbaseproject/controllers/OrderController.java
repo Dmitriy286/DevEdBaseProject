@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -163,7 +164,18 @@ public class OrderController {
 
         return "order/order-details";
     }
-
+//    @PostMapping("/order/filter")
+//    public String filterByName(@RequestParam("filter") String filter, Model model) {
+//        Iterable<Order> orders;
+//        if (filter != null && !filter.isEmpty()) {
+//            orders = orderRepository.findByCustomer(filter);
+//        }
+//        else {
+//            orders = orderRepository.findAll();
+//        }
+//        model.addAttribute("order", orders);
+//        return "FRONT/history-order";
+//    }
     public void sendEmailAboutOrder(Customer c, Order o) {
         String message = String.format("Добрый день, %s! \n" +
                         "Для Вас оформлен заказ с номером № " +
