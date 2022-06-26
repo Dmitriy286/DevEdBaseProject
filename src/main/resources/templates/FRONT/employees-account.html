@@ -5,15 +5,10 @@
 	<meta charset="utf-8">
 	<title>Personality</title>
 	<link rel="stylesheet" href="/style9.css">
-
-
-
 </head>
-
 <body>
 <th:block th:insert="fragments/menu :: menu"></th:block>
 <div class ="container2">
-
 	<div class="top">
 		<div class="topH"><h1>Личный кабинет</h1></div>
 	</div>
@@ -42,12 +37,30 @@
 	<div class="center_2">
 		<div class="layer1down_2"><!-- слева первый -->
 			<h2>Клиенты</h2>
-			<p><a href="/customers">Список клиентов</a></p>
+
+			<form th:action="@{/customers/filter}" th:object="${customers}" th:method="POST">
+				<label for="filter1">Enter name:</label>
+				<input type="text" name="filter" id="filter1">
+				<button type="submit">Find</button>
+			</form>
+			<div class="customers_list">
+			<ul th:each = "customer: ${customers}">
+				<li><a th:href = "@{customers/{id}(id=${customer.id})}"th:text ="${customer.name+ customer.surname}"></a></li>
+			</ul>
+			</div>
 		</div>
 		<div class="layer2down_2"><!-- справа первый -->
 			<h2>Товары</h2>
-			<p><a href="/products">Список продуктов</a></p>
-
+			<form th:action="@{/products/filter}" th:object="${products}" th:method="POST">
+				<label for="filter2">Enter name:</label>
+				<input type="text" name="filter" id="filter2">
+				<button type="submit">Find</button>
+			</form>
+			<div class="products_list">
+			<ul th:each = "product: ${products}">
+				<li><a th:href = "@{product/{id}(id=${product.id})}"th:text = "${product.productName}"></a></li>
+			</ul>
+			</div>
 		</div>
 
 		<div class="layer1_2_down_2"><!-- слева второй -->
@@ -55,7 +68,7 @@
 		</div>
 
 		<div class="layer2_2_down_2"><!-- справа второй -->
-			<p class="small_but"><a href="#">История рассылок</a></p>
+			<p class="small_but"><a href="/emails">История рассылок</a></p>
 		</div>
 
 		<div class="layer2_3_down_2"><!-- справа третий -->
