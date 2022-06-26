@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Creating Form</title>
@@ -9,10 +9,20 @@
 
 <form th:action="@{/emails}" th:method="POST" th:object="${email}">
 
-    <label for="Message">Message:</label>
-    <input id="Message" type="text" th:field="*{message}">
+<!--    !!!НЕ УДАЛЯТЬ ЗАКОММЕНТИРОВАННЫЕ СТРОКИ 14, 15!!!-->
+
+<!--    <label for="Message">Текст письма:</label>-->
+<!--    <input id="Message" type="text" th:field="*{message}">-->
 
     <br>
+
+    <label for="product_list">Выберите продукт</label>
+    <select th:name="product" id="product_list" th:field="*{product.id}">
+        <option th:each="product:${productList}"
+                th:value="${product.id}"
+                th:text="${product.productName}">
+        </option>
+    </select>
 
     <input type="submit" value="Add email">
 </form>

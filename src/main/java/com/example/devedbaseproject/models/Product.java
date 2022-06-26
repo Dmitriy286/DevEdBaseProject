@@ -54,12 +54,25 @@ public class Product {
     @JoinColumn(name = "product_subtype_id")
     private ProductSubtype productSubtype;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "parameter_values")
     private List<ProductParameterValue> parameterValues;
 
-    @OneToMany
+    @ManyToMany
     @JoinColumn(name = "tags")
     private List<Tag> tags;
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName +
+                ", description='" + description +
+                ", manufacturer=" + manufacturer +
+                ", productQuantity=" + productQuantity +
+                ", productSubtype=" + productSubtype +
+                ", parameterValues=" + parameterValues +
+                ", tags=" + tags +
+                '}';
+    }
 }

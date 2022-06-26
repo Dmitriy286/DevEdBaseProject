@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Emails List</title>
+    <link rel="stylesheet" href="/style9.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+</head>
+<body>
+<th:block th:insert="fragments/menu :: menu"></th:block>
+<div class ="container">
+    <div class="top">
+        <h1>История рассылок</h1>
+    </div>
+    <div class="main">
+<!--        <form action="search_mailing.php">-->
+<!--            <p><input type=search placeholder="Поиск рассылок">-->
+<!--                <input type="submit" value="Искать"></p>-->
+<!--        </form>-->
+<div th:switch="${emails.size()}">
+    <p th:case="0">List is empty</p>
+    <div th:case="*">
+        <label for="radioform"><b>Choose sent/unsent:</b></label>
+        <form th:action="@{/emails/newEmails}" th:method="POST" id="radioform">
+            <input type="radio" name="sent" value="true">sent<Br>
+            <input type="radio" name="sent" value="false">unsent<Br>
+            </p>
+            <button type="submit">Filter</button>
+        </form>
+
+        <br>
+        <div class="history_email">
+        <table>
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Message</th>
+                <th>Customer</th>
+                <th>Products</th>
+                <th>Employee</th>
+                <th>Sending status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "email: ${emails}">
+                <td th:text = "${email.date}"></td>
+                <td th:text = "${email.message}"></td>
+                <td><a th:href = "@{customers/{customerId}(customerId=${email.customer.getId()})}" th:text = "${email.customer.name+ email.customer.surname}"}>Customer</a></td>
+                <td>
+                    <ul>
+                        <th:block th:each="product : ${email.products}">
+                            <li th:utext="${product.productName}"></li>
+                        </th:block>
+                    </ul>
+                </td>
+                <!--            todo Как выводить айдишники из списка продуктов иным способом?-->
+                <td th:text = "${email.employee.name}"></td>
+                <td th:text = "${email.send}"></td>
+                <div th:switch="${email.send}">
+                    <p th:case="false">
+                    <td><a th:href = "@{/emails/{id}/edit(id = ${email.Id})}">Update</a></td>
+                    <td><a th:href = "@{/emails/{id}/send(id = ${email.Id})}">Send</a></td>
+                    <td><a th:href = "@{/emails/{id}/delete(id = ${email.Id})}">Delete</a></td>
+                    </p>
+                    <div th:case="*"></div>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <p><a href="/emails/new">Create email</a></p>
+    <p><a href="/emails">Show all emails</a></p>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -66,7 +66,7 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/employees/product/{id}")
     public String cardProduct(@PathVariable("id") Long id, Model model) {
         Product product = productRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Invalid product ID" + id));
@@ -78,7 +78,7 @@ public class ProductController {
         return "FRONT/card-product";
     }
 
-    @GetMapping("/product/update/{id}")
+    @GetMapping("/employees/product/update/{id}")
     public String updateFormProduct(@PathVariable("id") Long id, Model model) {
         Product product = productRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Invalid product ID" + id));
@@ -88,13 +88,13 @@ public class ProductController {
         return "FRONT/product-update";
     }
 
-    @PostMapping("/product/update/{id}")
+    @PostMapping("/employees/product/update/{id}")
     public String updateProduct(@PathVariable("id") Long id, Product product) {
         productRepository.save(product);
         return "redirect:/product/" + id;
     }
 
-    @GetMapping("/product/parameters/{id}")
+    @GetMapping("/employees/product/parameters/{id}")
     public String findProductById(@PathVariable("id") Long id, Model model) {
         List<ProductParameter> parameters = productParameterRepository.findAll();
         model.addAttribute("parameters", parameters);
@@ -137,7 +137,7 @@ public class ProductController {
         return "FRONT/product-parameters";
     }
 
-    @PostMapping("/product/parameters/{id}")
+    @PostMapping("employees/product/parameters/{id}")
     public String setParameters(@RequestParam Map<String, String> form,
                                 @ModelAttribute PPValueWrapper wrapper, Model model,
                                 @PathVariable("id") Long id) {
@@ -201,7 +201,7 @@ public class ProductController {
 //            System.out.println("Error Found, likely no product");
 //        }
 
-        return "redirect:/product/parameters/" + id;
+        return "redirect:employees/product/parameters/" + id;
     }
 
 
@@ -268,5 +268,16 @@ public class ProductController {
             }
         return "redirect:/products/" + productId + "/settags";
     }
-
+    @PostMapping("/products/filter")
+    public String search(@RequestParam("filter") String filter, Model model) {
+        Iterable<Product> products;
+        if (filter != null && !filter.isEmpty()) {
+            products = productRepository.findByProductName(filter);
+        }
+        else {
+            products = productRepository.findAll();
+        }
+        model.addAttribute("products", products);
+        return "products-filter";
+    }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,7 @@
     <p th:case="0">List is empty</p>
     <div th:case="*">
     <h2>Employee filter</h2>
-    <form th:action="@{/employees/filter}" th:method="POST">
+    <form th:action="@{/employees/filter}" th:object="${employees}" th:method="POST">
         <label for="filter">Enter name:</label>
         <input type="text" name="filter" id="filter">
         <button type="submit">Find</button>
@@ -59,6 +59,7 @@
     <p><a href="/employees/new">Create employee</a></p>
     <p><a href="/employees">Show all employee</a></p>
     <p><a href="/index">Back to main</a></p>
+    <br>
 </div>
 </body>
 </html>
