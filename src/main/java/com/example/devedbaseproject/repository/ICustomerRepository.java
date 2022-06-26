@@ -9,4 +9,5 @@ import java.util.List;
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     List<Customer> findByName(String name);
 
+
 }

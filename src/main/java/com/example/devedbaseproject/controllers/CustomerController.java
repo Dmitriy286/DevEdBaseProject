@@ -21,6 +21,7 @@ public class CustomerController {
 
     @Autowired
     public CustomerController(ICustomerRepository customerRepository) {
+
         this.customerRepository = customerRepository;
     }
 
@@ -31,26 +32,27 @@ public class CustomerController {
 //        return "customer-list";
 //    }
 
-    @PostMapping("/customers")
-    public String search(@RequestParam("search") String search, Model model) {
+    @PostMapping("/customers/filter")
+    public String search(@RequestParam("filter") String filter, Model model) {
         Iterable<Customer> customers;
-        if (search != null && !search.isEmpty()) {
-            customers = customerRepository.findByName(search);
+        if (filter != null && !filter.isEmpty()) {
+            customers = customerRepository.findByName(filter);
         }
         else {
             customers = customerRepository.findAll();
         }
         model.addAttribute("customers", customers);
-        return "customers-list";
-    }
-    @GetMapping("/customers")
-    public String findAll(Model model ){
-        List<Customer> customers = customerRepository.findAll();
-        model.addAttribute("customers", customers);
-        return "customers-list";
+        return "customers-filter";
     }
 
-    @GetMapping("/customers/{id}")
+//    @GetMapping("/customers")
+//    public String findAll(Model model ){
+//        List<Customer> customers = customerRepository.findAll();
+//        model.addAttribute("customers", customers);
+//        return "customers-list";
+//    }
+
+    @GetMapping("employees/customers/{id}")
     public String findAll(@PathVariable Long id, Model model ){
         Customer customers = customerRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Invalid customer ID" + id));
@@ -59,36 +61,37 @@ public class CustomerController {
     }
     @GetMapping("/customer-create")
     public String createCustomerForm(Customer customer){
-        return "customer-create";
+
+        return "FRONT/customer-create";
     }
 
 
     @PostMapping("/customer-create")
     public String createCustomer(Customer customer){
         customerRepository.save(customer);
-        return "redirect:/customers";
+        return "redirect:/employees/account";
     }
 
-    @GetMapping("/customer-delete/{id}")
+    @GetMapping("/employees/customers/delete/{id}")
     public String deleteCustomer(@PathVariable("id") Long id){
         customerRepository.deleteById(id);
-        return "redirect:/customers";
+        return "redirect:/employees/account";
     }
 
-    @GetMapping("/customers/update/{id}")
+    @GetMapping("/employees/customers/update/{id}")
     public String updateCustomerForm(@PathVariable("id") Long id, Model model){
         Customer customer = customerRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Invalid customer ID" + id));
         model.addAttribute("customer", customer);
-        return "customer-update";
+        return "FRONT/customer-update";
     }
 
-//    @PostMapping("/customers/update/")
-//    public String updateCustomer(Customer customer){
-//
-//        customerRepository.save(customer);
-//
-//        return "redirect:/customers/";
-//    }
+    @PostMapping("/employees/customers/update/{id}")
+    public String updateCustomer(Customer customer, @PathVariable("id") Long id){
+
+        customerRepository.save(customer);
+
+        return "redirect:/employees/customers/"+ id;
+    }
 
 }

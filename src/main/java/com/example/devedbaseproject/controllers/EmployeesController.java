@@ -2,24 +2,21 @@ package com.example.devedbaseproject.controllers;
 
 import com.example.devedbaseproject.models.Customer;
 import com.example.devedbaseproject.models.Employee;
+import com.example.devedbaseproject.models.Product;
 import com.example.devedbaseproject.models.Role;
 import com.example.devedbaseproject.repository.ICustomerRepository;
 import com.example.devedbaseproject.repository.IEmployeeRepository;
+import com.example.devedbaseproject.repository.IProductRepository;
 import com.example.devedbaseproject.repository.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,12 +27,14 @@ public class EmployeesController {
     private final IEmployeeRepository repository;
     private final IRoleRepository roleRepository;
     private final ICustomerRepository customerRepository;
+    private final IProductRepository productRepository;
 
     @Autowired
-    public EmployeesController(IEmployeeRepository repository, IRoleRepository roleRepository, ICustomerRepository customerRepository) {
+    public EmployeesController(IEmployeeRepository repository, IRoleRepository roleRepository, ICustomerRepository customerRepository, IProductRepository productRepository) {
         this.repository = repository;
         this.roleRepository = roleRepository;
         this.customerRepository = customerRepository;
+        this.productRepository = productRepository;
     }
 
 //    @Value("${upload.path}")
@@ -63,7 +62,12 @@ public class EmployeesController {
     }
     @GetMapping("/account")
     public String showEmployeeAccount(@AuthenticationPrincipal Employee employeeAccount, Model model){
+        List<Customer> customers = customerRepository.findAll();
+        List<Product> products = productRepository.findAll();
+
         model.addAttribute("employeeAccount", employeeAccount);
+        model.addAttribute("customers", customers);
+        model.addAttribute("products", products);
 
         return "FRONT/employees-account";
     }
