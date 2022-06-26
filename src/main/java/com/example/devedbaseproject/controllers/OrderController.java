@@ -2,7 +2,9 @@ package com.example.devedbaseproject.controllers;
 
 import com.example.devedbaseproject.models.*;
 import com.example.devedbaseproject.repository.*;
+import com.example.devedbaseproject.service.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,9 @@ public class OrderController {
     private final IProductRepository productRepository;
     private final IEmployeeRepository employeeRepository;
     private final IOrderDetailsRepository orderDetailsRepository;
+
+    @Autowired
+    private EmailSender sender;
 
     @Autowired
     public OrderController(IOrderRepository orderRepository, ICustomerRepository customerRepository, IProductRepository productRepository, IEmployeeRepository employeeRepository, IOrderDetailsRepository orderDetailsRepository) {
@@ -78,13 +83,15 @@ public class OrderController {
     }
 
     @PostMapping("/order-create")
-    public String createOrder(@Valid Order order, BindingResult result, Model model) {
+    public String createOrder(@AuthenticationPrincipal Employee employee,
+                              @Valid Order order, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "order-create";
         }
         order.setActionDateTime(getLocalDateTime());
         order.setOrderCost(200);
         order.setOrderStatus("Не оплачен");
+        order.setEmployee(employee);
 
 //        orderRepository.save(order);
 
@@ -102,31 +109,44 @@ public class OrderController {
             if (product.getTags() == null) {
                 System.out.println("У продукта нет тэгов");
             }
+
             else {
                 for (Tag tag : product.getTags()) {
-                    if (order.getCustomer().getTagCountMap().containsKey(tag)) {
-                        order.getCustomer().getTagCountMap().put(tag, order.getCustomer().getTagCountMap().get(tag) + 1);
-                    } else {
-                        order.getCustomer().getTagCountMap().put(tag, 1);
-                    }
+                    order.getCustomer().getTagList().add(tag);
                 }
             }
-            HashMap<Tag, Integer> sortedTags = order.getCustomer().getTagCountMap().entrySet().stream()
-                    .sorted(Map.Entry.<Tag, Integer>comparingByValue().reversed())
-                    .collect(Collectors.toMap(
-                            Map.Entry::getKey,
-                            Map.Entry::getValue,
-                            (a, b) -> { throw new AssertionError(); },
-                            LinkedHashMap::new));
-//                    .sorted(Comparator.comparingInt(e -> -e.getValue()))
-            sortedTags.entrySet().forEach(System.out::println);
-            order.getCustomer().setTagCountMap(sortedTags);
-            customerRepository.save(order.getCustomer());
+//            else {
+//                for (Tag tag : product.getTags()) {
+//                    if (order.getCustomer().getTagCountMap().containsKey(tag)) {
+//                        order.getCustomer().getTagCountMap().put(tag, order.getCustomer().getTagCountMap().get(tag) + 1);
+//                    } else {
+//                        order.getCustomer().getTagCountMap().put(tag, 1);
+//                    }
+//                }
+//            }
+
+//            HashMap<Tag, Integer> sortedTags = order.getCustomer().getTagCountMap().entrySet().stream()
+//                    .sorted(Map.Entry.<Tag, Integer>comparingByValue().reversed())
+//                    .collect(Collectors.toMap(
+//                            Map.Entry::getKey,
+//                            Map.Entry::getValue,
+//                            (a, b) -> { throw new AssertionError(); },
+//                            LinkedHashMap::new));
+////                    .sorted(Comparator.comparingInt(e -> -e.getValue()))
+//            sortedTags.entrySet().forEach(System.out::println);
+//            order.getCustomer().setTagCountMap(sortedTags);
+////            customerRepository.save(order.getCustomer());
         }
         //endregion
         orderRepository.save(order);
+        customerRepository.save(order.getCustomer());
+
+        sendEmailAboutOrder(order.getCustomer(), order);
+
         Optional<Order> newOrder = orderRepository.findById(order.getId());
         System.out.println(newOrder.get().getOrderDetails().get(0).getProduct());
+        System.out.println(newOrder.get().getCustomer().getTagList());
+
         return "redirect:/history-order";
     }
     @GetMapping("/order-details/{id}")
@@ -142,6 +162,14 @@ public class OrderController {
         model.addAttribute("orderDetails", orderDetails);
 
         return "order/order-details";
+    }
+
+    public void sendEmailAboutOrder(Customer c, Order o) {
+        String message = String.format("Добрый день, %s! \n" +
+                        "Для Вас оформлен заказ с номером № " +
+                        "%s",
+                c.getName(), o.getId());
+        sender.send(c.getEmail(), "Заказ оформлен", message);
     }
 
 }

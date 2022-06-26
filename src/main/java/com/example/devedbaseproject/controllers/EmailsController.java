@@ -6,10 +6,12 @@ import com.example.devedbaseproject.repository.ICustomerRepository;
 import com.example.devedbaseproject.repository.IEmailRepository;
 import com.example.devedbaseproject.repository.IEmployeeRepository;
 import com.example.devedbaseproject.repository.IProductRepository;
+import com.example.devedbaseproject.service.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -24,12 +26,19 @@ public class EmailsController {
     private final IEmployeeRepository employeeRepository;
     private ProductRecommendation productRecommendation;
 
+    List<Customer> customerSendingList;
+
+    @Autowired
+    private EmailSender sender;
+
     @Autowired
     public EmailsController(IEmailRepository repository, ICustomerRepository customerRepository, IProductRepository productRepository, IEmployeeRepository employeeRepository) {
         this.repository = repository;
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
         this.employeeRepository = employeeRepository;
+        this.customerSendingList = new ArrayList<>();
+
     }
 
     @GetMapping()
@@ -69,13 +78,22 @@ public class EmailsController {
 
         Product product = productRepository.findById(email.getProduct().getId()).orElseThrow();
 
-        Email newemail = new Email(email.getMessage());
-
-        newemail.setCustomers(productRecommendation.createDataForEmail(product));
+        Email newemail = new Email(product);
+        this.productRecommendation = new ProductRecommendation(product,
+                customerRepository.findAll(), repository);
+        List<Customer> cList = productRecommendation.getCustomerSendingList();
+        if (cList.isEmpty()) {
+            System.out.println("Предложить продукт некому");
+            return "redirect:/emails";
+        }
+        newemail.setCustomers(cList);
         newemail.setEmployee(employee);
         newemail.setSend(false);
+        newemail.setCustomer(cList.get(0));
 
         repository.save(newemail);
+
+        this.customerSendingList = cList;
 
         return "redirect:/emails";
     }
@@ -106,7 +124,7 @@ public class EmailsController {
     public String sendEmail(@PathVariable("id") Long id, Model model) {
 
         Optional<Email> email = repository.findById(id);
-        productRecommendation.sendEmail(email.get().getProduct());
+        sendEmail(email.get().getProduct());
         String servicemessage = "Email with id " + email.get().getId() +
         " for customers:  " + email.get().getCustomers() +
         " about product: " + email.get().getProduct() +
@@ -119,6 +137,18 @@ public class EmailsController {
 
     }
 
+    public void sendEmail(Product currentProduct) {
+            for (Customer c : this.customerSendingList) {
+//                if (!StringUtils.isEmpty(c.getEmail())) {
+                    String message = String.format("Добрый день, %s! \n" +
+                                    "Рекомендуем приобрести следующий продукт: \n" +
+                                    "%s",
+                            c.getName(), currentProduct);
+                    sender.send(c.getEmail(), "Рекомендуемый продукт", message);
+//                }
+            }
+        System.out.println(customerSendingList);
+        }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") Long id) {
