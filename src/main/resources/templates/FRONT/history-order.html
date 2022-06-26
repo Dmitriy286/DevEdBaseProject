@@ -8,18 +8,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
 </head>
-
 <body>
-<!--<th:block th:insert="fragments/menu :: menu"></th:block>-->
+<th:block th:insert="fragments/menu :: menu"></th:block>
 <div class="container">
     <div class="top">
         <h1>История заказов</h1>
     </div>
     <div class="main">
-        <form action="search_mailing.php">
-            <p><input type=search placeholder="Поиск заказов">
-                <input type="submit" value="Искать"></p>
+        <form th:action="@{/order/filter}" th:object="${order}" th:method="POST">
+            <label for="filter">Enter name:</label>
+            <input type="text" name="filter" id="filter">
+            <button type="submit">Find</button>
         </form>
+        <div class="history_order">
         <table>
             <thead>
             <tr>
@@ -40,7 +41,7 @@
             <tr th:each="order : ${orders}">
 
                 <td th:text="${order.actionDateTime}"></td>
-                <td th:text="${order.customer.name}"></td>
+                <td th:text="${order.customer.name+' '+order.customer.surname}"></td>
                 <td>Продукты</td>
                 <td>Количество продуктов</td>
                 <td th:text="${order.deliveryAddress}"></td>
@@ -54,11 +55,11 @@
 
 
             </tr>
-<!--            				<tr th:each="orderDetails : ${orders.orderDetails}">-->
+            <!--				<tr th:each="orderDetails : ${orders.orderDetails}">-->
 
-<!--            					<td th:text="${orderDetails.product}"></td>-->
-<!--            					<td th:text="${orderDetails.productAmount}"></td>-->
-<!--            				</tr>-->
+            <!--					<td th:text="${orderDetails.product}"></td>-->
+            <!--					<td th:text="${orderDetails.productAmount}"></td>-->
+            <!--				</tr>-->
             </tbody>
         </table>
         <!--					<a th:href="@{product-update/{id}(id=${order.id})}" class="btn">Edit</a>-->

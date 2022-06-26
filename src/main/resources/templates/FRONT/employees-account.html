@@ -27,6 +27,7 @@
 		<div class="layer2top_2">
 			<div class ="fotoclient2"><img height=100 width=100 th:src = "@{/image/employee_id_{id}.png(id = ${employeeAccount.getId()})}" alt="Employee photo">
 			</div>
+			<button><a th:href="@{/employees/{id}/edit(id=${employeeAccount.id})}">Изменить</a></button>
 			<div class="out2"><form th:action="@{/logout}" method="post">
 				<input type="submit" value="Выйти"/>
 			</form>
@@ -38,14 +39,16 @@
 		<div class="layer1down_2"><!-- слева первый -->
 			<h2>Клиенты</h2>
 
-			<form th:action="@{/customers/filter}" th:object="${customers}" th:method="POST">
+			<form th:id="ajax_form" th:action="@{/customers/filter}" th:object="${customers}" th:method="POST">
 				<label for="filter1">Enter name:</label>
 				<input type="text" name="filter" id="filter1">
 				<button type="submit">Find</button>
 			</form>
+			<div id="result_form"></div>
+
 			<div class="customers_list">
 			<ul th:each = "customer: ${customers}">
-				<li><a th:href = "@{customers/{id}(id=${customer.id})}"th:text ="${customer.name+ customer.surname}"></a></li>
+				<li><a th:href = "@{customers/{id}(id=${customer.id})}"th:text ="${customer.name+' '+customer.surname}"></a></li>
 			</ul>
 			</div>
 		</div>
@@ -74,10 +77,7 @@
 		<div class="layer2_3_down_2"><!-- справа третий -->
 			<p class="small_but"><a href="/history-order">История заказов клиентов менеджера</a></p>
 		</div>
-
-
 	</div>
-
 </div>
 </body>
 </html>

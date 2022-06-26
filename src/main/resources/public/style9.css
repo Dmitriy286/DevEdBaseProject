@@ -948,3 +948,8 @@ input[type="submit" i] {
     width: 1102px;
     height: 300px;
 }
+.history_order{
+    overflow-y: scroll; /* прокрутка по вертикали */
+    width: 1102px;
+    height: 400px;
+}
