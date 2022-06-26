@@ -9,16 +9,16 @@ import static com.example.devedbaseproject.businessLogic.LogicTools.*;
 
 public class AllOrdersGetters {
 
-    public static HashMap<Category, Integer> getGategoriesFromAllOrders(List<Order> orderList) {
-        return getProductCategories(getProductTypes(getProductSubtypes(getProductsFromAllOrders(orderList))));
+    public static HashMap<Category, Integer> getCategoriesFromAllOrders(List<Order> orderList) {
+        return getSortedCategoryMapByValues(getProductCategories(getProductTypes(getProductSubtypes(getProductsFromAllOrders(orderList)))));
     }
 
     public static HashMap<ProductType, Integer> getProductSubtypesFromAllOrders(List<Order> orderList) {
-        return getProductTypes(getProductSubtypes(getProductsFromAllOrders(orderList)));
+        return getSortedProductTypeMapByValues(getProductTypes(getProductSubtypes(getProductsFromAllOrders(orderList))));
     }
 
     public static HashMap<ProductSubtype, Integer> getProductTypesFromAllOrders(List<Order> orderList){
-        return getProductSubtypes(getProductsFromAllOrders(orderList));
+        return getSortedProductSubtypeMapByValues(getProductSubtypes(getProductsFromAllOrders(orderList)));
     }
     public static List<Product> getProductsFromAllOrders(List<Order> orderList) {
         return getProductList(orderList);

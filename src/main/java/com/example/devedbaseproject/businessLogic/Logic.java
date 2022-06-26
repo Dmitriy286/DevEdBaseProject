@@ -6,4 +6,8 @@ import java.util.*;
 
 public class Logic {
 
+    public Set<Product> suggestion(Customer customer, List<Order> orderList){
+
+        return null;
+    }
 }

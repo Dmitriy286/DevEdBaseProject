@@ -51,7 +51,7 @@ public class LogicTools {
 //    }
 
     //fixme а можно вот эти два метода в один запихать? разница то в объектах только
-    private static HashMap<Category, Integer> getSortedCategoryMapByValues(HashMap<Category, Integer> unsortedHashMap) {
+    public static HashMap<Category, Integer> getSortedCategoryMapByValues(HashMap<Category, Integer> unsortedHashMap) {
         HashMap<Category, Integer> sortedHashMap = unsortedHashMap.entrySet()
                 .stream()
                 .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
@@ -64,7 +64,7 @@ public class LogicTools {
         return sortedHashMap;
     }
 
-    private static HashMap<Tag, Integer> getSortedTagMapByValues(HashMap<Tag, Integer> unsortedHashMap) {
+    public static HashMap<Tag, Integer> getSortedTagMapByValues(HashMap<Tag, Integer> unsortedHashMap) {
         HashMap<Tag, Integer> sortedHashMap = unsortedHashMap.entrySet()
                 .stream()
                 .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
@@ -76,10 +76,31 @@ public class LogicTools {
 
         return sortedHashMap;
     }
+    public static HashMap<ProductType, Integer> getSortedProductTypeMapByValues(HashMap<ProductType, Integer> unsortedHashMap) {
+        HashMap<ProductType, Integer> sortedHashMap = unsortedHashMap.entrySet()
+                .stream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                .collect(Collectors
+                        .toMap(Map.Entry::getKey,
+                                Map.Entry::getValue,
+                                (e1, e2) -> e1,
+                                LinkedHashMap::new));
 
-    //Prototype
+        return sortedHashMap;
+    }
 
+    public static HashMap<ProductSubtype, Integer> getSortedProductSubtypeMapByValues(HashMap<ProductSubtype, Integer> unsortedHashMap) {
+        HashMap<ProductSubtype, Integer> sortedHashMap = unsortedHashMap.entrySet()
+                .stream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                .collect(Collectors
+                        .toMap(Map.Entry::getKey,
+                                Map.Entry::getValue,
+                                (e1, e2) -> e1,
+                                LinkedHashMap::new));
 
+        return sortedHashMap;
+    }
 
     public static List<Product> getProductList(List<Order> orderList) {
         List<Product> productList = new ArrayList<>();
