@@ -4,6 +4,7 @@ package com.example.devedbaseproject.controllers;
 import com.example.devedbaseproject.models.*;
 import com.example.devedbaseproject.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +23,14 @@ public class ProductController {
     private final IProductTypeRepository typeRepository;
     private final IProductSubtypeRepository subtypeRepository;
     private final ITagRepository tagRepository;
+    private final ICustomerRepository customerRepository;
 
 
     @Autowired
     public ProductController(IProductRepository productRepository, IProductParameterRepository productParameterRepository,
                              IProductParameterValueRepository ppvalueRepository, IManufacturerRepository manufacturerRepository,
                              ICategoryRepository categoryRepository, IProductTypeRepository typeRepository,
-                             IProductSubtypeRepository subtypeRepository, ITagRepository tagRepository) {
+                             IProductSubtypeRepository subtypeRepository, ITagRepository tagRepository, ICustomerRepository customerRepository) {
         this.productRepository = productRepository;
         this.productParameterRepository = productParameterRepository;
         this.ppvalueRepository = ppvalueRepository;
@@ -37,6 +39,7 @@ public class ProductController {
         this.typeRepository = typeRepository;
         this.subtypeRepository = subtypeRepository;
         this.tagRepository = tagRepository;
+        this.customerRepository = customerRepository;
     }
 
 
@@ -71,8 +74,6 @@ public class ProductController {
         Product product = productRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Invalid product ID" + id));
         model.addAttribute("product", product);
-//        model.addAttribute("manufacturer", manufacturerRepository.findAll());
-//        model.addAttribute("subtype", subtypeRepository.findAll());
         model.addAttribute("value", ppvalueRepository.findAll());
         model.addAttribute("parameters", productParameterRepository.findAll());
         return "FRONT/card-product";
@@ -98,23 +99,6 @@ public class ProductController {
     public String findProductById(@PathVariable("id") Long id, Model model) {
         List<ProductParameter> parameters = productParameterRepository.findAll();
         model.addAttribute("parameters", parameters);
-
-//        Optional<ProductParameter> pp = productParameterRepository.findById(31L);
-//        if (pp.isPresent()) {
-//            ProductParameter newPP = pp.get();
-//            PPValueWrapper wrapper = new PPValueWrapper();
-//            ProductParameterValue ppv = new ProductParameterValue();
-//            ppv.setParameter(newPP);
-//            ppv.setIntValue(0);
-//            ppv.setStringValue("test");
-//            wrapper.getPpValueList().add(ppv);
-//            model.addAttribute("wrapper", wrapper);
-//            System.out.println(wrapper);
-//            System.out.println(wrapper.getPpValueList());
-//        } else {
-//            System.out.println("Error Found");
-//        }
-
         ProductParameter newPP = new ProductParameter("");
 
         PPValueWrapper wrapper = new PPValueWrapper();
@@ -124,9 +108,6 @@ public class ProductController {
         ppv.setStringValue("test");
         wrapper.getPpValueList().add(ppv);
         model.addAttribute("wrapper", wrapper);
-
-//        List<ProductParameterValue> prodparamvalues = new ArrayList<ProductParameterValue>();
-//        model.addAttribute("prodparamvalues", prodparamvalues);
 
         Optional<Product> product = productRepository.findById(id);
         if (product.isPresent()) {
@@ -175,12 +156,6 @@ public class ProductController {
                 System.out.println("Error Found, likely no product");
             }
 
-//            Optional<ProductParameter> parameter = productParameterRepository.findByName(ppvalue.getParameter().getName());
-//            if (parameter.isPresent()) {
-//                ppvalue.setParameter(parameter.get());
-//            } else {
-//                System.out.println("Error Found, likely no parameter");
-//            }
             ppvalue.setParameter(productparameter);
             ppvalueRepository.save(ppvalue);
             product.getParameterValues().add(ppvalue);
@@ -189,17 +164,6 @@ public class ProductController {
             System.out.println(ppvalue.getParameter());
             System.out.println(ppvalue.getParameter().getName());
         }
-//
-//
-//        if (tempproduct.isPresent()) {
-//            Product product = tempproduct.get();
-//            prodparamvalue.setProduct(product);
-//            ppvalueRepository.save(prodparamvalue);
-//            product.getParameterValues().add(prodparamvalue);
-//            productRepository.save(product);
-//        } else {
-//            System.out.println("Error Found, likely no product");
-//        }
 
         return "redirect:employees/product/parameters/" + id;
     }
@@ -213,10 +177,6 @@ public class ProductController {
         List<Tag> tags = tagRepository.findAll();
 
         model.addAttribute("tags", tags);
-
-//        List<Tag> tagList = new ArrayList<>();
-//        tagList.add(new Tag());
-//        model.addAttribute("tagList", tagList);
 
         TagWrapper wrapper = new TagWrapper();
         Tag t = new Tag();
@@ -235,7 +195,6 @@ public class ProductController {
     @PostMapping("/products/{productId}/settags")
     public String saveTagList(@PathVariable("productId") Long productId,
                               @ModelAttribute TagWrapper wrapper, Model model,
-//                              @ModelAttribute List<Tag> tagList,
                               @RequestParam Map<String, String> form) {
 
         System.out.println(wrapper.getTagList());
@@ -262,14 +221,13 @@ public class ProductController {
                 } else {
                     System.out.println("Error Found, likely no tag");
                 }
-//                    productRepository.save(product);
             }
             productRepository.save(product);
             }
         return "redirect:/products/" + productId + "/settags";
     }
     @PostMapping("/products/filter")
-    public String search(@RequestParam("filter") String filter, Model model) {
+    public String filter(@RequestParam("filter") String filter, Model model, @AuthenticationPrincipal Employee employeeAccount) {
         Iterable<Product> products;
         if (filter != null && !filter.isEmpty()) {
             products = productRepository.findByProductName(filter);
@@ -277,7 +235,11 @@ public class ProductController {
         else {
             products = productRepository.findAll();
         }
+        List<Customer> customers = customerRepository.findAll();
+
+        model.addAttribute("employeeAccount", employeeAccount);
         model.addAttribute("products", products);
-        return "products-filter";
+        model.addAttribute("customers", customers);
+        return "FRONT/employees-account";
     }
 }

@@ -33,7 +33,7 @@ public class RegistrationController {
 
         if (employeeFromDB != null) {
             model.addAttribute("message", "User exists!");
-            return "registration";
+            return "FRONT/registration";
         }
         Employee newemployee = new Employee(employee.getUsername(), employee.getPassword());
 
