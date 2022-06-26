@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
     <meta charset="utf-8">
@@ -52,5 +52,12 @@
     </div>
     <button type="submit" class="fivedown">Сделать заказ</button>
 </div>
+<label for="taglist">Тэги клиента</label>
+<ul id="taglist">
+    <th:block th:each="tag : ${tagList}" >
+        <li th:text="${tag.name}"></li>
+    </th:block>
+</ul>
+
 </body>
 </html>

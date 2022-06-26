@@ -2,6 +2,7 @@ package com.example.devedbaseproject.controllers;
 
 import com.example.devedbaseproject.models.Customer;
 import com.example.devedbaseproject.models.Employee;
+import com.example.devedbaseproject.models.Tag;
 import com.example.devedbaseproject.repository.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -53,10 +55,15 @@ public class CustomerController {
 //    }
 
     @GetMapping("employees/customers/{id}")
-    public String findAll(@PathVariable Long id, Model model ){
-        Customer customers = customerRepository.findById(id).orElseThrow(() ->
+    public String findCustomer(@PathVariable Long id, Model model ){
+        Customer customer = customerRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Invalid customer ID" + id));
-        model.addAttribute("customer", customers);
+        model.addAttribute("customer", customer);
+        List<Tag> tagList = new ArrayList<Tag>(customer.getTagList());
+        model.addAttribute("tagList", tagList);
+        System.out.println(tagList);
+        System.out.println(customer.getTagList());
+
         return "FRONT/card-customer";
     }
     @GetMapping("/customer-create")
