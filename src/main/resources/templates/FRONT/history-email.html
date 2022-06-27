@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Emails List</title>
@@ -30,9 +30,8 @@
             <thead>
             <tr>
                 <th>Date</th>
-                <th>Message</th>
-                <th>Customer</th>
-                <th>Products</th>
+                <th>Product</th>
+                <th>Customers</th>
                 <th>Employee</th>
                 <th>Sending status</th>
             </tr>
@@ -40,16 +39,18 @@
             <tbody>
             <tr th:each = "email: ${emails}">
                 <td th:text = "${email.date}"></td>
-                <td th:text = "${email.message}"></td>
-                <td><a th:href = "@{customers/{customerId}(customerId=${email.customer.getId()})}" th:text = "${email.customer.name+ email.customer.surname}"}>Customer</a></td>
+<!--                <td th:text = "${email.message}"></td>-->
+                <td>
+                <a th:href = "@{/product/{productId}(productId=${email.product.getId()})}"
+                       th:text = "${email.product.getProductName()}">Product</a>
+                </td>
                 <td>
                     <ul>
-                        <th:block th:each="product : ${email.products}">
-                            <li th:utext="${product.productName}"></li>
+                        <th:block th:each="customer : ${email.customers}">
+                            <li th:utext="${customer.name}"></li>
                         </th:block>
                     </ul>
                 </td>
-                <!--            todo Как выводить айдишники из списка продуктов иным способом?-->
                 <td th:text = "${email.employee.name}"></td>
                 <td th:text = "${email.send}"></td>
                 <div th:switch="${email.send}">

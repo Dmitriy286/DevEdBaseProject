@@ -146,7 +146,7 @@ public class EmployeesController {
 
         repository.save(employee);
 
-        return "redirect:/employees/account";
+        return "redirect:/employees";
     }
 
     //    @DeleteMapping("/{id}/delete")
