@@ -2,42 +2,43 @@ package com.example.devedbaseproject.businessLogic;
 
 import com.example.devedbaseproject.models.*;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.devedbaseproject.businessLogic.LogicTools.*;
 
 public class CustomerGetters {
 
-    public static HashMap<Category, Integer> getCustomerCategories(Customer customer) {
-        return getProductCategories(getProductTypes(getProductSubtypes(getProductsFromCustomersOrders(customer))));
+    ArrayList<MapWrapperClass<Category>> customerCategories;
+    ArrayList<MapWrapperClass<ProductType>> customerProductType;
+    ArrayList<MapWrapperClass<ProductSubtype>> customerProductSubtype;
+    ArrayList<MapWrapperClass<Tag>> customerTags;
+
+
+    public ArrayList<MapWrapperClass<ProductSubtype>> getCustomerProductSubtype(Customer customer) {
+        List<Order> orderList = customer.getOrderList();
+        List<Product> productList = getProductList(orderList);
+        customerProductSubtype = getProductSubtypes(productList);
+        return customerProductSubtype;
     }
 
-    public static HashMap<ProductType, Integer> getCustomerProductType(Customer customer) {
-        return getProductTypes(getProductSubtypes(getProductsFromCustomersOrders(customer)));
+    public ArrayList<MapWrapperClass<ProductType>> getCustomerProductType(Customer customer) {
+        customerProductType = getProductTypes(getProductSubtypes(getProductsFromCustomersOrders(customer)));
+        return customerProductType;
     }
 
-    public static HashMap<ProductSubtype, Integer> getCustomerProductSubtype(Customer customer){
-        return getProductSubtypes(getProductsFromCustomersOrders(customer));
+    public ArrayList<MapWrapperClass<Category>> getCustomerCategories(Customer customer) {
+        customerCategories = getCategories(getProductTypes(getProductSubtypes(getProductsFromCustomersOrders(customer))));
+        return customerCategories;
     }
+
+    public ArrayList<MapWrapperClass<Tag>> getCustomerTags(Customer customer){
+        customerTags = getTags(getProductsFromCustomersOrders(customer));
+        return customerTags;
+    }
+
     public static List<Product> getProductsFromCustomersOrders(Customer customer) {
         List<Order> orderList = customer.getOrderList();
         return getProductList(orderList);
-    }
-
-    public static HashMap<Tag, Integer> getTagsFromCustomer(Customer customer){
-        HashMap<Tag, Integer> tagMap = new HashMap<>();
-        List<Tag> tagList = customer.getTagList();
-        for(Tag tag : tagList){
-            int tagCounter = 1;
-            if(tagMap.containsKey(tag)){
-                tagCounter += tagMap.get(tag);
-                tagMap.put(tag,tagCounter);
-            }
-            else{
-                tagMap.put(tag, tagCounter);
-            }
-        }
-        return tagMap;
     }
 }

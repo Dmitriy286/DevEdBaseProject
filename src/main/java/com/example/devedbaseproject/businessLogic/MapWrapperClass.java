@@ -1,17 +1,15 @@
 package com.example.devedbaseproject.businessLogic;
 
-import java.util.SortedMap;
-
-public class SortedMapClass <T> {
+public class MapWrapperClass<T> {
     T someClass;
     Integer counter;
 
-    public SortedMapClass(T someClass, Integer counter) {
+    public MapWrapperClass(T someClass, Integer counter) {
         this.someClass = someClass;
         this.counter = counter;
     }
 
-    public SortedMapClass(T smc) {
+    public MapWrapperClass(T smc) {
         this.someClass = smc;
         this.counter = 1;
     }

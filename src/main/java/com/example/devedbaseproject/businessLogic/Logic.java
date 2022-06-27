@@ -1,8 +1,9 @@
 package com.example.devedbaseproject.businessLogic;
 
-import com.example.devedbaseproject.models.*;
+import com.example.devedbaseproject.models.Category;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class Logic {
     /*берем у клинета самые популярные категории
@@ -13,8 +14,5 @@ public class Logic {
     топ категорий клиента берем за основу, из них топ типов и подтипов из всех заказов
     сравниваем топ подтипы клиента и системы
     */
-    public Set<Product> suggestion(Customer customer, List<Order> orderList){
 
-        return null;
-    }
 }

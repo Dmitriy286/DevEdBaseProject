@@ -3,57 +3,40 @@ package com.example.devedbaseproject.businessLogic;
 import com.example.devedbaseproject.models.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.SortedMap;
 
 import static com.example.devedbaseproject.businessLogic.LogicTools.*;
 
 public class AllOrdersGetters {
 
-    ArrayList<SortedMapClass<ProductSubtype>> subtypes;
-    ArrayList<SortedMapClass<ProductType>> types;
-    ArrayList<SortedMapClass<Category>> category;
+    ArrayList<MapWrapperClass<ProductSubtype>> subtypesFromOrders;
+    ArrayList<MapWrapperClass<ProductType>> typesFromOrders;
+    ArrayList<MapWrapperClass<Category>> categoriesFromOrders;
+    ArrayList<MapWrapperClass<Tag>> tagsFromOrders;
+    List<Product> productsFromOrders;
 
-    public static ArrayList<SortedMapClass> getSortedList(List<Order> orderList){
-
-        return null;
+    public List<Product> getProductsFromOrders(List<Order> orderList) {
+        productsFromOrders = getProductList(orderList);
+        return productsFromOrders;
     }
 
-
-    public static HashMap<Category, Integer> getCategoriesFromAllOrders(List<Order> orderList) {
-        return getSortedCategoryMapByValues(getProductCategories(getProductTypes(getProductSubtypes(getProductsFromAllOrders(orderList)))));
+    public ArrayList<MapWrapperClass<ProductSubtype>> getSubtypesFromOrders(List<Order> orderList) {
+        subtypesFromOrders = getProductSubtypes(getProductList(orderList));
+        return subtypesFromOrders;
     }
 
-    public static HashMap<ProductType, Integer> getProductSubtypesFromAllOrders(List<Order> orderList) {
-        return getSortedProductTypeMapByValues(getProductTypes(getProductSubtypes(getProductsFromAllOrders(orderList))));
+    public ArrayList<MapWrapperClass<ProductType>> getTypesFromOrders(List<Order> orderList) {
+        typesFromOrders = getProductTypes(getProductSubtypes(getProductList(orderList)));
+        return typesFromOrders;
     }
 
-    public static HashMap<ProductSubtype, Integer> getProductTypesFromAllOrders(List<Order> orderList) {
-        return getSortedProductSubtypeMapByValues(getProductSubtypes(getProductsFromAllOrders(orderList)));
+    public ArrayList<MapWrapperClass<Category>> getCategoriesFromOrders(List<Order> orderList) {
+        categoriesFromOrders = getCategories(getProductTypes(getProductSubtypes(getProductList(orderList))));
+        return categoriesFromOrders;
     }
 
-    public static List<Product> getProductsFromAllOrders(List<Order> orderList) {
-        return getProductList(orderList);
-    }
-
-    public static SortedMap<Tag, Integer> getTagsFromAllOrders(List<Order> orderList) {
-        SortedMap<Tag, Integer> tagMap = new SortedMap<>();
-        List<Product> productList = getProductList(orderList);
-        for (Product product : productList) {
-            List<Tag> tagList = product.getTags();
-            for (Tag tag : tagList) {
-                int tagCounter = 1;
-                if (tagMap.containsKey(tag)) {
-                    tagCounter += tagMap.get(tag);
-                    tagMap.put(tag, tagCounter);
-                } else {
-                    tagMap.put(tag, tagCounter);
-                }
-            }
-        }
-
-
-        return tagMap;
+    public ArrayList<MapWrapperClass<Tag>> getTagsFromOrders(List<Order> orderList) {
+        tagsFromOrders = getTags(getProductList(orderList));
+        return tagsFromOrders;
     }
 }
