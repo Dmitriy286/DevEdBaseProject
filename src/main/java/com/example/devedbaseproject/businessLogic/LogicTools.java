@@ -2,6 +2,7 @@ package com.example.devedbaseproject.businessLogic;
 
 import com.example.devedbaseproject.models.*;
 
+import java.nio.MappedByteBuffer;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -11,6 +12,15 @@ public class LogicTools {
     public static <T> ArrayList<MapWrapperClass<T>> getSortedList(ArrayList<MapWrapperClass<T>> unsortedList) {
         unsortedList.sort(Comparator.comparingInt(r -> r.counter));
         return unsortedList;
+    }
+
+    public static <T> ArrayList<MapWrapperClass<T>> getTop(ArrayList<MapWrapperClass<T>> allList) {
+        ArrayList<MapWrapperClass<T>> topList = new ArrayList<>();
+        int sizeArray = allList.size();
+        for(int i = 0; i<sizeArray*0.2; i++){
+            topList.add(allList.get(i));
+        }
+        return topList;
     }
 
     public static List<Product> getProductList(List<Order> orderList) {
@@ -40,8 +50,11 @@ public class LogicTools {
         for (var productSubtype : prodSubtypeList) {
             var productType = getFirstOrNull(productTypeList, productSubtype.getSomeClass().getProductType());
             if (productType != null) productType.counter += productSubtype.counter;
-            else productTypeList.add(new MapWrapperClass<>(productSubtype.getSomeClass().getProductType(), productSubtype.counter));
+            else
+                productTypeList.add(new MapWrapperClass<>(productSubtype.getSomeClass().getProductType(), productSubtype.counter));
         }
+
+
         return getSortedList(productTypeList);
     }
 
@@ -78,4 +91,5 @@ public class LogicTools {
 
         } else return null;
     }
+
 }

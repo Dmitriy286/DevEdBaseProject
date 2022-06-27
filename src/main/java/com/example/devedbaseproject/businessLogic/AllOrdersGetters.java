@@ -14,6 +14,11 @@ public class AllOrdersGetters {
     ArrayList<MapWrapperClass<Category>> categoriesFromOrders;
     ArrayList<MapWrapperClass<Tag>> tagsFromOrders;
     List<Product> productsFromOrders;
+    List<Order> orderList;
+
+    public AllOrdersGetters(List<Order> orderList) {
+        this.orderList = orderList;
+    }
 
     public List<Product> getProductsFromOrders(List<Order> orderList) {
         productsFromOrders = getProductList(orderList);

@@ -1,9 +1,7 @@
 package com.example.devedbaseproject.controllers;
 
-import com.example.devedbaseproject.models.Customer;
-import com.example.devedbaseproject.models.Employee;
-import com.example.devedbaseproject.models.Product;
-import com.example.devedbaseproject.models.Tag;
+import com.example.devedbaseproject.businessLogic.Logic;
+import com.example.devedbaseproject.models.*;
 import com.example.devedbaseproject.repository.ICustomerRepository;
 import com.example.devedbaseproject.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +60,8 @@ public class CustomerController {
         model.addAttribute("customer", customer);
         List<Tag> tagList = new ArrayList<Tag>(customer.getTagList());
         model.addAttribute("tagList", tagList);
+        List<ProductSubtype> productSubtypeList = new Logic().suggestion(customer);
+        model.addAttribute("subtypes", productSubtypeList);
         System.out.println(tagList);
         System.out.println(customer.getTagList());
 

@@ -49,8 +49,8 @@
     <div class="down">
         <h4>История заказов клиента :</h4>
         <div class="orders">
-            <ul th:each = "order: ${customer.orderList}">
-                <li th:text = "${order.actionDateTime}"></li>
+            <ul th:each = "productSubtype: ${subtypes}">
+                <li th:text = "${productSubtype.productSubtypeName}"></li>
             </ul>
         </div>
     </div>

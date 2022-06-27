@@ -10,21 +10,25 @@ import static com.example.devedbaseproject.businessLogic.LogicTools.*;
 public class CustomerGetters {
 
     ArrayList<MapWrapperClass<Category>> customerCategories;
-    ArrayList<MapWrapperClass<ProductType>> customerProductType;
-    ArrayList<MapWrapperClass<ProductSubtype>> customerProductSubtype;
+    ArrayList<MapWrapperClass<ProductType>> customerProductTypes;
+    ArrayList<MapWrapperClass<ProductSubtype>> customerProductSubtypes;
     ArrayList<MapWrapperClass<Tag>> customerTags;
+    Customer customer;
 
+    public CustomerGetters(Customer customer) {
+        this.customer=customer;
+    }
 
     public ArrayList<MapWrapperClass<ProductSubtype>> getCustomerProductSubtype(Customer customer) {
         List<Order> orderList = customer.getOrderList();
         List<Product> productList = getProductList(orderList);
-        customerProductSubtype = getProductSubtypes(productList);
-        return customerProductSubtype;
+        customerProductSubtypes = getProductSubtypes(productList);
+        return customerProductSubtypes;
     }
 
     public ArrayList<MapWrapperClass<ProductType>> getCustomerProductType(Customer customer) {
-        customerProductType = getProductTypes(getProductSubtypes(getProductsFromCustomersOrders(customer)));
-        return customerProductType;
+        customerProductTypes = getProductTypes(getProductSubtypes(getProductsFromCustomersOrders(customer)));
+        return customerProductTypes;
     }
 
     public ArrayList<MapWrapperClass<Category>> getCustomerCategories(Customer customer) {
