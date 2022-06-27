@@ -24,4 +24,20 @@ public class CustomerGetters {
         List<Order> orderList = customer.getOrderList();
         return getProductList(orderList);
     }
+
+    public static HashMap<Tag, Integer> getTagsFromCustomer(Customer customer){
+        HashMap<Tag, Integer> tagMap = new HashMap<>();
+        List<Tag> tagList = customer.getTagList();
+        for(Tag tag : tagList){
+            int tagCounter = 1;
+            if(tagMap.containsKey(tag)){
+                tagCounter += tagMap.get(tag);
+                tagMap.put(tag,tagCounter);
+            }
+            else{
+                tagMap.put(tag, tagCounter);
+            }
+        }
+        return tagMap;
+    }
 }
