@@ -7,6 +7,7 @@
 </head>
 <body>
 <th:block th:insert="fragments/menu :: menu"></th:block>
+<div class="container2">
 <div th:switch="${supplies}">
     <h2 th:case="null">No supplies found!</h2>
     <div th:case="*">
@@ -34,6 +35,7 @@
     </div>
     <p><a href="/supplies-create" class="btn">Create supplies</a></p>
     <p><a href="/" class="btn">Back</a></p>
+</div>
 </div>
 </body>
 </html>

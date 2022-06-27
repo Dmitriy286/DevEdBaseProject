@@ -5,9 +5,46 @@
 
 body {
 	margin: 60px;
-	background-image: url(https://thumbs.dreamstime.com/b/%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D1%8B%D0%B9-%D1%84%D0%BE%D0%BD-%D1%81-%D1%81%D0%BB%D0%B0%D0%B1%D0%BE-%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9-%D1%81%D1%82%D0%B0%D1%80%D0%BE%D0%B9-%D1%82%D0%B5%D0%BA%D1%81%D1%82%D1%83%D1%80%D0%BE%D0%B9-%D0%B8%D0%B7-%D1%81%D1%82%D0%B0%D1%80%D0%B8%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-160760145.jpg);
+	background-image: url("/image/bg1.jpg");
 	background-size: cover; /* Фон занимает всю доступную площадь */
 	font-family: 'Press Start 2P', cursive !important;
+}
+
+.center_image{
+	width: 780px;
+	margin: auto;
+	margin-top: -256px;
+}
+
+h1 {
+	text-align: center;
+}
+
+.boxInbox {
+	width: 741px;
+	height: 129px;
+	margin: auto;
+	margin-top: 197px;
+	padding-top: 25px;
+	padding-bottom: 23px;
+	background-color: #F1EBE7;
+}
+
+.beauty_box {
+	width: 740px;
+	height: 80px;
+	margin: auto;
+	background-color: #ffffff;
+}
+
+marquee img{
+	margin-left: 60px;
+	margin-top: 3px;
+}
+
+footer {
+	margin-top: 333px;
+	text-align: center;
 }
 
 .container {
@@ -22,12 +59,13 @@ body {
 	width: 1145px;
 	height: 794px;
 	margin: 0 auto;
-	background-image: url(https://i.gifer.com/ICU.gif);
-	color: #fff;
+	background: #FFD8B4;
+
 }
 
 .container_gif h1{
-	font-size: 650%;
+	font-size: 500%;
+	margin: 50px auto;
 }
 
 .top {
@@ -41,8 +79,8 @@ body {
 
 }
 
-h1{
-	margin: 0 auto;
+.top h1{
+	margin: 0px auto;
 	border: 1px;
 	padding: 1px;
 	text-align: center;
