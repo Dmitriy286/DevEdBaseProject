@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Update supplies</title>
-  <link rel="stylesheet" href="/list.css">
+  <link rel="stylesheet" href="/style9.css">
 </head>
 <body>
+<th:block th:insert="fragments/menu :: menu"></th:block>
 <form action="#" th:action="@{/supplies-update}" th:object="${supplies}" method="post">
   <label for="supplies_id">ID</label>
   <input readonly type="number" th:field="*{id}" id="supplies_id" placeholder="ID">

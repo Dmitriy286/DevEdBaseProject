@@ -16,18 +16,21 @@
 		<div class="layer1top_2">
 			<h4> Карточка сотрудника : </h4><!--  !сделать лейблы! -->
 			<div class="white_back">
+				<form action="#" th:action="@{/employees/{id}/edit (id=${employeeAccount.id})}" th:object="${employeeAccount}" method="post">
+					<input type="hidden" th:field="${employeeAccount.id}">
 				<p class="p2" th:text="${employeeAccount.name}">Имя</p>
 				<p class="p2" th:text="${employeeAccount.email}">Электронная почта</p> <!-- справа -->
 				<p class="p2" th:text="${employeeAccount.phoneNumber}">Номер телефона</p> <!-- справа -->
 				<th:block th:each="role : ${employeeAccount.roles}">
 					<p class="p2" th:text="${role.name}">Должность</p>
 				</th:block>
+					<input type="submit" value="Изменить"/>
+				</form>
 			</div>
 		</div>
 		<div class="layer2top_2">
-			<div class ="fotoclient2"><img height=100 width=100 th:src = "@{/image/employee_id_{id}.png(id = ${employeeAccount.getId()})}" alt="Employee photo">
+			<div class ="foto_client2"><img height=100 width=100 th:src = "@{/image/employee_id_{id}.png(id = ${employeeAccount.getId()})}" alt="Employee photo">
 			</div>
-			<button><a th:href="@{/employees/{id}/edit(id=${employeeAccount.id})}">Изменить</a></button>
 			<div class="out2"><form th:action="@{/logout}" method="post">
 				<input type="submit" value="Выйти"/>
 			</form>
@@ -39,13 +42,11 @@
 		<div class="layer1down_2"><!-- слева первый -->
 			<h2>Клиенты</h2>
 
-			<form th:id="ajax_form" th:action="@{/customers/filter}" th:object="${customers}" th:method="POST">
+			<form th:action="@{/customers/filter}" th:object="${customers}" th:method="POST">
 				<label for="filter1">Enter name:</label>
 				<input type="text" name="filter" id="filter1">
 				<button type="submit">Find</button>
 			</form>
-			<div id="result_form"></div>
-
 			<div class="customers_list">
 			<ul th:each = "customer: ${customers}">
 				<li><a th:href = "@{customers/{id}(id=${customer.id})}"th:text ="${customer.name+' '+customer.surname}"></a></li>

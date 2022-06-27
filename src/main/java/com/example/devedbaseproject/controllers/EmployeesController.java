@@ -121,7 +121,7 @@ public class EmployeesController {
     }
 
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/edit")
     public String update(@RequestParam Map<String, String> form,
             @ModelAttribute("employee") Employee employee, @PathVariable("id") Long id) {
 
@@ -146,7 +146,7 @@ public class EmployeesController {
 
         repository.save(employee);
 
-        return "redirect:/employees";
+        return "redirect:/employees/account";
     }
 
     //    @DeleteMapping("/{id}/delete")
