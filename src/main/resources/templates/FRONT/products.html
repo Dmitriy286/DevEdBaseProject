@@ -13,29 +13,33 @@
 <div class="container2">
 
     <div class="top_11">
-        <h1 class="h1_11">Продукты</h1>
+        <h1 class="h1_11">Введите данные о продукте :</h1>
     </div>
-    <div class="center_4">
-        <div class="layer_left_11">
-            <h2>Список продуктов :</h2>
-            <div class="productlist_11">
-                <div class="list_11">
-                    <table>
-                        <tr th:each="product : ${products}">
-                            <td><a th:href="@{/product/{id}(id=${product.id})}"
-                                   th:text="${product.productName}"></a></td>
-                            <!--                        <td><a th:href="@{products-parameters/{id}(id=${product.id})}" class="btn">Добавить характеристики</a></td>-->
-                        </tr>
-                    </table>
+<!--    <div class="center_4">-->
+<!--        <div class="layer_left_11">-->
+<!--            <h2>Список продуктов :</h2>-->
+<!--            <div class="productlist_11">-->
+<!--                <div class="list_11">-->
+<!--                    <form th:action="@{/products/filter}" th:object="${productsFilter}" th:method="POST">-->
+<!--                        <label for="filter2">Enter name:</label>-->
+<!--                        <input type="text" name="filter" id="filter2">-->
+<!--                        <button type="submit">Find</button>-->
+<!--                    </form>-->
+<!--                    <div class="products_list">-->
+<!--                        <ul th:each="product: ${products}">-->
+<!--                            <li><a th:href="@{product/{id}(id=${product.id})}" th:text="${product.productName}"></a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
 
-                </div>
-            </div>
-        </div>
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="layer_right_11">
-            <h2>Информация о продукте :</h2>
+<!--        <div class="layer_right_11">-->
             <div class="add_products_11">
-                <form class="form_add_products_11" action="#" th:action="@{/products}" th:object="${product}" method="post">
+                <form class="form_add_products_11" th:action="@{/products}" th:object="${product}"
+                      method="post">
                     <div class="into_form_11">
                         <label for="product_name"><h5>Name</h5></label>
                         <input type="text" th:field="*{productName}" id="product_name"
@@ -65,11 +69,11 @@
                         </select>
                         <br/>
                     </div>
-                    <form enctype="multipart/form-data" method="post">
-                        <p class="size_smaller"><input type="file" name="f">
-                            <input type="submit" value="Отправить"/></p>
-                    </form>
-                    <button type="submit" class="button_add_product_11">Добавить продукт</button>
+<!--                    <form enctype="multipart/form-data" method="post">-->
+<!--                        <p class="size_smaller"><input type="file" name="f">-->
+<!--                            <input type="submit" value="Отправить"/></p>-->
+<!--                    </form>-->
+                    <input type="submit" value="Создать продукт"/></p>
                     <!--                    <input type="submit" value="Create Product" class="btn">-->
                 </form>
             </div>

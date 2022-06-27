@@ -972,6 +972,6 @@ input[type="submit" i] {
 }
 .history_order{
     overflow-y: scroll; /* прокрутка по вертикали */
-    width: 1102px;
-    height: 400px;
+    width: 1200px;
+    height: 500px;
 }

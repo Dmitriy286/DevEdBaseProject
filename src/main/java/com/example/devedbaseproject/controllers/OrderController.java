@@ -44,6 +44,7 @@ public class OrderController {
     public String findAll(Model model) {
         List<Order> orders = orderRepository.findAll();
         model.addAttribute("orders", orders);
+        model.addAttribute("orderDetails", orderDetailsRepository.findAll());
         return "FRONT/history-order";
     }
 

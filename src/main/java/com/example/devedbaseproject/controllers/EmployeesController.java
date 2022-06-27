@@ -121,7 +121,7 @@ public class EmployeesController {
     }
 
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/edit")
     public String update(@RequestParam Map<String, String> form,
             @ModelAttribute("employee") Employee employee, @PathVariable("id") Long id) {
 

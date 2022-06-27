@@ -40,7 +40,7 @@
             <td th:text = "${employee.password}"></td>
             <td>
                 <th:block th:each="role : ${employee.roles}">
-                    <p th:text="${role.getId()}"></p>
+                    <p th:text="${role.getName()}"></p>
                 </th:block>
             </td>
 

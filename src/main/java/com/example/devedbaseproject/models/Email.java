@@ -22,9 +22,9 @@ public class Email {
     @Column(name = "message")
     private String message;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "customer_id")
+//    private Customer customer;
 
     @LazyCollection(LazyCollectionOption.FALSE)
 //    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH})
@@ -51,7 +51,7 @@ public class Email {
                 "id=" + id +
                 ", date='" + date + '\'' +
                 ", message='" + message + '\'' +
-                ", customer=" + customer +
+//                ", customer=" + customer +
                 ", products=" + products +
                 ", employee=" + employee +
                 ", send=" + send +
@@ -65,7 +65,7 @@ public class Email {
     public Email(Product product) {
         this.date = LocalDate.now();
         this.message = "";
-        this.customer = new Customer();
+//        this.customer = new Customer();
         this.customers = new ArrayList<>();
         this.product = product;
         this.products = new ArrayList<>();
@@ -98,13 +98,13 @@ public class Email {
         this.message = message;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+//    public Customer getCustomer() {
+//        return customer;
+//    }
+//
+//    public void setCustomer(Customer customer) {
+//        this.customer = customer;
+//    }
 
     public List<Product> getProducts() {
         return products;

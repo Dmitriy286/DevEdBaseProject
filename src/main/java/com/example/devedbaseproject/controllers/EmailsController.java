@@ -59,7 +59,15 @@ public class EmailsController {
     @GetMapping("/customer/{customerId}")
     public String findEmailByCustomerID(@PathVariable("customerId") Long customerId, Model model) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID" + customerId));
-        List<Email> emailList = repository.findByCustomer(customer);
+
+        List<Email> emailList = new ArrayList<>();
+
+        for (Email e: repository.findAll()) {
+            if (e.getCustomers().contains(customer)) {
+                emailList.add(e);
+            }
+            }
+
         model.addAttribute("emails", emailList);
 
         return "FRONT/history-email";
@@ -89,7 +97,7 @@ public class EmailsController {
         newemail.setCustomers(cList);
         newemail.setEmployee(employee);
         newemail.setSend(false);
-        newemail.setCustomer(cList.get(0));
+//        newemail.setCustomer(cList.get(0));
 
         repository.save(newemail);
 
