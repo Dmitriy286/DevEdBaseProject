@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Create supplies</title>
-  <link rel="stylesheet" href="/list.css">
+  <link rel="stylesheet" href="/style9.css">
 </head>
 <body>
+<th:block th:insert="fragments/menu :: menu"></th:block>
 <form action="#" th:action="@{/supplies-create}" th:object="${supplies}" method="post">
   <label>Manufacturer Id</label>
   <select th:name="manufacturer"> // имя поля класса!

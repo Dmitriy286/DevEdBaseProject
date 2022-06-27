@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Supplies</title>
-    <link rel="stylesheet" href="/list.css">
+    <link rel="stylesheet" href="/style9.css">
 </head>
 <body>
+<th:block th:insert="fragments/menu :: menu"></th:block>
 <div th:switch="${supplies}">
     <h2 th:case="null">No supplies found!</h2>
     <div th:case="*">

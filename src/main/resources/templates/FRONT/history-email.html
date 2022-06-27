@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <title>Emails List</title>
     <link rel="stylesheet" href="/style9.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
 </head>
 <body>
 <th:block th:insert="fragments/menu :: menu"></th:block>
@@ -24,13 +21,10 @@
     <div th:case="*">
         <label for="radioform"><b>Choose sent/unsent:</b></label>
         <form th:action="@{/emails/newEmails}" th:method="POST" id="radioform">
-            <input type="radio" name="sent" value="true">sent<Br>
-            <input type="radio" name="sent" value="false">unsent<Br>
-            </p>
+            <input type="radio" name="sent" value="true">sent<br/>
+            <input type="radio" name="sent" value="false">unsent<br/>
             <button type="submit">Filter</button>
         </form>
-
-        <br>
         <div class="history_email">
         <table>
             <thead>
