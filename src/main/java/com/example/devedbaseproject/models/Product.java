@@ -15,8 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 
-@Entity // сущность связана с БД
-@Table(name = "product") // имя, связанной таблицы
+@Entity
+@Table(name = "product")
 public class Product {
 
 
@@ -33,7 +33,7 @@ public class Product {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "product_name")
@@ -44,8 +44,7 @@ public class Product {
 
     @ManyToOne//(cascade = { CascadeType.ALL })
     @JoinColumn(name = "manufacturer_id")
-    private Manufacturer manufacturer; // идет в класс Manufacturer
-    // и связывается по primary key
+    private Manufacturer manufacturer;
 
     @Column(name = "product_quantity")
     private Long productQuantity;

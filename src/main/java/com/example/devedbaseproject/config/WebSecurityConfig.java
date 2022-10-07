@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -31,17 +30,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService);
-                //ниже закомментированы строки из работающего кода!!!
-//                jdbcAuthentication()
-//                .dataSource(dataSource)
-//                .usersByUsernameQuery("select username, password, active from Employees where username=?")
-//                .authoritiesByUsernameQuery("select e.username, r.name from employees as e inner join employee_role as er on e.id = er.employee_id inner join roles as r on r.id = er.role_id where e.username=?");
-    }
+   }
 
 //
 //    @Override
 //    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        //и добавляем его сюда
 //        auth.authenticationProvider(customAuthencationProvider);
 //    }
 
@@ -70,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/registration").permitAll()
+                .antMatchers("/", "/registration", "/order-data", "/purchase-data").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .formLogin()
@@ -85,9 +78,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/style.css", "/image/coffee.png", "/image/flowers.png",
-                "https://fonts.googleapis.com", "https://fonts.gstatic.com",
-                "https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");
+        web.ignoring().antMatchers("/style.css", "/image/1.jpg", "/image/1_1.jpg",
+                "/image/2.jpg", "/image/2_2.png", "/image/3.jpg", "/image/3_3.jpg", "/image/4.jpg",
+                "/image/4_4.jpg", "/image/5.jpg", "/image/5_5.jpg", "/image/6.jpg", "/image/6_6.jpg",
+                "/image/Dane_png1.png",
+                "https://fonts.googleapis.com/", "https://fonts.gstatic.com/",
+                "https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap%22");
     }
 
 
