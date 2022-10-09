@@ -10,7 +10,6 @@
     <th:block th:insert="fragments/navigation :: main-menu"></th:block>
     <div>
         <form action="#" th:action="@{/type-update}" th:object="${productType}" method="post">
-<!--            <form action="#" th:action="@{/type-update/{id}(id=${productType.id})}" th:object="${productType}" method="post">-->
             <label for="product_type_id">ID</label>
             <input readonly type="number" th:field="*{id}" id="product_type_id" placeholder="ID">
             <br/>

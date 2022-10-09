@@ -20,9 +20,9 @@ public class SuppliesDetails {
     @Column(name = "id")
     private Long id;
 
-//    @OneToOne
-//    @JoinColumn(name = "product_id")
-//    private Long productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Column(name = "product_quantity")
     private Long productQuantity;

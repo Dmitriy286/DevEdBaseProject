@@ -1,8 +1,9 @@
 package com.example.devedbaseproject.models;
 
-import javax.persistence.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
-import lombok.*;
+import javax.persistence.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,11 +22,15 @@ public class Email {
     @Column(name = "message")
     private String message;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = {CascadeType.DETACH})
+    private List<Customer> customers;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH})
+    private Product product;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = {CascadeType.DETACH})
     private List<Product> products;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -41,7 +46,6 @@ public class Email {
                 "id=" + id +
                 ", date='" + date + '\'' +
                 ", message='" + message + '\'' +
-                ", customer=" + customer +
                 ", products=" + products +
                 ", employee=" + employee +
                 ", send=" + send +
@@ -52,11 +56,11 @@ public class Email {
     public Email() {
     }
 
-    public Email(String message) {
-
+    public Email(Product product) {
         this.date = LocalDate.now();
-        this.message = message;
-        this.customer = new Customer();
+        this.message = "";
+        this.customers = new ArrayList<>();
+        this.product = product;
         this.products = new ArrayList<>();
         this.employee = new Employee();
         this.send = false;
@@ -87,13 +91,6 @@ public class Email {
         this.message = message;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
 
     public List<Product> getProducts() {
         return products;
@@ -118,6 +115,23 @@ public class Email {
     public void setSend(boolean send) {
         this.send = send;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
+
     //endregion
 }
 

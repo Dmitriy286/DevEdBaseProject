@@ -26,11 +26,10 @@ public class ProductParameterValue {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-//    @Cascade(CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne//(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "parameter_id")
     private ProductParameter parameter;
 

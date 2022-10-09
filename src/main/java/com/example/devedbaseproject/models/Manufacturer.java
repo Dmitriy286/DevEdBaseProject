@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.List;
 
 
-@Entity // сущность связана с БД
-@Table(name = "manufacturer") // имя, связанной таблицы
+@Entity
+@Table(name = "manufacturer")
 public class Manufacturer {
 
     @Id
@@ -13,7 +13,7 @@ public class Manufacturer {
     @Column(name = "manufacturer_id")
     private Long id;
 
-    @OneToMany(mappedBy = "manufacturer") // поле класса
+    @OneToMany(mappedBy = "manufacturer")
     private List<Product> productList;
 
     @Column(name = "name")

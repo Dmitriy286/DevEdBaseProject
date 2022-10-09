@@ -1,5 +1,7 @@
 package com.example.devedbaseproject.models;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -48,11 +50,9 @@ public class Employee implements UserDetails {
                     name = "role_id"
             )
     )
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.DETACH)
     private List<Role> roles;
-
-    @OneToMany(mappedBy="employee")
-    private List<Order> orderList;
 
     @Override
     public String toString() {
@@ -80,6 +80,7 @@ public class Employee implements UserDetails {
         this.email = "";
         this.phoneNumber = "";
         this.photo = "";
+//        this.orderList = new ArrayList<>();
     }
 
     public Employee(String name, String username, String password, String email, String phoneNumber, String photo) {
@@ -91,6 +92,7 @@ public class Employee implements UserDetails {
         this.photo = photo;
         this.roles = new ArrayList<>();
         this.active = false;
+//        this.orderList = new ArrayList<>();
     }
     //endregion
     //region Setters, Getters

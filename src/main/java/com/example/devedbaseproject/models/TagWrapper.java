@@ -14,7 +14,6 @@ public class TagWrapper {
         this.tagList = tagList;
     }
 
-
     public void setTagList(ArrayList<Tag> tagList) {
         this.tagList = tagList;
     }

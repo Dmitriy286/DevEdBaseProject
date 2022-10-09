@@ -35,7 +35,6 @@ public class ProductParametersController {
 
     @GetMapping("/{name}")
     public String findParameterByName(@PathVariable("name") String name, Model model) {
-
         Optional<ProductParameter> parameter = repository.findByName(name);
         if (parameter.isPresent()) {
             model.addAttribute("parameter", parameter.get());
@@ -68,14 +67,12 @@ public class ProductParametersController {
         else {
             System.out.println("Error Found");
         }
-
         return "parameters/edit";
     }
 
     @PostMapping("/{id}")
     public String update(@ModelAttribute("parameter") ProductParameter parameter, @PathVariable("id") Long id) {
         repository.save(parameter);
-
         return "redirect:/parameters";
     }
 
@@ -84,6 +81,4 @@ public class ProductParametersController {
         repository.deleteById(id);
         return "redirect:/parameters";
     }
-
-
 }

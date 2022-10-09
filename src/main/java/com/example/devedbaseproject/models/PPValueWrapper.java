@@ -14,7 +14,6 @@ public class PPValueWrapper {
         this.ppValueList = ppValueList;
     }
 
-
     public void setPpValueList(ArrayList<ProductParameterValue> ppValueList) {
         this.ppValueList = ppValueList;
     }

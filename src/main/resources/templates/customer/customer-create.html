@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить клиента</title>
+    <link rel="stylesheet" href="/style9.css">
+</head>
+<body>
+<th:block th:insert="fragments/menu :: menu"></th:block>
+<div class="container2_short">
+    <div class="top">
+        <div class="topH"><h1>Регистрация нового клиента</h1></div>
+    </div>
+    <div class="main5">
+        <div class="layer1_reg">
+            <h4>Данные клиента :</h4>
+        <form id="infoclientreg" action="#" th:action="@{/customer-create}" th:object="${customer}" method="post">
+            <p class="p5 allGoCenter"><label for="name">Имя</label>
+            <input type="text" th:field="*{name}" id="name" placeholder="Введите имя">
+            </p>
+            <p class="p5 allGoCenter"><label for="surname">Фамилия</label>
+            <input type="text" th:field="*{surname}" id="surname" placeholder="Введите фамилию">
+            </p>
+            <p class="p5 allGoCenter"><label for="age">Возраст</label>
+            <input type="text" th:field="*{age}" id="age" placeholder="Введите возраст">
+            </p>
+            <p class="p5 allGoCenter"><label for="email">Почта</label>
+            <input type="text" th:field="*{email}" id="email" placeholder="Введите почтовый адрес">
+            </p>
+            <p class="p5 allGoCenter"><label for="phoneNumber">Телефон</label>
+            <input type="text" th:field="*{phoneNumber}" id="phoneNumber" placeholder="Введите номер телефона">
+            </p>
+
+<!--                <div class ="fotoclient"><img height=100 width=100 src ="/clientempty.png" alt ="Фото клиента"></div>-->
+                <button type="submit" class ="addclient">Добавить клиента</button>
+
+        </form>
+    </div>
+</div>
+</div>
+</body>
+</html>

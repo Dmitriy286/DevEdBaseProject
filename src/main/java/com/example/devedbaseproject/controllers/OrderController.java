@@ -2,13 +2,16 @@ package com.example.devedbaseproject.controllers;
 
 import com.example.devedbaseproject.models.*;
 import com.example.devedbaseproject.repository.*;
+import com.example.devedbaseproject.service.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -26,6 +29,9 @@ public class OrderController {
     private final IOrderDetailsRepository orderDetailsRepository;
 
     @Autowired
+    private EmailSender sender;
+
+    @Autowired
     public OrderController(IOrderRepository orderRepository, ICustomerRepository customerRepository, IProductRepository productRepository, IEmployeeRepository employeeRepository, IOrderDetailsRepository orderDetailsRepository) {
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
@@ -38,7 +44,8 @@ public class OrderController {
     public String findAll(Model model) {
         List<Order> orders = orderRepository.findAll();
         model.addAttribute("orders", orders);
-        return "FRONT/history-order";
+        model.addAttribute("orderDetails", orderDetailsRepository.findAll());
+        return "order/history-order";
     }
 
     @GetMapping("/order-update/{id}")
@@ -78,17 +85,17 @@ public class OrderController {
     }
 
     @PostMapping("/order-create")
-    public String createOrder(@Valid Order order, BindingResult result, Model model) {
+    public String createOrder(@AuthenticationPrincipal Employee employee,
+                              @Valid Order order, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "order-create";
         }
         order.setActionDateTime(getLocalDateTime());
         order.setOrderCost(200);
         order.setOrderStatus("Не оплачен");
+        order.setEmployee(employee);
 
-        orderRepository.save(order);
-
-        //region Добавление тэгов продуктов из заказа в список тэгов клиента
+        //region Add product tags from order to client's tag list
         for (OrderDetails od: order.getOrderDetails()) {
             Optional<Product> tempproduct = productRepository.findById(od.getProduct().getId());
             Product product = new Product();
@@ -102,28 +109,18 @@ public class OrderController {
             if (product.getTags() == null) {
                 System.out.println("У продукта нет тэгов");
             }
+
             else {
                 for (Tag tag : product.getTags()) {
-                    if (order.getCustomer().getTagCountMap().containsKey(tag)) {
-                        order.getCustomer().getTagCountMap().put(tag, order.getCustomer().getTagCountMap().get(tag) + 1);
-                    } else {
-                        order.getCustomer().getTagCountMap().put(tag, 1);
-                    }
+                    order.getCustomer().getTagList().add(tag);
                 }
             }
-            HashMap<Tag, Integer> sortedTags = order.getCustomer().getTagCountMap().entrySet().stream()
-                    .sorted(Map.Entry.<Tag, Integer>comparingByValue().reversed())
-                    .collect(Collectors.toMap(
-                            Map.Entry::getKey,
-                            Map.Entry::getValue,
-                            (a, b) -> { throw new AssertionError(); },
-                            LinkedHashMap::new));
-//                    .sorted(Comparator.comparingInt(e -> -e.getValue()))
-            sortedTags.entrySet().forEach(System.out::println);
-            order.getCustomer().setTagCountMap(sortedTags);
-            customerRepository.save(order.getCustomer());
         }
         //endregion
+        orderRepository.save(order);
+        customerRepository.save(order.getCustomer());
+        sendEmailAboutOrder(order.getCustomer(), order);
+        Optional<Order> newOrder = orderRepository.findById(order.getId());
 
         return "redirect:/history-order";
     }
@@ -138,8 +135,15 @@ public class OrderController {
         model.addAttribute("customer", customer);
 //        model.addAttribute("employee", employee);
         model.addAttribute("orderDetails", orderDetails);
-
         return "order/order-details";
+    }
+
+    public void sendEmailAboutOrder(Customer c, Order o) {
+        String message = String.format("Добрый день, %s! \n" +
+                        "Для Вас оформлен заказ с номером № " +
+                        "%s",
+                c.getName(), o.getId());
+        sender.send(c.getEmail(), "Заказ оформлен", message);
     }
 
 }

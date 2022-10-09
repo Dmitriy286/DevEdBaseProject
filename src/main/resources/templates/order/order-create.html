@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Create order</title>
-<!--    <link rel="stylesheet" href="/list.css">-->
+    <link rel="stylesheet" href="/style9.css">
 </head>
 <body>
+<th:block th:insert="fragments/menu :: menu"></th:block>
 <div class="container">
-    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
     <div>
         <form action="#" th:action="@{/order-create}" th:object="${order}" method="post">
 
@@ -40,13 +40,6 @@
             <label for="deliveryAddress">Адрес</label>
             <input type="text" th:field="*{deliveryAddress}" id="deliveryAddress" placeholder="Адрес доставки">
             <br/>
-            <label for="employee_list">Выберите работника</label>
-            <select th:name="employee" id="employee_list">
-                <option th:each="employee:${employees}"
-                        th:value="${employee.id}"
-                        th:text="${employee.name}">Товар
-                </option>
-            </select>
             <br/><br/>
 
 

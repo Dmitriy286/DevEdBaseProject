@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Supplies</title>
+    <link rel="stylesheet" href="/style9.css">
+</head>
+<body>
+<th:block th:insert="fragments/menu :: menu"></th:block>
+<div class="container2">
+<div th:switch="${supplies}">
+    <h2 th:case="null">No supplies found!</h2>
+    <div th:case="*">
+        <h2>Supplies</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Supply's Id</th>
+                <th>Manufacturer's Id</th>
+                <th>Supply's Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="supplies : ${supplies}">
+                <td th:text="${supplies.id}"></td>
+                <td th:text="${supplies.manufacturer.name}"></td>
+                <td th:text="${supplies.suppliesDate}"></td>
+
+                <td><a th:href="@{supplies-update/{id}(id=${supplies.id})}" class="btn">Edit</a></td>
+                <td><a th:href="@{supplies-delete/{id}(id=${supplies.id})}" class="btn">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/supplies-create" class="btn">Create supplies</a></p>
+    <p><a href="/" class="btn">Back</a></p>
+</div>
+</div>
+</body>
+</html>

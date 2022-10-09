@@ -1,10 +1,9 @@
 package com.example.devedbaseproject.models;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Entity
@@ -30,13 +29,14 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Order> orderList;
 
-    @Transient
-    private HashMap<Tag, Integer> tagCountMap;
+    @ManyToMany
+    @JoinColumn(name = "tag_count_map")
+    private List<Tag> tagList;
 
     //region Constructors
     public Customer() {
         this.orderList = new ArrayList<>();
-        this.tagCountMap = new HashMap<>();
+        this.tagList = new ArrayList<>();
     }
 
     public Customer(String name, String surname, Integer age, String email, String phoneNumber) {
@@ -46,7 +46,7 @@ public class Customer {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.orderList = new ArrayList<>();
-        this.tagCountMap = new HashMap<>();
+        this.tagList = new ArrayList<>();
     }
     //endregion
     //region Getters, setters
@@ -106,12 +106,24 @@ public class Customer {
         this.orderList = orderList;
     }
 
-    public HashMap<Tag, Integer> getTagCountMap() {
-        return tagCountMap;
+    public List<Tag> getTagList() {
+        return tagList;
     }
 
-    public void setTagCountMap(HashMap<Tag, Integer> tagCountMap) {
-        this.tagCountMap = tagCountMap;
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
     }
+
     //endregion
+
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", tagList=" + tagList +
+                '}';
+    }
 }

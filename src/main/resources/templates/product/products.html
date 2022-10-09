@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Products</title>
+    <link rel="stylesheet" href="/style9.css">
+
+
+</head>
+<body>
+<th:block th:insert="fragments/menu :: menu"></th:block>
+<div class="container2">
+
+    <div class="top_11">
+        <h1 class="h1_11">Введите данные о продукте :</h1>
+    </div>
+            <div class="add_products_11">
+                <form class="form_add_products_11" th:action="@{/products}" th:object="${product}"
+                      th:method="POST">
+                    <div class="into_form_11">
+                        <label for="product_name"><h5>Name</h5></label>
+                        <input type="text" th:field="*{productName}" id="product_name"
+                               placeholder="Введите наименование">
+                        <br/>
+                        <label for="description"><h5>Description</h5></label>
+                        <input type="text" th:field="*{description}" id="description" placeholder="Введите описание">
+                        <br/>
+                        <label><h5>Manufacturer</h5></label>
+                        <select th:name="manufacturer">
+                            <option th:each="manufacturer: ${manufacturer}"
+                                    th:value="${manufacturer.id}"
+                                    th:text="${manufacturer.name}">
+                            </option>
+                        </select>
+                        <br/>
+                        <label for="product_quantity"><h5>Quantity</h5></label>
+                        <input type="text" th:field="*{productQuantity}" id="product_quantity"
+                               placeholder="Введите количество">
+                        <br/>
+                        <label><h5>Subtype ID</h5></label>
+                        <select th:name="productSubtype"> // имя поля класса!
+                            <option th:each="subtype: ${subtype}"
+                                    th:value="${subtype.id}"
+                                    th:text="${subtype.productSubtypeName}">
+                            </option>
+                        </select>
+                        <br/>
+                    </div>
+                    <input type="submit" value="Создать продукт"/></p>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

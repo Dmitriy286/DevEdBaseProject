@@ -7,7 +7,6 @@
 </head>
 <body>
 <div class="container">
-    <th:block th:insert="fragments/navigation :: main-menu"></th:block>
 
     <div>
         <p th:text="${product.getProductName()}">value</p>
@@ -48,7 +47,7 @@
 </div>
 <a href="/index">Назад на главную</a>
 <br>
-<a th:href="@{/products/{productId}(productId=${product.getId})}">Назад к продукту</a>
+<a th:href="@{employees/product/{productId}(productId=${product.getId})}">Назад к продукту</a>
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -96,28 +95,18 @@
             let newTagSelectId = tagSelectIdStr + newTagSelectIdNumber;
             let oldTagSelectId = tagSelectIdStr + oldTagSelectIdNumber;
 
-            // var optionIdStr = "optionTag";
-            // var oldOptionIdNumber = 1 + count2;
-            // var newOptionIdNumber = 2 + count2;
-            // let newOptionId = optionIdStr + newOptionIdNumber;
-            // let oldOptionId = optionIdStr + oldOptionIdNumber;
-
             var index = 1 + count2;
             let newFieldText = "tagList[" + index + "]"
             console.log(newFieldText)
 
             $("#" + oldContainerId).clone(true, true).attr("id", newContainerId).appendTo(".outer-container");
             $("#" + newContainerId).find("#" + oldTagSelectId).attr("id", newTagSelectId);
-            // $("#" + newTagSelectId).find("#" + oldOptionId).attr("id", newOptionId);
-            // $("#" + newTagSelectId).find("#" + newOptionId).attr("name", newFieldText);
             $("#" + newContainerId).find("#" + oldTagNameId).attr("id", newTagNameId);
             $("#" + newContainerId).find("#" + newTagNameId).attr("name", newFieldText);
             $("#" + newTagNameId).val("")
 
             count2 += 1;
-
         });
-
     });
 
 </script>

@@ -4,13 +4,15 @@ import com.example.devedbaseproject.models.Customer;
 import com.example.devedbaseproject.models.Email;
 import com.example.devedbaseproject.models.Product;
 import com.example.devedbaseproject.models.Tag;
-import com.example.devedbaseproject.repository.ICustomerRepository;
 import com.example.devedbaseproject.repository.IEmailRepository;
-import com.example.devedbaseproject.repository.IProductRepository;
+import com.example.devedbaseproject.service.EmailSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /*продукт -> тэги продукта
 
@@ -27,75 +29,90 @@ import java.util.List;
      */
 
 public class ProductRecommendation {
-    private final IProductRepository productRepository;
-    private final ICustomerRepository customerRepository;
-
-    private final IEmailRepository emailRepository;
+    private List<Customer> customerList;
+    Product currentProduct;
     private List<Tag> productTagList;
     private List<Customer> customerSendingList;
+    private IEmailRepository emailRepository;
 
-    public ProductRecommendation(IProductRepository productRepository, ICustomerRepository customerRepository, IEmailRepository emailRepository) {
-        this.productRepository = productRepository;
-        this.customerRepository = customerRepository;
+    @Autowired
+    private EmailSender sender;
+
+    public ProductRecommendation() {
+    }
+
+    public ProductRecommendation(Product currentProduct, List<Customer> customerList,
+                                 IEmailRepository emailRepository) {
+        this.currentProduct = currentProduct;
+        this.customerList = customerList;
         this.emailRepository = emailRepository;
-        this.customerSendingList = new ArrayList<>();
-
+        this.setCustomerSendingList();
     }
 
     //todo необходима доработка метода (зависит от реализации рассылки)
-    public void sendEmail(Product currentProduct) {
-        this.setProductTagList(currentProduct);
-        this.tagCompare();
-//        product
-//        this.customerSendingList
+    public void setCustomerSendingList() {
+        setProductTagList(this.currentProduct.getTags());
+        this.customerSendingList = tagCompare();
+        }
 
-        //что-то делаем с this.customerSendingList
-//        send(this.customerSendingList);
+    public void sendEmail() {
+        for (Customer c : this.customerSendingList) {
+            if (!StringUtils.isEmpty(c.getEmail())) {
+                String message = String.format("Добрый день, %s! \n" +
+                                "Рекомендуем приобрести следующий продукт: \n" +
+                                "%s",
+                        c.getName(), currentProduct);
+                sender.send(c.getEmail(), "Рекомендуемый продукт", message);
+            }
+        }
     }
 
-
-    public void tagCompare() {
+    public List<Customer> tagCompare() {
         boolean flag = true;
         List<Tag> tagList = getProductTagList();
-        List<Customer> customerList = getCustomerList();
-
-        for (Customer c : customerList) {
+        List<Customer> listForSending = new ArrayList<>();
+        for (Customer c : this.customerList) {
             for (Tag tag: tagList) {
-                if (!c.getTagCountMap().containsKey(tag)) {
+                if (c.getTagList().contains(tag)) {
+                    flag = true;
+                }
+                else{
                     flag = false;
                     break;
                 }
             }
-            if (flag) {
-                this.customerSendingList.add(c);
+            if (flag && checkPreviousSending(c, currentProduct)) {
+                listForSending.add(c);
             }
         }
-
-
+        return listForSending;
     }
 
-    public void checkPreviousSending() {
-        this.tagCompare();
-        for (Customer c: this.customerSendingList) {
-            for (Email e: emailRepository.findByCustomer(c)) {
-                if (e.getDate().plusDays(30).isAfter(LocalDate.now())) {
-                    this.customerSendingList.remove(c);
+    public boolean checkPreviousSending(Customer c, Product p) {
+            for (Email e: emailRepository.findAll()) {
+                if (e.getCustomers().contains(c)) {
+                    if (e.getDate().plusDays(30).isAfter(LocalDate.now())) {
+                        return false;
+                    }
                 }
             }
-        }
+            for (Email e: emailRepository.findByProduct(p)) {
+                if (e.getCustomers().contains(c)) {
+                        return false;
+                    }
+            }
+        return true;
     }
 
-    public List<Customer> getCustomerList() {
-        return customerRepository.findAll();
-    }
-
-    public void setProductTagList(Product currentProduct) {
-        this.productTagList = currentProduct.getTags();
+    public void setProductTagList(List<Tag> productTagList) {
+        this.productTagList = productTagList;
     }
 
     public List<Tag> getProductTagList() {
         return this.productTagList;
     }
 
-
+    public List<Customer> getCustomerSendingList() {
+        return customerSendingList;
+    }
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Change employee details</title>
+</head>
+<body>
+
+<form th:action="@{/employees/{id}/edit (id=${employee.id})}" th:method="PATCH" th:object="${employee}">
+
+    <label for="Name">Name:</label>
+    <input type="text" th:field="*{name}" id="Name">
+
+    <br>
+
+    <label for="Username">Username:</label>
+    <input id="Username" type="text" th:field="*{username}">
+
+    <br>
+
+    <label for="Password">Password:</label>
+    <input id="Password" type="text" th:field="*{password}">
+
+    <br>
+
+    <label for="Email">Email:</label>
+    <input id="Email" type="text" th:field="*{email}">
+
+    <br>
+
+    <label for="phoneNumber">Phone Number:</label>
+    <input id="phoneNumber" type="text" th:field="*{phoneNumber}">
+
+    <br>
+
+    <label for="Photo">Photo:</label>
+    <input id="Photo" type="image" th:field="*{photo}">
+
+    <br>
+
+    <label for="Roles">Roles:</label>
+    <input id="Roles" type="text" th:field="*{roles}">
+
+    <br>
+
+    <label for="Active">Active:</label>
+    <input id="Active" type="text" th:field="*{active}">
+
+    <br>
+
+    <div th:each="nextRole : ${roles}">
+        <label>
+            <input th:type="checkbox"
+                   th:name="${nextRole}"
+                   th:value="${nextRole}"
+                   th:text="${nextRole}">
+        </label>
+    </div>
+
+    <br>
+
+    <input type="submit" value="Change employee details">
+</form>
+
+</body>
+</html>

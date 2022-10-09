@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Emails List</title>
-    <link rel="stylesheet" href="/list.css">
+    <link rel="stylesheet" href="style9.css">
+
 </head>
 <body>
-
+<th:block th:insert="fragments/menu :: menu"></th:block>
 <div th:switch="${emails.size()}">
     <p th:case="0">List is empty</p>
     <div th:case="*">

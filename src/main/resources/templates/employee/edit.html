@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Change employee details</title>
@@ -48,25 +48,12 @@
 
     <br>
 
-<!--    <ul>-->
-<!--        <th:block th:each="product : ${email.products}">-->
-<!--            <li th:utext="${product.getProductId()}"></li>-->
-<!--        </th:block>-->
-<!--    </ul>-->
-
     <div th:each="nextRole : ${roles}">
         <label>
             <input th:type="checkbox"
                    th:name="${nextRole}"
                    th:value="${nextRole}"
                    th:text="${nextRole}">
-<!--                   th:checked="${#lists.contains(employee.roles, nextRole)}" >-->
-<!--                   th:field ="${employee.getRoles()}"-->
-
-<!--            th:checked="${nextRole}"-->
-            <!--                   th:field="*{employee.roles}"-->
-<!--            <label th:for="${#ids.prev(${roles})}"-->
-<!--                   th:text="${nextRole}">Roling</label>-->
         </label>
     </div>
 

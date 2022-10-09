@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Orders History</title>
+    <link rel="stylesheet" href="/style9.css">
+</head>
+<body>
+<th:block th:insert="fragments/menu :: menu"></th:block>
+<div class="container2">
+    <div class="top">
+        <div class="topH"><h1>История заказов</h1></div>
+    </div>
+    <div class="main">
+        <form th:action="@{/order/filter}" th:object="${order}" th:method="POST">
+            <label for="filter">Enter name:</label>
+            <input type="text" name="filter" id="filter">
+            <button type="submit">Find</button>
+        </form>
+        <div class="history_order">
+            <table>
+                <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Клиент</th>
+                    <th>Статус</th>
+                    <th>Менеджер</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+
+                    <td th:text="${order.actionDateTime}"></td>
+                    <td th:text="${order.customer.name+' '+order.customer.surname}"></td>
+                    <td th:text="${order.orderStatus}"></td>
+                    <td th:text="${order.employee.name}"></td>
+                    <td>
+                        <button id="btn">Подробнее</button>
+                        <div class="btn">
+                            <ul id="list">
+
+                                <li th:text="${'Адрес: '+order.deliveryAddress}"></li>
+                                <li th:text="${'Стоимость: '+order.orderCost}"></li>
+                                <li th:each="orderDetail : ${order.orderDetails}"></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $('#btn').click(function() {
+            $('.btn').toggle();
+    });
+</script>
+</html>

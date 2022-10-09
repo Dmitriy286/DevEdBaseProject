@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Personality</title>
+	<link rel="stylesheet" href="/style9.css">
+</head>
+<body>
+<th:block th:insert="fragments/menu :: menu"></th:block>
+<div class ="container2_long">
+	<div class="top">
+		<div class="topH"><h1>Личный кабинет</h1></div>
+	</div>
+	<div class="main2">
+		<div class="layer1top_2">
+			<h4> Карточка сотрудника : </h4>
+			<div class="white_back">
+				<form action="#" th:action="@{/employees/{id}/edit (id=${employeeAccount.id})}" th:object="${employeeAccount}" method="post">
+					<input type="hidden" th:field="${employeeAccount.id}">
+				<p class="p2" th:text="${employeeAccount.name}">Имя</p>
+				<p class="p2" th:text="${employeeAccount.email}">Электронная почта</p>
+				<p class="p2" th:text="${employeeAccount.phoneNumber}">Номер телефона</p>
+				<th:block th:each="role : ${employeeAccount.roles}">
+					<p class="p2" th:text="${role.name}">Должность</p>
+				</th:block>
+					<input type="submit" value="Изменить"/>
+				</form>
+			</div>
+			<button><a th:href="@{/employees/{id}/edit(id=${employeeAccount.id})}">Изменить</a></button>
+		</div>
+		<div class="layer2top_2">
+			<div class ="foto_client2"><img height=100 width=100 th:src = "@{/image/employee_id_{id}.png(id = ${employeeAccount.getId()})}" alt="Employee photo">
+			</div>
+			<div class="out2"><form th:action="@{/logout}" method="post">
+				<input type="submit" value="Выйти"/>
+			</form>
+			</div>
+		</div>
+
+	</div>
+	<div class="center_2">
+		<div class="layer1down_2">
+			<h2>Клиенты</h2>
+
+			<form th:id="ajax_form" th:action="@{/customers/filter}" th:object="${customers}" th:method="POST">
+				<label for="filter1">Введите имя:</label>
+				<input type="text" name="filter" id="filter1">
+				<button type="submit">Find</button>
+			</form>
+			<div id="result_form"></div>
+
+			<div class="customers_list">
+			<ul th:each = "customer: ${customers}">
+				<li><a th:href = "@{customers/{id}(id=${customer.id})}"th:text ="${customer.name+' '+customer.surname}"></a></li>
+			</ul>
+			</div>
+		</div>
+		<div class="layer2down_2">
+			<h2>Товары</h2>
+			<form th:action="@{/products/filter}" th:object="${products}" th:method="POST">
+				<label for="filter2">Введите имя:</label>
+				<input type="text" name="filter" id="filter2">
+				<button type="submit">Find</button>
+			</form>
+			<div class="products_list">
+			<ul th:each = "product: ${products}">
+				<li><a th:href = "@{product/{id}(id=${product.id})}"th:text = "${product.productName}"></a></li>
+			</ul>
+			</div>
+		</div>
+
+		<div class="layer1_2_down_2"><!-- слева второй -->
+			<p class="small_but"><a href="/customer-create">Создать аккаунт клиента</a></p>
+		</div>
+
+		<div class="layer2_2_down_2"><!-- справа второй -->
+			<p class="small_but"><a href="/emails">История рассылок</a></p>
+		</div>
+
+		<div class="layer2_3_down_2"><!-- справа третий -->
+			<p class="small_but"><a href="/history-order">История заказов клиентов менеджера</a></p>
+		</div>
+	</div>
+</div>
+</body>
+</html>

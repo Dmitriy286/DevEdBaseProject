@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="/list.css">
 </head>
 <body>
-
+<div class="container2">
 <div th:switch="${employees.size()}">
     <p th:case="0">List is empty</p>
     <div th:case="*">
     <h2>Employee filter</h2>
-    <form th:action="@{/employees/filter}" th:method="POST">
+    <form th:action="@{/employees/filter}" th:object="${employees}" th:method="POST">
         <label for="filter">Enter name:</label>
         <input type="text" name="filter" id="filter">
         <button type="submit">Find</button>
@@ -40,7 +40,7 @@
             <td th:text = "${employee.password}"></td>
             <td>
                 <th:block th:each="role : ${employee.roles}">
-                    <p th:text="${role.getId()}"></p>
+                    <p th:text="${role.getName()}"></p>
                 </th:block>
             </td>
 
@@ -59,6 +59,8 @@
     <p><a href="/employees/new">Create employee</a></p>
     <p><a href="/employees">Show all employee</a></p>
     <p><a href="/index">Back to main</a></p>
+    <br>
+</div>
 </div>
 </body>
 </html>
