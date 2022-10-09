@@ -7,10 +7,17 @@
 </head>
 <body>
 <th:block th:insert="fragments/menu :: menu"></th:block>
+<div class="container2">
+
 <div th:switch="${manufacturer}">
     <h2 th:case="null">No manufacturer found!</h2>
     <div th:case="*">
-        <h2>Manufacturers</h2>
+        <div class="top">
+            <div class="topG">
+            <h1>Производители</h1>
+            </div>
+        </div>
+        <div class="table1">
         <table>
             <thead>
             <tr>
@@ -33,9 +40,11 @@
             </tr>
             </tbody>
         </table>
+            <p><a href="/manufacturer-create" class="btn">Create manufacturer</a></p>
+            <p><a href="/" class="btn">Back</a></p>
+        </div>
     </div>
-    <p><a href="/manufacturer-create" class="btn">Create manufacturer</a></p>
-    <p><a href="/" class="btn">Back</a></p>
+</div>
 </div>
 </body>
 </html>
