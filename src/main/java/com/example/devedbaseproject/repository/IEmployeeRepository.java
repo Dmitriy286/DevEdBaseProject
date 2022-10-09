@@ -13,8 +13,6 @@ import java.util.Optional;
 
 @Repository
 public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
-
-//    List<Employee> findAll(Sortable sortable);
     List<Employee> findByName(String name);
     Employee findByUsername(String username);
 

@@ -32,12 +32,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService);
    }
 
-//
-//    @Override
-//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.authenticationProvider(customAuthencationProvider);
-//    }
-
 
 //@Override
 //public void configure(AuthenticationManagerBuilder auth) throws Exception {

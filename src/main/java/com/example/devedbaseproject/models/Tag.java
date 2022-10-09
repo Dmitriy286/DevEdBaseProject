@@ -26,9 +26,6 @@ public class Tag {
         this.name = name;
     }
 
-    //    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "product_id")
-//    private Product product;
 
     //region getters, setters
 
@@ -48,7 +45,6 @@ public class Tag {
         this.name = name;
     }
     //endregion
-
 
     @Override
     public String toString() {

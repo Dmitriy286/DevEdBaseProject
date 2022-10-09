@@ -29,16 +29,6 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Order> orderList;
 
-//    @Column(name="tag_list_wrapper")
-//    private TagListWrapper tagListWrapper;
-
-//    @Column(name="tag_count_map")
-//    private HashMap<Tag, Integer> tagCountMap;
-
-//    @ManyToMany
-//    @JoinColumn(name = "tag_count_map")
-//    private HashMap<Tag, Integer> tagCountMap;
-
     @ManyToMany
     @JoinColumn(name = "tag_count_map")
     private List<Tag> tagList;
@@ -123,23 +113,6 @@ public class Customer {
     public void setTagList(List<Tag> tagList) {
         this.tagList = tagList;
     }
-
-    //    public HashMap<Tag, Integer> getTagCountMap() {
-//        return tagCountMap;
-//    }
-//
-//    public void setTagCountMap(HashMap<Tag, Integer> tagCountMap) {
-//        this.tagCountMap = tagCountMap;
-//    }
-
-//    public TagListWrapper getTagListWrapper() {
-//        return tagListWrapper;
-//    }
-//
-//    public void setTagListWrapper(TagListWrapper tagListWrapper) {
-//        this.tagListWrapper = tagListWrapper;
-//    }
-
 
     //endregion
 

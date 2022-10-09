@@ -52,11 +52,7 @@ public class Employee implements UserDetails {
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(cascade = CascadeType.DETACH)
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private List<Role> roles;
-
-//    @OneToMany(mappedBy="employee")
-//    private List<Order> orderList;
 
     @Override
     public String toString() {

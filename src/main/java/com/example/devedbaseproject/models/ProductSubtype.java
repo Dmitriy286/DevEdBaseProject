@@ -25,7 +25,7 @@ public class ProductSubtype {
     @Column(name = "product_subtype_description")
     private String productSubtypeDescription;
 
-    @ManyToOne //(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "product_type_id")
     private ProductType productType;
 }

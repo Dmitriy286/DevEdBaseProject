@@ -49,7 +49,7 @@ public class EmailsController {
         });
 
         model.addAttribute("emails", emailList);
-        return "FRONT/history-email";
+        return "emails/history-email";
     }
 
     @GetMapping("/customer/{customerId}")
@@ -64,7 +64,7 @@ public class EmailsController {
             }
 
         model.addAttribute("emails", emailList);
-        return "FRONT/history-email";
+        return "emails/history-email";
     }
 
     @GetMapping("/new")
@@ -77,9 +77,7 @@ public class EmailsController {
     @PostMapping()
     public String createEmailForOneProduct(@AuthenticationPrincipal Employee employee,
             @ModelAttribute("email") Email email) {
-
         Product product = productRepository.findById(email.getProduct().getId()).orElseThrow();
-
         Email newemail = new Email(product);
         this.productRecommendation = new ProductRecommendation(product,
                 customerRepository.findAll(), repository);
@@ -116,7 +114,7 @@ public class EmailsController {
         else {
             model.addAttribute("emails", sentEmails);
         }
-        return "FRONT/history-email";
+        return "emails/history-email";
     }
 
     @GetMapping("/{id}/send")

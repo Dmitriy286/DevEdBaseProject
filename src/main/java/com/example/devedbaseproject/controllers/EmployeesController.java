@@ -37,20 +37,15 @@ public class EmployeesController {
         this.productRepository = productRepository;
     }
 
-//    @Value("${upload.path}")
-//    private String uploadPath;
-
     @GetMapping
     public String findAll(Model model) {
         List<Employee> employeeList = repository.findAll();
-
         Collections.sort(employeeList, new Comparator<Employee>(){
             public int compare(Employee o1, Employee o2)
             {
                 return o1.getId().compareTo(o2.getId());
             }
         });
-
         model.addAttribute("employees", employeeList);
         return "employee/showAll";
     }
@@ -69,7 +64,7 @@ public class EmployeesController {
         model.addAttribute("customers", customers);
         model.addAttribute("products", products);
 
-        return "FRONT/employees-account";
+        return "employee/employees-account";
     }
 
     @GetMapping("/new")
@@ -77,30 +72,10 @@ public class EmployeesController {
         return "employee/new";
     }
 
-//    @PostMapping("/new")
-//    public String createEmployee(@ModelAttribute("employee") Employee employee, @RequestParam ("file") MultipartFile file)
-//            throws IOException {
-//       if (file != null && !file.getOriginalFilename().isEmpty()){
-//           File uploadDir = new File(uploadPath);
-//           if (uploadDir.exists()){
-//               uploadDir.mkdir();
-//           }
-//           String uuidFile = UUID.randomUUID().toString();
-//           String resultFilename = uuidFile + "." + file.getOriginalFilename();
-//
-//           file.transferTo(new File (uploadPath + "/" + resultFilename));
-//           employee.setFilename(resultFilename);
-//       }
-//        repository.save(employee);
-//        return "redirect:/employees";
-//    }
-
-        @PostMapping("/new")
+    @PostMapping//("/employees")
     public String createEmployee(Employee employee) {
-
         repository.save(employee);
         return "redirect:/employees";
-
     }
 
     @GetMapping("/{id}/edit")
@@ -110,16 +85,13 @@ public class EmployeesController {
         Optional<Employee> employee = repository.findById(id);
         if (employee.isPresent()) {
             model.addAttribute("employee", employee.get());
-            System.out.println(employee);
-            System.out.println(employee.get());
         }
         else {
             System.out.println("Error Found");
         }
 
-        return "FRONT/employee-edit";
+        return "employee/employee-edit";
     }
-
 
     @PostMapping("/{id}/edit")
     public String update(@RequestParam Map<String, String> form,
@@ -129,13 +101,6 @@ public class EmployeesController {
         Set<String> stringroles = roles.stream()
                 .map(Role::getName)
                 .collect(Collectors.toSet());
-        System.out.println(roles);
-        System.out.println(stringroles);
-        System.out.println(employee);
-        System.out.println(employee.getRoles());
-        System.out.println(form);
-        System.out.println(form.keySet());
-
         employee.getRoles().clear();
 
         for (String key : form.keySet()) {
@@ -143,13 +108,11 @@ public class EmployeesController {
                 employee.getRoles().add(roleRepository.findByName(key).get());
             }
         }
-
         repository.save(employee);
 
         return "redirect:/employees";
     }
 
-    //    @DeleteMapping("/{id}/delete")
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         repository.deleteById(id);
@@ -168,8 +131,5 @@ public class EmployeesController {
         model.addAttribute("employees", employees);
         return "employee/showAll";
     }
-
-
-
 
 }

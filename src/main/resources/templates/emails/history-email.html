@@ -12,10 +12,6 @@
         <h1>История рассылок</h1>
     </div>
     <div class="main">
-<!--        <form action="search_mailing.php">-->
-<!--            <p><input type=search placeholder="Поиск рассылок">-->
-<!--                <input type="submit" value="Искать"></p>-->
-<!--        </form>-->
 <div th:switch="${emails.size()}">
     <p th:case="0">List is empty</p>
     <div th:case="*">

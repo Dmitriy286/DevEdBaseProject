@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Change order</title>
-<!--    <link rel="stylesheet" href="/list.css">-->
 </head>
 <body>
 <div class="container">
@@ -14,7 +13,6 @@
             <label for="order_id">ID</label>
             <input readonly type="number" th:field="*{id}" id="order_id" placeholder="ID">
             <br/>
-<!--            <label for="customerName" th:text="${customer.name+' '+ customer.surname}"></label>-->
             <label for="customerName">Клиент</label>
             <input type="hidden" th:field="*{customer.id}" id="customerName">
             <output type="text" th:text="${customer.name +' '+ customer.surname}"></output>
@@ -46,8 +44,6 @@
             <input type="text" th:field="*{deliveryAddress}" id="deliveryAddress" placeholder="Адрес доставки">
             <br/>
             <br><br>
-
-
 
             <input type="submit" value="Изменить заказ" class="btn">
         </form>

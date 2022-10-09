@@ -17,8 +17,6 @@
         <tr>
             <th>Parameter Id</th>
             <th>Name</th>
-<!--            <th>StringValue</th>-->
-<!--            <th>IntValue</th>-->
             <th>ValueType</th>
         </tr>
         </thead>
@@ -26,8 +24,6 @@
         <tr th:each = "parameter: ${parameters}">
             <td th:text = "${parameter.id}">Parameter id</td>
             <td><a th:href = "@{/parameters/{name}(name=${parameter.getName()})}" th:text = "${parameter.name}">Parameter Name</a></td>
-<!--            <td th:text = "${parameter.stringValue}">None</td>-->
-<!--            <td th:text = "${parameter.intValue}">None</td>-->
             <td th:text = "${parameter.valueType}">valueType</td>
             <td><a th:href = "@{/parameters/{id}/edit(id = ${parameter.id})}">Update</a></td>
             <td><a th:href = "@{/parameters/{id}/delete(id = ${parameter.id})}">Delete</a></td>

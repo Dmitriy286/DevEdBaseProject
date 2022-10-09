@@ -45,7 +45,7 @@ public class OrderController {
         List<Order> orders = orderRepository.findAll();
         model.addAttribute("orders", orders);
         model.addAttribute("orderDetails", orderDetailsRepository.findAll());
-        return "FRONT/history-order";
+        return "order/history-order";
     }
 
     @GetMapping("/order-update/{id}")
@@ -95,9 +95,7 @@ public class OrderController {
         order.setOrderStatus("Не оплачен");
         order.setEmployee(employee);
 
-//        orderRepository.save(order);
-
-        //region Добавление тэгов продуктов из заказа в список тэгов клиента
+        //region Add product tags from order to client's tag list
         for (OrderDetails od: order.getOrderDetails()) {
             Optional<Product> tempproduct = productRepository.findById(od.getProduct().getId());
             Product product = new Product();
@@ -117,37 +115,12 @@ public class OrderController {
                     order.getCustomer().getTagList().add(tag);
                 }
             }
-//            else {
-//                for (Tag tag : product.getTags()) {
-//                    if (order.getCustomer().getTagCountMap().containsKey(tag)) {
-//                        order.getCustomer().getTagCountMap().put(tag, order.getCustomer().getTagCountMap().get(tag) + 1);
-//                    } else {
-//                        order.getCustomer().getTagCountMap().put(tag, 1);
-//                    }
-//                }
-//            }
-
-//            HashMap<Tag, Integer> sortedTags = order.getCustomer().getTagCountMap().entrySet().stream()
-//                    .sorted(Map.Entry.<Tag, Integer>comparingByValue().reversed())
-//                    .collect(Collectors.toMap(
-//                            Map.Entry::getKey,
-//                            Map.Entry::getValue,
-//                            (a, b) -> { throw new AssertionError(); },
-//                            LinkedHashMap::new));
-////                    .sorted(Comparator.comparingInt(e -> -e.getValue()))
-//            sortedTags.entrySet().forEach(System.out::println);
-//            order.getCustomer().setTagCountMap(sortedTags);
-////            customerRepository.save(order.getCustomer());
         }
         //endregion
         orderRepository.save(order);
         customerRepository.save(order.getCustomer());
-
         sendEmailAboutOrder(order.getCustomer(), order);
-
         Optional<Order> newOrder = orderRepository.findById(order.getId());
-        System.out.println(newOrder.get().getOrderDetails().get(0).getProduct());
-        System.out.println(newOrder.get().getCustomer().getTagList());
 
         return "redirect:/history-order";
     }
@@ -162,21 +135,9 @@ public class OrderController {
         model.addAttribute("customer", customer);
 //        model.addAttribute("employee", employee);
         model.addAttribute("orderDetails", orderDetails);
-
         return "order/order-details";
     }
-//    @PostMapping("/order/filter")
-//    public String filterByName(@RequestParam("filter") String filter, Model model) {
-//        Iterable<Order> orders;
-//        if (filter != null && !filter.isEmpty()) {
-//            orders = orderRepository.findByCustomer(filter);
-//        }
-//        else {
-//            orders = orderRepository.findAll();
-//        }
-//        model.addAttribute("order", orders);
-//        return "FRONT/history-order";
-//    }
+
     public void sendEmailAboutOrder(Customer c, Order o) {
         String message = String.format("Добрый день, %s! \n" +
                         "Для Вас оформлен заказ с номером № " +

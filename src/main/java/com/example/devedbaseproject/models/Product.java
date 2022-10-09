@@ -42,14 +42,14 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne//(cascade = { CascadeType.ALL })
+    @ManyToOne
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 
     @Column(name = "product_quantity")
     private Long productQuantity;
 
-    @ManyToOne //(cascade = { CascadeType.ALL })
+    @ManyToOne
     @JoinColumn(name = "product_subtype_id")
     private ProductSubtype productSubtype;
 

@@ -9,7 +9,7 @@
 <th:block th:insert="fragments/menu :: menu"></th:block>
 <div class="container">
     <div>
-        <form action="#" th:action="@{/employees/customers/update/{id}(id=${customer.id})}" th:object="${customer}" method="post">
+        <form action="#" th:action="@{/employees/customers/update/{id}(id=${customer.id})}" th:object="${customer}" th:method="PATCH">
             <input type="hidden" th:field="*{id}">
             <label for="name">Имя</label>
             <input type="text" th:field="*{name}" id="name" placeholder="Name">

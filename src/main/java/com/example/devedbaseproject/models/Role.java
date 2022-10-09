@@ -26,20 +26,6 @@ public class Role implements GrantedAuthority {
     @Column(name = "name")
     private String name;
 
-//    @ManyToMany
-//    @JoinTable(name="Employees",
-//            joinColumns=@JoinColumn(name="roleId"),
-//            inverseJoinColumns=@JoinColumn(name="employeeId"))
-//    private List<Employee> employees;
-
-//    @Override
-//    public String toString() {
-//        return "{" +
-//                "Id: " + Id +
-//                ", name: '" + name +
-//               "'}";
-//    }
-
     @Override
     public String toString() {
         return "" + name + "";
