@@ -21,7 +21,7 @@ public class Supplies {
     @Column(name = "supplies_id")
     private Long id;
 
-    @ManyToOne//(cascade = { CascadeType.ALL })
+    @ManyToOne
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 

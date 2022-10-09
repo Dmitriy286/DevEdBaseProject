@@ -28,14 +28,12 @@ public class TagsController {
     @GetMapping()
     public String findAll(Model model) {
         List<Tag> tagList = repository.findAll();
-
         Collections.sort(tagList, new Comparator<Tag>(){
             public int compare(Tag o1, Tag o2)
             {
                 return o1.getId().compareTo(o2.getId());
             }
         });
-
         model.addAttribute("tags", tagList);
         return "tag/showAll";
     }
@@ -74,24 +72,17 @@ public class TagsController {
         else {
             System.out.println("Error Found");
         }
-
         return "tag/edit";
     }
-
-//    @PatchMapping("/{id}")
     @PostMapping("/{id}")
     public String update(@ModelAttribute("tag") Tag tag, @PathVariable("id") Long id) {
         repository.save(tag);
-
         return "redirect:/tags";
     }
 
-    //    @DeleteMapping("/{id}/delete")
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         repository.deleteById(id);
         return "redirect:/tags";
     }
-
-
 }

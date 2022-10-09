@@ -23,7 +23,6 @@ public class EmailsController {
     private final IEmailRepository repository;
     private final ICustomerRepository customerRepository;
     private final IProductRepository productRepository;
-    private final IEmployeeRepository employeeRepository;
     private ProductRecommendation productRecommendation;
 
     List<Customer> customerSendingList;
@@ -32,19 +31,16 @@ public class EmailsController {
     private EmailSender sender;
 
     @Autowired
-    public EmailsController(IEmailRepository repository, ICustomerRepository customerRepository, IProductRepository productRepository, IEmployeeRepository employeeRepository) {
+    public EmailsController(IEmailRepository repository, ICustomerRepository customerRepository, IProductRepository productRepository) {
         this.repository = repository;
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
-        this.employeeRepository = employeeRepository;
         this.customerSendingList = new ArrayList<>();
-
     }
 
     @GetMapping()
     public String findAll(Model model) {
         List<Email> emailList = repository.findAll();
-
         Collections.sort(emailList, new Comparator<Email>(){
             public int compare(Email o1, Email o2)
             {
@@ -53,13 +49,12 @@ public class EmailsController {
         });
 
         model.addAttribute("emails", emailList);
-        return "FRONT/history-email";
+        return "emails/history-email";
     }
 
     @GetMapping("/customer/{customerId}")
     public String findEmailByCustomerID(@PathVariable("customerId") Long customerId, Model model) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID" + customerId));
-
         List<Email> emailList = new ArrayList<>();
 
         for (Email e: repository.findAll()) {
@@ -69,8 +64,7 @@ public class EmailsController {
             }
 
         model.addAttribute("emails", emailList);
-
-        return "FRONT/history-email";
+        return "emails/history-email";
     }
 
     @GetMapping("/new")
@@ -83,9 +77,7 @@ public class EmailsController {
     @PostMapping()
     public String createEmailForOneProduct(@AuthenticationPrincipal Employee employee,
             @ModelAttribute("email") Email email) {
-
         Product product = productRepository.findById(email.getProduct().getId()).orElseThrow();
-
         Email newemail = new Email(product);
         this.productRecommendation = new ProductRecommendation(product,
                 customerRepository.findAll(), repository);
@@ -97,12 +89,9 @@ public class EmailsController {
         newemail.setCustomers(cList);
         newemail.setEmployee(employee);
         newemail.setSend(false);
-//        newemail.setCustomer(cList.get(0));
 
         repository.save(newemail);
-
         this.customerSendingList = cList;
-
         return "redirect:/emails";
     }
 
@@ -125,12 +114,11 @@ public class EmailsController {
         else {
             model.addAttribute("emails", sentEmails);
         }
-        return "FRONT/history-email";
+        return "emails/history-email";
     }
 
     @GetMapping("/{id}/send")
     public String sendEmail(@PathVariable("id") Long id, Model model) {
-
         Optional<Email> email = repository.findById(id);
         sendEmail(email.get().getProduct());
         String servicemessage = "Email with id " + email.get().getId() +
@@ -142,18 +130,15 @@ public class EmailsController {
         repository.save(email.get());
         model.addAttribute("servicemessage", servicemessage);
         return "emails/emailSent";
-
     }
 
     public void sendEmail(Product currentProduct) {
             for (Customer c : this.customerSendingList) {
-//                if (!StringUtils.isEmpty(c.getEmail())) {
                     String message = String.format("Добрый день, %s! \n" +
                                     "Рекомендуем приобрести следующий продукт: \n" +
                                     "%s",
                             c.getName(), currentProduct);
                     sender.send(c.getEmail(), "Рекомендуемый продукт", message);
-//                }
             }
         System.out.println(customerSendingList);
         }
@@ -181,14 +166,12 @@ public class EmailsController {
             model.addAttribute("servicemessage", servicemessage);
             return "emails/error";
         }
-
         return "emails/edit";
     }
 
     @PostMapping("/{id}")
     public String update(@ModelAttribute("email") Email email, @PathVariable("id") Long id) {
         repository.save(email);
-
         return "redirect:/emails";
     }
 
@@ -209,7 +192,6 @@ public class EmailsController {
             model.addAttribute("servicemessage", servicemessage);
             return "emails/error";
         }
-
         return "redirect:/emails";
     }
 }

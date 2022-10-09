@@ -44,17 +44,16 @@ public class ProductController {
 
 
     @GetMapping("/products")
-    public String findAll(Model model, Product product) {
+    public String findAll(Model model) {
         List<Product> products = productRepository.findAll();
-        model.addAttribute("products", products); // attribute - "${products}"
+        model.addAttribute("products", products);
 
         List<ProductType> types = typeRepository.findAll();
         model.addAttribute("type", types);
-
         model.addAttribute("manufacturer", manufacturerRepository.findAll());
         model.addAttribute("subtype", subtypeRepository.findAll());
 
-        return "FRONT/products";
+        return "product/products";
     }
 
     @PostMapping("/products")
@@ -69,14 +68,14 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/employees/product/{id}")
+    @GetMapping("/product/{id}")
     public String cardProduct(@PathVariable("id") Long id, Model model) {
         Product product = productRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Invalid product ID" + id));
         model.addAttribute("product", product);
         model.addAttribute("value", ppvalueRepository.findAll());
         model.addAttribute("parameters", productParameterRepository.findAll());
-        return "FRONT/card-product";
+        return "product/card-product";
     }
 
     @GetMapping("/employees/product/update/{id}")
@@ -86,21 +85,20 @@ public class ProductController {
         model.addAttribute("product", product);
         model.addAttribute("manufacturer", manufacturerRepository.findAll());
         model.addAttribute("subtype", subtypeRepository.findAll());
-        return "FRONT/product-update";
+        return "product/product-update";
     }
 
-    @PostMapping("/employees/product/update/{id}")
+    @PostMapping("/product/update/{id}")
     public String updateProduct(@PathVariable("id") Long id, Product product) {
         productRepository.save(product);
         return "redirect:/product/" + id;
     }
 
-    @GetMapping("/employees/product/parameters/{id}")
+    @GetMapping("/product/parameters/{id}")
     public String findProductById(@PathVariable("id") Long id, Model model) {
         List<ProductParameter> parameters = productParameterRepository.findAll();
         model.addAttribute("parameters", parameters);
         ProductParameter newPP = new ProductParameter("");
-
         PPValueWrapper wrapper = new PPValueWrapper();
         ProductParameterValue ppv = new ProductParameterValue();
         ppv.setParameter(newPP);
@@ -108,32 +106,22 @@ public class ProductController {
         ppv.setStringValue("test");
         wrapper.getPpValueList().add(ppv);
         model.addAttribute("wrapper", wrapper);
-
         Optional<Product> product = productRepository.findById(id);
         if (product.isPresent()) {
             model.addAttribute("product", product.get());
         } else {
             System.out.println("Error Found");
         }
-        return "FRONT/product-parameters";
+        return "product/product-parameters";
     }
 
-    @PostMapping("employees/product/parameters/{id}")
+    @PostMapping("product/parameters/{id}")
     public String setParameters(@RequestParam Map<String, String> form,
                                 @ModelAttribute PPValueWrapper wrapper, Model model,
                                 @PathVariable("id") Long id) {
         System.out.println(wrapper.getPpValueList() != null ? wrapper.getPpValueList().size() : "null list");
         System.out.println("--");
-
         model.addAttribute("wrapper", wrapper);
-
-        System.out.println(form);
-        System.out.println(wrapper);
-        System.out.println(wrapper.getPpValueList());
-        System.out.println(wrapper.getPpValueList().toString());
-        System.out.println(wrapper.getPpValueList().get(0).toString());
-        System.out.println(wrapper.getPpValueList().size());
-        System.out.println(form.keySet());
 
         Optional<Product> tempproduct = productRepository.findById(id);
 
@@ -148,34 +136,24 @@ public class ProductController {
             ppvalue.setProduct(product);
 
             Optional<ProductParameter> tempproductparameter = productParameterRepository.findByName(ppvalue.getParameter().getName());
-
             ProductParameter productparameter = new ProductParameter();
             if (tempproductparameter.isPresent()) {
                 productparameter = tempproductparameter.get();
             } else {
                 System.out.println("Error Found, likely no product");
             }
-
             ppvalue.setParameter(productparameter);
             ppvalueRepository.save(ppvalue);
             product.getParameterValues().add(ppvalue);
             productRepository.save(product);
-            System.out.println(ppvalue);
-            System.out.println(ppvalue.getParameter());
-            System.out.println(ppvalue.getParameter().getName());
         }
-
-        return "redirect:employees/product/parameters/" + id;
+        return "redirect:/product/parameters/" + id;
     }
-
-
-
 
     @GetMapping("/products/{productId}/settags")
     public String setTagsForm(@PathVariable("productId") Long productId,
                                   Model model) {
         List<Tag> tags = tagRepository.findAll();
-
         model.addAttribute("tags", tags);
 
         TagWrapper wrapper = new TagWrapper();
@@ -196,9 +174,6 @@ public class ProductController {
     public String saveTagList(@PathVariable("productId") Long productId,
                               @ModelAttribute TagWrapper wrapper, Model model,
                               @RequestParam Map<String, String> form) {
-
-        System.out.println(wrapper.getTagList());
-        System.out.println(form);
         Optional<Product> tempproduct = productRepository.findById(productId);
 
         Product product = new Product();
@@ -213,9 +188,7 @@ public class ProductController {
         }
         else {
             for (Tag tempTag: wrapper.getTagList()) {
-
                 Optional<Tag> tag = tagRepository.findById(tempTag.getId());
-
                 if (tag.isPresent()) {
                     product.getTags().add(tag.get());
                 } else {
@@ -240,6 +213,6 @@ public class ProductController {
         model.addAttribute("employeeAccount", employeeAccount);
         model.addAttribute("products", products);
         model.addAttribute("customers", customers);
-        return "FRONT/employees-account";
+        return "product/employees-account";
     }
 }

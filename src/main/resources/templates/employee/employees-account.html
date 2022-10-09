@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
 	<meta charset="utf-8">
@@ -14,13 +14,13 @@
 	</div>
 	<div class="main2">
 		<div class="layer1top_2">
-			<h4> Карточка сотрудника : </h4><!--  !сделать лейблы! -->
+			<h4> Карточка сотрудника : </h4>
 			<div class="white_back">
 				<form action="#" th:action="@{/employees/{id}/edit (id=${employeeAccount.id})}" th:object="${employeeAccount}" method="post">
 					<input type="hidden" th:field="${employeeAccount.id}">
 				<p class="p2" th:text="${employeeAccount.name}">Имя</p>
-				<p class="p2" th:text="${employeeAccount.email}">Электронная почта</p> <!-- справа -->
-				<p class="p2" th:text="${employeeAccount.phoneNumber}">Номер телефона</p> <!-- справа -->
+				<p class="p2" th:text="${employeeAccount.email}">Электронная почта</p>
+				<p class="p2" th:text="${employeeAccount.phoneNumber}">Номер телефона</p>
 				<th:block th:each="role : ${employeeAccount.roles}">
 					<p class="p2" th:text="${role.name}">Должность</p>
 				</th:block>
@@ -40,7 +40,7 @@
 
 	</div>
 	<div class="center_2">
-		<div class="layer1down_2"><!-- слева первый -->
+		<div class="layer1down_2">
 			<h2>Клиенты</h2>
 
 			<form th:id="ajax_form" th:action="@{/customers/filter}" th:object="${customers}" th:method="POST">
@@ -56,7 +56,7 @@
 			</ul>
 			</div>
 		</div>
-		<div class="layer2down_2"><!-- справа первый -->
+		<div class="layer2down_2">
 			<h2>Товары</h2>
 			<form th:action="@{/products/filter}" th:object="${products}" th:method="POST">
 				<label for="filter2">Введите имя:</label>

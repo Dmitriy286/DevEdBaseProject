@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Emails List</title>
@@ -7,19 +7,18 @@
 </head>
 <body>
 <th:block th:insert="fragments/menu :: menu"></th:block>
-<div class ="container2">
+<div class ="container">
     <div class="top">
-        <div class="topH"><h1>История рассылок</h1></div>
+        <h1>История рассылок</h1>
     </div>
-
-    <div class="main_long">
+    <div class="main">
 <div th:switch="${emails.size()}">
     <p th:case="0">List is empty</p>
     <div th:case="*">
         <label for="radioform"><b>Choose sent/unsent:</b></label>
         <form th:action="@{/emails/newEmails}" th:method="POST" id="radioform">
-            <input type="radio" name="sent" value="true">sent<Br>
-            <input type="radio" name="sent" value="false">unsent<Br>
+            <input type="radio" name="sent" value="true">sent<br/>
+            <input type="radio" name="sent" value="false">unsent<br/>
             <button type="submit">Filter</button>
         </form>
         <div class="history_email">
@@ -27,9 +26,8 @@
             <thead>
             <tr>
                 <th>Date</th>
-                <th>Message</th>
-                <th>Customer</th>
-                <th>Products</th>
+                <th>Product</th>
+                <th>Customers</th>
                 <th>Employee</th>
                 <th>Sending status</th>
             </tr>
@@ -49,7 +47,6 @@
                         </th:block>
                     </ul>
                 </td>
-                <!--            todo Как выводить айдишники из списка продуктов иным способом?-->
                 <td th:text = "${email.employee.name}"></td>
                 <td th:text = "${email.send}"></td>
                 <div th:switch="${email.send}">
@@ -65,9 +62,10 @@
         </table>
         </div>
     </div>
+    <br>
+    <hr>
     <p><a href="/emails/new">Create email</a></p>
     <p><a href="/emails">Show all emails</a></p>
-</div>
 </div>
 </div>
 </div>

@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create order</title>
     <link rel="stylesheet" href="/style9.css">
-<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
-<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
-<!--    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">-->
 </head>
 <body>
 <th:block th:insert="fragments/menu :: menu"></th:block>
@@ -43,13 +40,6 @@
             <label for="deliveryAddress">Адрес</label>
             <input type="text" th:field="*{deliveryAddress}" id="deliveryAddress" placeholder="Адрес доставки">
             <br/>
-<!--            <label for="employee_list">Выберите работника</label>-->
-<!--            <select th:name="employee" id="employee_list">-->
-<!--                <option th:each="employee:${employees}"-->
-<!--                        th:value="${employee.id}"-->
-<!--                        th:text="${employee.name}">Товар-->
-<!--                </option>-->
-<!--            </select>-->
             <br/><br/>
 
 

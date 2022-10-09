@@ -24,7 +24,6 @@
                 </thead>
                 <tbody>
                 <tr th:each="category : ${category}">
-                    <!--                            ПОЛЯ КЛАССА!!!!-->
                     <td th:text="${category.id}"></td>
                     <td th:text="${category.categoryName}"></td>
                     <td th:text="${category.categoryDescription}"></td>
@@ -53,7 +52,6 @@
                 </thead>
                 <tbody>
                 <tr th:each="type : ${productType}">
-                    <!--                            ПОЛЯ КЛАССА!!!!-->
                     <td th:text="${type.id}"></td>
                     <td th:text="${type.productTypeName}"></td>
                     <td th:text="${type.productTypeDescription}"></td>
@@ -83,7 +81,6 @@
                 </thead>
                 <tbody>
                 <tr th:each="subtype : ${productSubtype}">
-                    <!--                            ПОЛЯ КЛАССА!!!!-->
                     <td th:text="${subtype.id}"></td>
                     <td th:text="${subtype.productSubtypeName}"></td>
                     <td th:text="${subtype.productSubtypeDescription}"></td>

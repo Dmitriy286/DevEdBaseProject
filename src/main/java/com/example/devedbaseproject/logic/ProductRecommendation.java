@@ -4,9 +4,7 @@ import com.example.devedbaseproject.models.Customer;
 import com.example.devedbaseproject.models.Email;
 import com.example.devedbaseproject.models.Product;
 import com.example.devedbaseproject.models.Tag;
-import com.example.devedbaseproject.repository.ICustomerRepository;
 import com.example.devedbaseproject.repository.IEmailRepository;
-import com.example.devedbaseproject.repository.IProductRepository;
 import com.example.devedbaseproject.service.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -14,8 +12,7 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+
 
 /*продукт -> тэги продукта
 
@@ -36,12 +33,10 @@ public class ProductRecommendation {
     Product currentProduct;
     private List<Tag> productTagList;
     private List<Customer> customerSendingList;
-//    @Autowired
-//    private EmailSender sender;
-
     private IEmailRepository emailRepository;
 
-
+    @Autowired
+    private EmailSender sender;
 
     public ProductRecommendation() {
     }
@@ -60,17 +55,17 @@ public class ProductRecommendation {
         this.customerSendingList = tagCompare();
         }
 
-//    public void sendEmail() {
-//        for (Customer c : this.customerSendingList) {
-//            if (!StringUtils.isEmpty(c.getEmail())) {
-//                String message = String.format("Добрый день, %s! \n" +
-//                                "Рекомендуем приобрести следующий продукт: \n" +
-//                                "%s",
-//                        c.getName(), currentProduct);
-//                sender.send(c.getEmail(), "Рекомендуемый продукт", message);
-//            }
-//        }
-//    }
+    public void sendEmail() {
+        for (Customer c : this.customerSendingList) {
+            if (!StringUtils.isEmpty(c.getEmail())) {
+                String message = String.format("Добрый день, %s! \n" +
+                                "Рекомендуем приобрести следующий продукт: \n" +
+                                "%s",
+                        c.getName(), currentProduct);
+                sender.send(c.getEmail(), "Рекомендуемый продукт", message);
+            }
+        }
+    }
 
     public List<Customer> tagCompare() {
         boolean flag = true;
@@ -101,13 +96,11 @@ public class ProductRecommendation {
                     }
                 }
             }
-
             for (Email e: emailRepository.findByProduct(p)) {
                 if (e.getCustomers().contains(c)) {
                         return false;
                     }
             }
-
         return true;
     }
 

@@ -28,7 +28,6 @@ public class RolesController {
     @GetMapping()
     public String findAll(Model model) {
         List<Role> roleList = repository.findAll();
-
         Collections.sort(roleList, new Comparator<Role>(){
             public int compare(Role o1, Role o2)
             {
@@ -42,7 +41,6 @@ public class RolesController {
 
     @GetMapping("/{name}")
     public String findRoleByName(@PathVariable("name") String name, Model model) {
-
         Optional<Role> role = repository.findByName(name);
         if (role.isPresent()) {
             model.addAttribute("role", role.get());
@@ -75,24 +73,18 @@ public class RolesController {
         else {
             System.out.println("Error Found");
         }
-
         return "role/edit";
     }
 
-//    @PatchMapping("/{id}")
     @PostMapping("/{id}")
     public String update(@ModelAttribute("role") Role role, @PathVariable("id") Long id) {
         repository.save(role);
-
         return "redirect:/roles";
     }
 
-    //    @DeleteMapping("/{id}/delete")
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         repository.deleteById(id);
         return "redirect:/roles";
     }
-
-
 }

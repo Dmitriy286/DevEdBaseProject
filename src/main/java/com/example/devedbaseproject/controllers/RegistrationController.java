@@ -33,16 +33,12 @@ public class RegistrationController {
 
         if (employeeFromDB != null) {
             model.addAttribute("message", "User exists!");
-            return "FRONT/registration";
+            return "registration";
         }
         Employee newemployee = new Employee(employee.getUsername(), employee.getPassword());
-
         Role role = rolerepo.findByName("Admin").orElseThrow();
-
         newemployee.getRoles().add(role);
-//        rolelist.add(role);
         newemployee.setActive(true);
-//        employee.setRoles(rolelist);
         repository.save(newemployee);
 
         return "redirect:/login";

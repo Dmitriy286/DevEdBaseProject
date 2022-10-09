@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-//@AllArgsConstructor
 
 @Entity
 @Table(name = "product_parameters")

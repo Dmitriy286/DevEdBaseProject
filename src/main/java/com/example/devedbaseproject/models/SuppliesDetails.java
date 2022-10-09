@@ -20,7 +20,7 @@ public class SuppliesDetails {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne//(cascade = { CascadeType.ALL })
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 

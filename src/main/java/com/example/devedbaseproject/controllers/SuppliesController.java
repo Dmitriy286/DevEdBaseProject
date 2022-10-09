@@ -23,37 +23,33 @@ public class SuppliesController {
 
     @Autowired
     public SuppliesController(ISuppliesRepository suppliesRepository, IManufacturerRepository manufacturerRepository) {
-
         this.suppliesRepository = suppliesRepository;
         this.manufacturerRepository = manufacturerRepository;
     }
-
 
     @GetMapping("/supplies")
     public String findAll(Model model) {
         List<Supplies> supplies = suppliesRepository.findAll();
         model.addAttribute("supplies", supplies); // attribute - "${supplies}"
-        return "supplies-list";
+        return "supplies/supplies-list";
     }
-
     @GetMapping("/supplies-create")
     public String createSuppliesForm(Supplies supplies, Model model) {
         model.addAttribute("manufacturer", manufacturerRepository.findAll());
-        return "supplies-create";
+        return "supplies/supplies-create";
     }
-
 
     @PostMapping("/supplies-create")
     public String createSupplies(@Valid Supplies supplies) {
         supplies.setSuppliesDate(LocalDate.now());
         suppliesRepository.save(supplies);
-        return "redirect:/supplies";
+        return "redirect:/supplies/supplies-list";
     }
 
     @GetMapping("/supplies-delete/{id}")
     public String deleteSupplies(@PathVariable("id") Long id) {
         suppliesRepository.deleteById(id);
-        return "redirect:/supplies";
+        return "redirect:/supplies/supplies-list";
     }
 
     @GetMapping("/supplies-update/{id}")
@@ -62,12 +58,12 @@ public class SuppliesController {
                 new IllegalArgumentException("Invalid supplies ID" + id));
         model.addAttribute("supplies", supplies);
         model.addAttribute("manufacturer", manufacturerRepository.findAll());
-        return "supplies-update";
+        return "supplies/supplies-update";
     }
 
     @PostMapping("/supplies-update")
     public String updateSupplies(Supplies supplies) {
         suppliesRepository.save(supplies);
-        return "redirect:/supplies";
+        return "redirect:/supplies/supplies-list";
     }
 }

@@ -8,7 +8,6 @@
 </head>
 <body>
 <div class="container">
-<!--    <th:block th:insert="fragments/navigation :: main-menu"></th:block>-->
     <th:block th:insert="fragments/menu :: menu"></th:block>
     <div th:switch="${products}">
         <h2 th:case="null">No products found!</h2>
@@ -28,8 +27,6 @@
                 </thead>
                 <tbody>
                 <tr th:each="product : ${products}">
-                    <!--                            ПОЛЯ КЛАССА!!!!-->
-<!--                    <td th:text="${product.id}"></td>-->
                     <td><a th:href = "@{/product/{id}(id=${product.getId()})}" th:text = "${product.Id}">userid</a></td>
                     <td th:text="${product.productName}"></td>
                     <td th:text="${product.description}"></td>

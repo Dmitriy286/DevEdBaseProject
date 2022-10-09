@@ -23,7 +23,7 @@ public class RatingNotes {
     @Column(name = "rating_name")
     private Long ratingNumber;
 
-    @ManyToOne//(cascade = { CascadeType.ALL })
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

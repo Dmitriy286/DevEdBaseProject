@@ -12,8 +12,6 @@
 <p th:text="${employee.getPhoto()}">value</p>
 
 <img th:src = "@{/image/employee_id_{id}.png(id = ${employee.getId()})}" alt="Employee photo">
-<!--<img src = "/image/employee_id_2.png" alt="Employee photo">-->
-<!--todo не подтягивает фотку-->
 
 </body>
 </html>

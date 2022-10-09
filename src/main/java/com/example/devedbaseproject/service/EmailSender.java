@@ -22,6 +22,5 @@ public class EmailSender {
         email.setText(text);
 
         sender.send(email);
-
     }
 }

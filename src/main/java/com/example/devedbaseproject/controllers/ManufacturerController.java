@@ -24,24 +24,24 @@ public class ManufacturerController {
     public String findAll(Model model) {
         List<Manufacturer> manufacturer = manufacturerRepository.findAll();
         model.addAttribute("manufacturer", manufacturer);
-        return "manufacturer-list";
+        return "manufacturer/manufacturer-list";
     }
 
     @GetMapping("/manufacturer-create")
     public String createManufacturerForm(Manufacturer manufacturer) {
-        return "manufacturer-create";
+        return "manufacturer/manufacturer-create";
     }
 
     @PostMapping("/manufacturer-create")
     public String createManufacturer(Manufacturer manufacturer) {
         manufacturerRepository.save(manufacturer);
-        return "redirect:/manufacturer";
+        return "redirect:/manufacturer/manufacturer";
     }
 
     @GetMapping("/manufacturer-delete/{id}")
     public String deleteManufacturer(@PathVariable("id") Long id) {
         manufacturerRepository.deleteById(id);
-        return "redirect:/manufacturer";
+        return "redirect:/manufacturer/manufacturer-list";
     }
 
     @GetMapping("/manufacturer-update/{id}")
@@ -49,13 +49,13 @@ public class ManufacturerController {
         Manufacturer manufacturer = manufacturerRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Invalid manufacturer ID" + id));
         model.addAttribute("manufacturer", manufacturer);
-        return "manufacturer-update";
+        return "manufacturer/manufacturer-update";
     }
 
     @PostMapping("/manufacturer-update")
     public String updateManufacturer(Manufacturer manufacturer) {
         manufacturerRepository.save(manufacturer);
-        return "redirect:/manufacturer";
+        return "redirect:/manufacturer/manufacturer";
     }
 
 

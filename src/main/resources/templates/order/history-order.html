@@ -42,31 +42,13 @@
                                 <li th:text="${'Адрес: '+order.deliveryAddress}"></li>
                                 <li th:text="${'Стоимость: '+order.orderCost}"></li>
                                 <li th:each="orderDetail : ${order.orderDetails}"></li>
-<!--                                <li th:text="${orderDetail.product.productName}"></li>-->
-<!--                                <li th:text="${orderDetail.productAmount}"></li>-->
                             </ul>
                         </div>
-<!--                        <div th:each="orderDetails : ${orders.orderDetails}">-->
-<!--                            <ul>-->
-<!--                            <li th:text="${orderDetails.product.productName}"></li>-->
-<!--                            </ul>-->
-<!--                        </div>-->
                     </td>
-
-                    <!--					<td th:text="${order.orderDetails.product}"></td>-->
-                    <!--					<td th:text="${order.orderDetails.productAmount}"></td>-->
-
-
                 </tr>
-                <!--				<tr th:each="orderDetails : ${orders.orderDetails}">-->
 
-                <!--					<td th:text="${orderDetails.product}"></td>-->
-                <!--					<td th:text="${orderDetails.productAmount}"></td>-->
-                <!--				</tr>-->
                 </tbody>
             </table>
-            <!--					<a th:href="@{product-update/{id}(id=${order.id})}" class="btn">Edit</a>-->
-            <!--					<a th:href="@{product-delete/{id}(id=${order.id})}" class="btn">Delete</a>-->
         </div>
     </div>
 </div>
@@ -74,9 +56,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
     $('#btn').click(function() {
-        // $('ul#list').children().each(function(){
             $('.btn').toggle();
-        // })
     });
 </script>
 </html>
